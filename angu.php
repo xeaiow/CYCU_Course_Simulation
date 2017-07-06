@@ -17,11 +17,11 @@
     <title>Document</title>
 </head>
 
-<body>
+<body ng-app="myApp" ng-controller="ListController">
 
     <div class="ui inverted menu">
-        <a class="active item">Home</a>
-        <a class="item">Messages</a>
+        <a class="active item">模擬器</a>
+        <a class="item">efew</a>
         <a class="item">Friends</a>
     </div>
 
@@ -29,8 +29,27 @@
     <div class="ui container">
 
         <!-- Grid -->
-        <div class="ui grid" ng-app="myApp" ng-controller="ListController">
+        <div class="ui grid">
             <div class="seven wide column">
+
+                <div class="ui comments">
+                    <div class="comment">
+                        <a class="avatar"><img src="https://semantic-ui.com/images/avatar/small/elliot.jpg"></a>
+                        <div class="content">
+                            <a class="author">{{ profile[0].name }}</a>
+                            <div class="metadata">
+                                <div class="date">{{ profile[0].department }} {{ profile[0].level }} {{ profile[0].class }}</div>
+                                <div class="rating">
+                                <i class="star icon"></i>
+                                {{ selectCoursePhase.length }} / 22
+                                </div>
+                            </div>
+                            <div class="text">
+                                Hey guys, I hope this example comment is helping you read this documentation.
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="ui fluid icon input">
                     <input type="text" ng-model="keywords" ng-init="keywords='作業系統'" placeholder="課程 / 老師" press-Enter="search()">

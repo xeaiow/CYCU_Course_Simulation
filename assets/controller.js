@@ -3,7 +3,12 @@ app.controller('ListController', function($scope, $http) {
 
     // 搜尋課程
     $scope.course = [];
-    $scope.courseTimes = [];
+    $scope.profile = [{
+        "name": "吳冠興",
+        "department": "資訊管理學系",
+        "level": "四年級",
+        "class": "乙班"
+    }];
     $scope.search = function() {
         $http({
                 url: 'find.php',
@@ -52,6 +57,7 @@ app.controller('ListController', function($scope, $http) {
                     type: "error",
                     confirmButtonText: "知道了"
                 });
+                $scope.keepGoing = false;
             }
         });
 
@@ -79,6 +85,16 @@ app.controller('ListController', function($scope, $http) {
                     }
                 }
             }
+
+        } else {
+
+            swal({
+                title: "錯誤",
+                text: "暑修加選功能未開放！",
+                type: "error",
+                confirmButtonText: "知道了"
+            });
+            $scope.keepGoing = false;
         }
         // console.log("此次選擇的課程" + $scope.tempSelectCourse);
 
@@ -94,6 +110,7 @@ app.controller('ListController', function($scope, $http) {
                     confirmButtonText: "知道了"
                 });
                 $scope.keepGoing = false;
+
             }
         }
 
