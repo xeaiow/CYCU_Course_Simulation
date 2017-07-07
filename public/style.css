@@ -1,0 +1,28 @@
+.course_block {
+    height: 50px;
+    min-width: 100px;
+    max-width: 100px;
+}
+
+.course_block_schedule {
+    height: 50px;
+    min-width: 50px;
+    max-width: 50px;
+}
+
+.lists-max-height {
+    max-height: 700px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #CCC;
+}
