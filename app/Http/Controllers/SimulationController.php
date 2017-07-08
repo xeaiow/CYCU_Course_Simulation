@@ -20,7 +20,7 @@ class SimulationController extends Controller
         $keywords = $request->keywords;
 
         $result = Course::
-        where('course_name', 'like', '%'. $keywords. '%')
+        where('course_name', 'regex', "/.*$keywords.*/i")
         ->orWhere('course_id', $keywords)
         ->orWhere('teacher', $keywords)
         ->get();
