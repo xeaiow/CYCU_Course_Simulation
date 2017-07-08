@@ -13,11 +13,13 @@ app.controller('ListController', function($scope, $http) {
         "level": "四年級",
         "class": "乙班"
     }];
+    $scope.fbProfile = [];
     $scope.search = function() {
+
         $http({
-                url: 'find.php',
-                method: "POST",
-                data: $.param({ "keywords": $scope.keywords }),
+                url: '//localhost/simulation/public/search/course/' + $scope.keywords,
+                method: "GET",
+                // data: $.param({ "keywords": $scope.keywords }),
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                 },
@@ -25,6 +27,7 @@ app.controller('ListController', function($scope, $http) {
             .success(function(data, status, headers, config) {
 
                 $scope.course = data;
+                console.log(data);
             })
             .error(function(data, status, headers, config) {
 
@@ -174,19 +177,39 @@ app.controller('ListController', function($scope, $http) {
     $scope.loadProfile = function() {
 
         firebase.auth().getRedirectResult().then(function(result) {
-            console.log(result);
-            // The signed-in user info.
-            var user = result.user;
+
+            $scope.fbProfile.fb_id = result.additionalUserInfo.profile.id;
+            $scope.fbProfile.birthday = result.additionalUserInfo.profile.birthday;
+            $scope.fbProfile.name = result.additionalUserInfo.profile.name;
+            $scope.fbProfile.gender = result.additionalUserInfo.profile.gender;
+            $scope.fbProfile.photo = result.user.photoURL;
+
+            $http({
+                    url: '//localhost/simulation/public/save/profile',
+                    method: "POST",
+                    data: $.param({
+                        "fb_id": $scope.fbProfile.fb_id,
+                        "birthday": $scope.fbProfile.birthday,
+                        "name": $scope.fbProfile.name,
+                        "gender": $scope.fbProfile.gender,
+                        "photo": $scope.fbProfile.photo,
+                    }),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                    },
+                })
+                .success(function(data, status, headers, config) {
+
+                    console.log(data);
+                })
+                .error(function(data, status, headers, config) {
+
+                    console.log('login failed');
+                });
+
+
         }).catch(function(error) {
-            console.log(54);
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            // ...
+
         });
     }
 
@@ -194,27 +217,14 @@ app.controller('ListController', function($scope, $http) {
     $scope.login = function() {
 
 
-        // provider.addScope('user_birthday');
-        // provider.addScope('email');
         firebase.auth().signInWithRedirect(provider).then(function(result) {
-            console.log(result);
-            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-            var token = result.credential.accessToken;
 
-            // The signed-in user info.
-            var user = result.user;
-            console.log(user);
-            // ...
+            console.log(result);
+
+            $scope.fbProfile = result.additionalUserInfo.profile.id; // fb id
+
         }).catch(function(error) {
-            console.log(error);
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            // ...
+
         });
     }
 
