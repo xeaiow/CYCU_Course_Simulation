@@ -61,7 +61,7 @@
             
             <!-- 加選結果列 -->
             <div class="lists-max-height">
-                <div class="ui card fluid" ng-repeat="item in selectCourse">
+                <div class="ui card fluid" ng-repeat="item in selectCourse" ng-if="item.id!==undefined">
                     <div class="content">
                         <i class="right floated star icon"></i>
                         <div class="header">
@@ -89,7 +89,7 @@
                             <% item.point %> 學分
                         </span>
                     </div>
-                    <div class="ui bottom attached button" ng-click="minusCourse(item.course_id , item.course_name, item.teacher, item.time_1, item.time_2, item.time_3, item.com_or_opt, item.point)">
+                    <div class="ui bottom attached button" ng-click="minusCourse(item.id)">
                         <i class="minus icon red"></i>退選
                     </div>
                 </div>

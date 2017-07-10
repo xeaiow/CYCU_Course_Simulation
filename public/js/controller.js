@@ -243,33 +243,84 @@ app.controller('ListController', function($scope, $http) {
         }
     }
 
-    $scope.ddd = "";
+
     // 匯入課程    
     $scope.import = function() {
 
-        // $http({
-        //         url: '//itouch.cycu.edu.tw/myfile/student/json/pf_historyOfClass.jsp',
-        //         method: "GET",
-        //         headers: {
-        //             'Content-Type': 'application/x-www-form-urlencoded',
-        //             'Authorization': 'Bearer ' + $scope.authorization
-        //         }
-        //     })
-        //     .success(function(data, status, headers, config) {
+        $http({
+                url: $scope.baseUrl + 'added_course',
+                method: "GET",
+            })
+            .success(function(data, status, headers, config) {
 
-        //         console.log(data);
-        //     })
-        //     .error(function(data, status, headers, config) {
-        //         console.log('failed');
-        //     });
-        // //itouch.cycu.edu.tw/myfile/student/json/pf_historyOfClass.jsp
-        // $http.jsonp("//localhost/simulation/public/added_course?callback=JSON_CALLBACK").success(function(data) {
+                angular.forEach(data, function(val, key) {
 
-        //     $scope.ddd = angular.fromJson(data);
-        //     console.log(JSON.stringify($scope.dd));
-        // });
+                    $scope.selectCourse.push({
+                        'id': val.id,
+                        'name': val.name,
+                        "teacher": val.teacher,
+                        'time_1': val.time_1,
+                        'time_2': val.time_2,
+                        'time_3': val.time_3,
+                        "com_or_opt": val.com_or_opt,
+                        "point": val.point,
+                        "phase": val.phase
+                    });
+
+                    $scope.pushCourseToList(val.phase, val.name, val.teacher);
+
+                    // 把加選過的課程時間加到 selectCoursePhase 陣列   
+                    angular.forEach(val.phase, function(val, key) {
+
+                        $scope.selectCoursePhase.push(parseInt(val));
+                    });
+
+                });
+                console.log($scope.selectCoursePhase);
 
 
+                console.log(data);
+
+            })
+            .error(function(data, status, headers, config) {
+                console.log('failed');
+            });
+    }
+
+    // 退選
+    $scope.minusCourse = function(id) {
+
+
+        $http({
+                url: $scope.baseUrl + 'minus_course/' + id,
+                method: "GET",
+            })
+            .success(function(data, status, headers, config) {
+
+                $scope.pushCourseToList(data, undefined, undefined);
+                angular.forEach($scope.selectCourse, function(val, key) {
+
+                    // 從 selectCourse 陣列尋找退選編號            
+                    if (val.id == id) {
+
+                        // 刪除該陣列值
+                        $scope.selectCourse.splice($scope.selectCourse.indexOf(val), 1);
+
+                    }
+                });
+
+                // 刪除課程所占用的格子                
+                angular.forEach(data, function(val, key) {
+
+                    $scope.selectCoursePhase.splice($scope.selectCoursePhase.indexOf(val), 1);
+                });
+
+
+                console.log($scope.selectCoursePhase);
+            })
+            .error(function(data, status, headers, config) {
+                console.log('failed');
+            });
     }
 
 

@@ -163,7 +163,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Jenssegers\Mongodb\MongodbServiceProvider::class,
-
+        Weidner\Goutte\GoutteServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -227,6 +227,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Moloquent'       => Jenssegers\Mongodb\Eloquent\Model::class,
+        'Goutte' => Weidner\Goutte\GoutteFacade::class,
 
     ],
 

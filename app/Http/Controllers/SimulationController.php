@@ -104,13 +104,25 @@ class SimulationController extends Controller
 
 
     // 匯入已修過的課程
-    public function importCourse () {
+    public function importCourse ()
+    {
 
         $data = array(
             'username' => Session::get('username'),
             'photo' => Session::get('photo')
         );
         return view('simulation.import')->with('profile', $data);
+    }
+
+    // 退選 
+    public function minusCourse (Request $request)
+    {
+
+        $result = addCourse::Where('fb_id', Session::get('id'))->Where('id', $request->course_id)->first();
+        
+        echo json_encode($result->phase); // 回傳該課程占用的課表
+
+        $result->delete();
     }
 
 
