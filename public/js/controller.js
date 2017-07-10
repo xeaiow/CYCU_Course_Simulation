@@ -3,16 +3,27 @@ app.config(function($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
 });
+
+app.config(function($sceDelegateProvider) {
+    $sceDelegateProvider.resourceUrlWhitelist([
+        // Allow same origin resource loads.
+        'self',
+        // Allow loading from our assets domain.
+        'https://itouch.cycu.edu.tw/myfile/student/json/pf_historyOfClass.jsp'
+    ]);
+});
+
 app.controller('ListController', function($scope, $http) {
 
     // 搜尋課程
     $scope.course = [];
     $scope.loging = false;
     $scope.fbProfile = [];
+    $scope.baseUrl = "//localhost/simulation/public/";
     $scope.search = function() {
 
         $http({
-                url: '//localhost/simulation/public/search_course/' + $scope.keywords,
+                url: $scope.baseUrl + 'search_course/' + $scope.keywords,
                 method: "GET",
                 // data: $.param({ "keywords": $scope.keywords }),
                 headers: {
@@ -144,7 +155,7 @@ app.controller('ListController', function($scope, $http) {
 
             // 存入 mondodb
             $http({
-                    url: '//localhost/simulation/public/course/save',
+                    url: $scope.baseUrl + 'course/save',
                     method: "POST",
                     data: $.param({
 
@@ -182,7 +193,7 @@ app.controller('ListController', function($scope, $http) {
     $scope.loadAddedCourse = function() {
 
         $http({
-                url: '//localhost/simulation/public/added_course',
+                url: $scope.baseUrl + 'added_course',
                 method: "GET",
             })
             .success(function(data, status, headers, config) {
@@ -232,6 +243,36 @@ app.controller('ListController', function($scope, $http) {
         }
     }
 
+    $scope.ddd = "";
+    // 匯入課程    
+    $scope.import = function() {
+
+        // $http({
+        //         url: '//itouch.cycu.edu.tw/myfile/student/json/pf_historyOfClass.jsp',
+        //         method: "GET",
+        //         headers: {
+        //             'Content-Type': 'application/x-www-form-urlencoded',
+        //             'Authorization': 'Bearer ' + $scope.authorization
+        //         }
+        //     })
+        //     .success(function(data, status, headers, config) {
+
+        //         console.log(data);
+        //     })
+        //     .error(function(data, status, headers, config) {
+        //         console.log('failed');
+        //     });
+        // //itouch.cycu.edu.tw/myfile/student/json/pf_historyOfClass.jsp
+        // $http.jsonp("//localhost/simulation/public/added_course?callback=JSON_CALLBACK").success(function(data) {
+
+        //     $scope.ddd = angular.fromJson(data);
+        //     console.log(JSON.stringify($scope.dd));
+        // });
+
+
+    }
+
+
 
     // 對應表
     $scope.course_date = [];
@@ -263,7 +304,7 @@ app.controller('ListController', function($scope, $http) {
             $scope.fbProfile.photo = result.user.photoURL;
 
             $http({
-                    url: '//localhost/simulation/public/profile/save',
+                    url: $scope.baseUrl + 'profile/save',
                     method: "POST",
                     data: $.param({
                         "fb_id": $scope.fbProfile.fb_id,
@@ -278,7 +319,7 @@ app.controller('ListController', function($scope, $http) {
                 })
                 .success(function(data, status, headers, config) {
 
-                    window.location.href = '//localhost/simulation/public/';
+                    window.location.href = $scope.baseUrl + '';
                 })
                 .error(function(data, status, headers, config) {
 
@@ -293,7 +334,7 @@ app.controller('ListController', function($scope, $http) {
 
     $scope.logout = function() {
 
-        window.location.href = '//localhost/simulation/public/logout';
+        window.location.href = $scope.baseUrl + 'logout';
     }
 
     // toastr dialog setting    

@@ -103,6 +103,17 @@ class SimulationController extends Controller
     }
 
 
+    // 匯入已修過的課程
+    public function importCourse () {
+
+        $data = array(
+            'username' => Session::get('username'),
+            'photo' => Session::get('photo')
+        );
+        return view('simulation.import')->with('profile', $data);
+    }
+
+
     // 登出
     public function logout ()
     {

@@ -14,3 +14,5 @@ Route::get('/logout', 'SimulationController@logout');
 Route::post('/course/save', 'SimulationController@saveCourse');
 
 Route::get('/added_course', 'SimulationController@addedCourse');
+
+Route::get('/import', 'SimulationController@importCourse');

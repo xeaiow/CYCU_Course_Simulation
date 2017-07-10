@@ -21,7 +21,7 @@
 
 <body ng-app="myApp" ng-controller="ListController" ng-init="loadAddedCourse()">
 
-    <div class="ui stackable menu">
+    <div class="ui stackable inverted menu">
 
         @if ($profile['username'] != null)
 
@@ -31,7 +31,7 @@
             <a class="item">{{ $profile['username'] }}</a>
             <a class="item"><i class="star icon"></i> <% selectCoursePhase.length %> / 22</a>
             <a class="item"><button class="ui fluid facebook button" ng-click="logout()">登出</button></a>
-
+            <a class="item"><button class="ui fluid facebook button" onclick="window.location.href='{{ url('/import') }}'">匯入已修課程</button></a>
         @else
 
             <div class="item">
@@ -47,6 +47,24 @@
         @yield('content')
 
     </div>
+
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBzSbVjSh0HcmjeOlIjCgUHy2hCNwn9QNo",
+            authDomain: "simulation-7b9ca.firebaseapp.com",
+            databaseURL: "https://simulation-7b9ca.firebaseio.com",
+            projectId: "simulation-7b9ca",
+            storageBucket: "simulation-7b9ca.appspot.com",
+            messagingSenderId: "754253323975"
+        };
+        firebase.initializeApp(config);
+
+        $('.activating.element').popup();
+        $('.menu .item').tab();
+        $('.ui.accordion').accordion();
+    </script>
 
 </body>
 

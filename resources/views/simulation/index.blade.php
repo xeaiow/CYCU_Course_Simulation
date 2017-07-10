@@ -1,10 +1,8 @@
-@extends('layout.main') @section('content')
+@extends('layout.main')
+
+@section('content')
 
 <!-- Grid -->
-{{--
-<div class="ui active dimmer" ng-show="loging">
-    <div class="ui indeterminate text loader">Loading...</div>
-</div> --}}
 <div class="ui grid">
     <div class="seven wide column">
         <div class="ui pointing secondary menu">
@@ -433,22 +431,5 @@
     </div>
 </div>
 <!-- GridEnd -->
-
-<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
-<script>
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyBzSbVjSh0HcmjeOlIjCgUHy2hCNwn9QNo",
-        authDomain: "simulation-7b9ca.firebaseapp.com",
-        databaseURL: "https://simulation-7b9ca.firebaseio.com",
-        projectId: "simulation-7b9ca",
-        storageBucket: "simulation-7b9ca.appspot.com",
-        messagingSenderId: "754253323975"
-    };
-    firebase.initializeApp(config);
-
-    $('.activating.element').popup();
-    $('.menu .item').tab();
-</script>
 
 @endsection
