@@ -54,6 +54,7 @@ app.controller('ListController', function($scope, $http) {
     $scope.selectCoursePhase = []; // 選擇的課程的絕對位置
     $scope.loadAddedCourse = []; // 從資料庫載入已加選課程資訊
     $scope.history_course = []; // 曾修過的課程
+    $scope.selectPoints = 0; // 目前學分數
 
 
     $scope.addCourse = function(id, name, teacher, time_1, time_2, time_3, com_or_opt, point, course_class) {
@@ -77,6 +78,19 @@ app.controller('ListController', function($scope, $http) {
         });
 
 
+        // 判斷是否超過一學期可修習學分數
+        if ($scope.selectPoints + parseInt(point) > 22) {
+
+            swal({
+                title: "錯誤",
+                text: "學分超過上限！",
+                type: "error",
+                confirmButtonText: "知道了"
+            });
+            $scope.keepGoing = false;
+        }
+
+
         // 計算此課程有多少個上課時段
         if (time_1 != undefined) {
 
@@ -84,7 +98,6 @@ app.controller('ListController', function($scope, $http) {
 
                 $scope.tempSelectCourse.push(((7 * time_1.slice(2, -1).slice(i, i + 1).replace(/C/, 9).replace(/D/, 10).replace(/E/, 11).replace(/F/, 12).replace(/G/, 13)) - (7 - time_1.slice(0, 1))) - 1);
             }
-            console.log("temp" + $scope.tempSelectCourse);
 
             if (time_2 != undefined) {
 
@@ -93,14 +106,12 @@ app.controller('ListController', function($scope, $http) {
                     $scope.tempSelectCourse.push(((7 * time_2.slice(2, -1).slice(i, i + 1).replace(/C/, 9).replace(/D/, 10).replace(/E/, 11).replace(/F/, 12).replace(/G/, 13)) - (7 - time_2.slice(0, 1))) - 1);
                 }
 
-                console.log("temp" + $scope.tempSelectCourse);
                 if (time_3 != undefined) {
 
                     for (var i = 0; i < time_3.slice(2, -1).length; i++) {
 
                         $scope.tempSelectCourse.push(((7 * time_3.slice(2, -1).slice(i, i + 1).replace(/C/, 9).replace(/D/, 10).replace(/E/, 11).replace(/F/, 12).replace(/G/, 13)) - (7 - time_3.slice(0, 1))) - 1);
                     }
-                    console.log("temp" + $scope.tempSelectCourse);
                 }
             }
 
@@ -128,7 +139,6 @@ app.controller('ListController', function($scope, $http) {
                     confirmButtonText: "知道了"
                 });
                 $scope.keepGoing = false;
-
             }
         }
 
@@ -139,7 +149,8 @@ app.controller('ListController', function($scope, $http) {
 
                 $scope.selectCoursePhase.push(val);
             });
-            console.log($scope.selectCoursePhase);
+
+            // console.log($scope.selectCoursePhase);
 
             $scope.pushCourseToList($scope.tempSelectCourse, name, teacher);
 
@@ -156,6 +167,8 @@ app.controller('ListController', function($scope, $http) {
                 "point": point,
                 "phase": $scope.tempSelectCourse,
             });
+
+            $scope.selectPoints += parseInt(point);
 
             // 存入 mondodb
             $http({
@@ -208,6 +221,7 @@ app.controller('ListController', function($scope, $http) {
                         'id': val.id,
                         'name': val.name,
                         "teacher": val.teacher,
+                        "class": val.class,
                         'time_1': val.time_1,
                         'time_2': val.time_2,
                         'time_3': val.time_3,
@@ -217,6 +231,7 @@ app.controller('ListController', function($scope, $http) {
                     });
 
                     $scope.pushCourseToList(val.phase, val.name, val.teacher);
+                    $scope.selectPoints += parseInt(val.point); // 取得該課程學分數
 
                     // 把加選過的課程時間加到 selectCoursePhase 陣列   
                     angular.forEach(val.phase, function(val, key) {
@@ -280,7 +295,7 @@ app.controller('ListController', function($scope, $http) {
                 method: "GET",
             })
             .success(function(data, status, headers, config) {
-                console.log(data);
+
                 $scope.pushCourseToList(data, undefined, undefined);
                 angular.forEach($scope.selectCourse, function(val, key) {
 
@@ -289,6 +304,7 @@ app.controller('ListController', function($scope, $http) {
 
                         // 刪除該陣列值
                         $scope.selectCourse.splice($scope.selectCourse.indexOf(val), 1);
+                        $scope.selectPoints -= parseInt(val.point); // 將退選課程占用之學分數去除
                     }
                 });
 

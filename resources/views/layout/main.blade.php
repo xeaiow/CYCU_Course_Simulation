@@ -23,17 +23,29 @@
 
     <div class="ui stackable inverted menu">
 
-        @if ($profile['username'] != null)
+        @if ( $profile['username'] != null )
 
+            <a href="{{ url('/') }}" class="item">模擬中原</a>
             <div class="item">
                 <img src="{{ $profile['photo'] }}">
             </div>
             <a class="item">{{ $profile['username'] }}</a>
-            <a class="item"><i class="star icon"></i> <% selectCoursePhase.length %> / 22</a>
-            <a class="item"><button class="ui fluid facebook button" ng-click="logout()">登出</button></a>
-            <a class="item"><button class="ui fluid facebook button" onclick="window.location.href='{{ url('/import') }}'">匯入已修課程</button></a>
-        @else
+            <a class="item"><i class="star icon"></i> <% selectPoints %> / 22</a>
+            
+            @if ( $profile['isImport'] == 1 )
 
+                <a class="item"><button class="ui fluid facebook button" onclick="window.location.href='{{ url('/history') }}'">已修習課程</button></a> 
+            @elseif ( $profile['isImport'] == 0 )
+
+                <a class="item"><button class="ui fluid facebook button" onclick="window.location.href='{{ url('/import') }}'">匯入已修課程</button></a>
+            @endif
+
+            <div class="right menu">
+                <a class="item"><button class="ui fluid grey button" ng-click="logout()">登出</button></a>
+            </div>
+
+        @else
+    
             <div class="item">
                 <button class="ui fluid facebook button" ng-click="loadProfile()"><i class="facebook icon"></i>快速登入</button>
             </div>

@@ -23,6 +23,8 @@ Route::post('/import_course', 'SimulationController@importCourse');
 
 Route::get('/test', 'SimulationController@test');
 
+Route::get('/history', 'SimulationController@history');
+
 
 // Route::get('/welcome', function() {
 

@@ -19,7 +19,8 @@ class SimulationController extends Controller
     {
         $data = array(
             'username' => Session::get('username'),
-            'photo' => Session::get('photo')
+            'photo' => Session::get('photo'),
+            'isImport' => Session::get('isImport')
         );
 
         return view('simulation.index')->with('profile', $data);
@@ -48,12 +49,10 @@ class SimulationController extends Controller
         // 如果沒註冊才新增
         if ($joined->count() > 0) {
 
-           
             $result = $joined->get();
 
-            Session::put('username', $result[0]['name']);
-            Session::put('id', $result[0]['fb_id']);
-            Session::put('photo', $result[0]['photo']);
+            // 如果沒匯入過就設為 0 否則 1
+            ( $result['isImport'] == 0 ? Session::put('isImport', 0) : Session::put('isImport', 1) );     
         }
         else {
             
@@ -64,6 +63,7 @@ class SimulationController extends Controller
                 'name'      => $request->name,
                 'gender'    => $request->gender,
                 'photo'     => $request->photo,
+                'isImport'  => 0
             ];
 
             Users::create($new);
@@ -82,10 +82,15 @@ class SimulationController extends Controller
             ];
             addCourse::create($simulation);
 
-            Session::put('username', $request->name);
-            Session::put('id', $request->fb_id);
-            Session::put('photo', $request->photo);
+            // 是否匯入過課程設為 0
+            Session::put('isImport', 0);
+
         }
+    
+        Session::put('username', $request->name);
+        Session::put('id', $request->fb_id);
+        Session::put('photo', $request->photo);
+
         return redirect('/');
     }
 
@@ -99,6 +104,7 @@ class SimulationController extends Controller
             'id'        => $request->id,
             'name'      => $request->name,
             'teacher'   => $request->teacher,
+            'class'     => $request->class,
             'time_1'    => $request->time_1,
             'time_2'    => $request->time_2,
             'time_3'    => $request->time_3,
@@ -126,7 +132,8 @@ class SimulationController extends Controller
 
         $data = array(
             'username' => Session::get('username'),
-            'photo' => Session::get('photo')
+            'photo' => Session::get('photo'),
+            'isImport' => Session::get('isImport')
         );
         return view('simulation.import')->with('profile', $data);
     }
@@ -138,6 +145,12 @@ class SimulationController extends Controller
 
         $historyCourse = historyCourse::Where('fb_id', Session::get('id'));
         $historyCourse->update(['history_course' => $request->history_course]);
+
+        // 設定該使用者為已匯入過
+        Users::Where('fb_id', Session::get('id'))->update(['isImport' => 1]);
+
+        // 建立 Session 且設定為已匯入 
+        Session::put('isImport', 1);
     }
 
 
@@ -158,6 +171,20 @@ class SimulationController extends Controller
         }
         // 刪除該使用者在 add_course 中指定的課程
         addCourse::Where('fb_id', Session::get('id'))->pull('add_course', array('id'=> $request->course_id));
+    }
+
+
+    // 已修習之課程清單
+    public function history ()
+    {
+
+        $data = array(
+            'username' => Session::get('username'),
+            'photo' => Session::get('photo'),
+            'isImport' => Session::get('isImport')
+        );
+
+        return view('simulation.history')->with('profile', $data);
     }
     
     public function test ()

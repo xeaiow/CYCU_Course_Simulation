@@ -1,3 +1,18 @@
+@import url(//fonts.googleapis.com/earlyaccess/cwtexhei.css);
+table,
+.secondary,
+.content,
+.button,
+.header,
+.item {
+    font-family: 'cwTeXHei', sans-serif !important;
+}
+
+p,
+span {
+    font-weight: 900;
+}
+
 .course_block {
     height: 50px;
     min-width: 100px;

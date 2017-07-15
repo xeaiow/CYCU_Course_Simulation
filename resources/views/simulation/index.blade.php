@@ -7,10 +7,10 @@
     <div class="seven wide column">
         <div class="ui pointing secondary menu">
             <a class="item active" data-tab="first">搜尋課程</a>
-            <a class="item" data-tab="second">加選課程</a>
+            <a class="item" data-tab="second">已選課程</a>
         </div>
         <!-- 搜尋課程 -->
-        <div class="ui bottom attached tab segment active" data-tab="first">
+        <div class="ui bottom basic tab segment active" data-tab="first">
             
             <!-- 搜尋列 -->
             <div class="ui fluid icon input">
@@ -48,7 +48,7 @@
                             <% item.point %> 學分
                         </span>
                     </div>
-                    <div class="ui bottom attached button" ng-click="addCourse(item.course_id , item.course_name, item.teacher, item.time_1, item.time_2, item.time_3, item.com_or_opt, item.point, item.course_class)">
+                    <div class="ui bottom attached button" ng-click="addCourse(item.course_id , item.course_name, item.teacher, item.time_1, item.time_2, item.time_3, item.com_or_opt, item.point, item.class)">
                         <i class="add icon green"></i>加選
                     </div>
                 </div>
@@ -57,7 +57,7 @@
         </div>
 
         <!-- 加選課程 -->
-        <div class="ui bottom attached tab segment" data-tab="second">
+        <div class="ui bottom basic tab segment" data-tab="second">
             
             <!-- 加選結果列 -->
             <div class="lists-max-height">
