@@ -1,30 +1,31 @@
 @extends('layout.main') @section('content')
 
 <div class="ui one column stackable center aligned page grid">
-    <div class="column twelve wide">
 
-        <div class="ui large steps fluid">
-            <div class="step">
-                <div class="content">
-                    <div class="title">1. 取得帳號權限以便後續操作</div>
-                </div>
+    <div class="column sixteen wide">
+
+        <button class="ui button facebook fluid" onclick="window.open('https://itouch.cycu.edu.tw/myfile/student/#!/login?returnRoute=%2FpersonalInformation', '_blank')">登入 iTouch My File</button>
+
+        <div class="ui warning message">
+            <i class="close icon"></i>
+            <div class="header">
+                請將以下代碼複製到下方
+            </div>
+            登入 iTouch 後，務必請重新整理，方可取得已修習之課程代碼
+        </div>
+
+        <div class="ui segment basic">
+            <iframe width="100%" ng-src="//itouch.cycu.edu.tw/myfile/student/json/pf_historyOfClass.jsp" frameborder="0"></iframe>
+        </div>
+
+        <div class="ui form">
+            <div class="field">
+                <textarea ng-model="history_course"></textarea>
             </div>
         </div>
 
-        <button class="ui button facebook" onclick="window.open('https://itouch.cycu.edu.tw/myfile/student/#!/login?returnRoute=%2FpersonalInformation', '_blank')">登入 iTouch</button>
-        <button ng-click="import()"></button>
-        <div class="ui large steps fluid">
-            <div class="link step">
-                <div class="content">
-                    <div class="title">2. 確認匯入</div>
-                </div>
-            </div>
-        </div>
+        <button class="ui button google plus fluid" ng-click="import()">儲存</button>
 
-        <button class="ui button facebook" ng-click="import()">匯入資料</button>
-
-        <iframe id="ss" src="//localhost/simulation/public/added_course" frameborder="0"></iframe>
-        
         <!--<div class="ui styled fluid accordion">
             <div class="title">
                 <i class="dropdown icon"></i> 給你修課資訊，安全嗎？
@@ -35,7 +36,6 @@
                 </p>
             </div>
         </div>-->
-
 
     </div>
 </div>

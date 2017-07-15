@@ -17,7 +17,12 @@ Route::get('/added_course', 'SimulationController@addedCourse');
 
 Route::get('/minus_course/{course_id}', 'SimulationController@minusCourse');
 
-Route::get('/import', 'SimulationController@importCourse');
+Route::get('/import', 'SimulationController@import');
+
+Route::post('/import_course', 'SimulationController@importCourse');
+
+Route::get('/test', 'SimulationController@test');
+
 
 // Route::get('/welcome', function() {
 

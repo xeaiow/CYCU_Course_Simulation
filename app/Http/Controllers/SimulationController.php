@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Course;
 use App\Users;
 use App\addCourse;
+use App\historyCourse;
 
 use Auth;
 use Redirect;
@@ -56,6 +57,7 @@ class SimulationController extends Controller
         }
         else {
             
+            // 將使用者資料儲存到 users
             $new = [    
                 'fb_id'     => $request->fb_id,
                 "birthday"  => $request->birthday,
@@ -65,6 +67,20 @@ class SimulationController extends Controller
             ];
 
             Users::create($new);
+
+            // 建立匯入已修過課程資料
+            $history = [
+                'fb_id' => $request->fb_id,
+                'history_course' => []
+            ];
+            historyCourse::create($history);
+
+            // 建立模擬選課清單預設值
+            $simulation = [
+                'fb_id' => $request->fb_id,
+                'add_course' => []
+            ];
+            addCourse::create($simulation);
 
             Session::put('username', $request->name);
             Session::put('id', $result[0]['fb_id']);
@@ -77,6 +93,7 @@ class SimulationController extends Controller
     public function saveCourse (Request $request)
     {
 
+        $addCourse = addCourse::Where('fb_id', Session::get('id'));
         $course = [
             'fb_id'     => Session::get('id'),
             'id'        => $request->id,
@@ -90,7 +107,7 @@ class SimulationController extends Controller
             "phase"     => $request->phase
         ];
 
-        addCourse::create($course);
+        $addCourse->push(['add_course' => $course]);
     }
 
 
@@ -98,13 +115,13 @@ class SimulationController extends Controller
     public function addedCourse ()
     {
 
-        $result = addCourse::Where('fb_id', Session::get('id'))->get();
+        $result = addCourse::Where('fb_id', Session::get('id'))->get(['add_course'])->first();
         echo $result;
     }
 
 
     // 匯入已修過的課程
-    public function importCourse ()
+    public function import ()
     {
 
         $data = array(
@@ -114,15 +131,39 @@ class SimulationController extends Controller
         return view('simulation.import')->with('profile', $data);
     }
 
+
+    // 儲存匯入的已修習課程
+    public function importCourse (Request $request)
+    {
+
+        $historyCourse = historyCourse::Where('fb_id', Session::get('id'));
+        $historyCourse->update(['history_course' => $request->history_course]);
+    }
+
+
     // 退選 
     public function minusCourse (Request $request)
     {
-
-        $result = addCourse::Where('fb_id', Session::get('id'))->Where('id', $request->course_id)->first();
         
-        echo json_encode($result->phase); // 回傳該課程占用的課表
+        // 抓取欲刪除之課程占用的課表位置
+        $result = addCourse::Where('fb_id', Session::get('id'))->Where('add_course.id', '=', $request->course_id)->get(['add_course.phase', 'add_course.id'])->first();
+       
+       // 回傳占用位置
+        foreach ($result['add_course'] as $item) {
 
-        $result->delete();
+            if ($item['id'] == $request->course_id) {
+
+               echo json_encode($item['phase']);
+            }   
+        }
+        // 刪除該使用者在 add_course 中指定的課程
+        addCourse::Where('fb_id', Session::get('id'))->pull('add_course', array('id'=> $request->course_id));
+    }
+    
+    public function test ()
+    {//Where('fb_id', Session::get('id'))->
+        $result = addCourse::where('add_course', 'elemMatch', array('id'=>'MA203E'))->get(['add_course.id', 'add_course.phase']);
+        echo $result;
     }
 
 

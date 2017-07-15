@@ -53,6 +53,7 @@ app.controller('ListController', function($scope, $http) {
     $scope.selectCourse = []; // 選擇的課程
     $scope.selectCoursePhase = []; // 選擇的課程的絕對位置
     $scope.loadAddedCourse = []; // 從資料庫載入已加選課程資訊
+    $scope.history_course = []; // 曾修過的課程
 
 
     $scope.addCourse = function(id, name, teacher, time_1, time_2, time_3, com_or_opt, point, course_class) {
@@ -83,6 +84,7 @@ app.controller('ListController', function($scope, $http) {
 
                 $scope.tempSelectCourse.push(((7 * time_1.slice(2, -1).slice(i, i + 1).replace(/C/, 9).replace(/D/, 10).replace(/E/, 11).replace(/F/, 12).replace(/G/, 13)) - (7 - time_1.slice(0, 1))) - 1);
             }
+            console.log("temp" + $scope.tempSelectCourse);
 
             if (time_2 != undefined) {
 
@@ -91,12 +93,14 @@ app.controller('ListController', function($scope, $http) {
                     $scope.tempSelectCourse.push(((7 * time_2.slice(2, -1).slice(i, i + 1).replace(/C/, 9).replace(/D/, 10).replace(/E/, 11).replace(/F/, 12).replace(/G/, 13)) - (7 - time_2.slice(0, 1))) - 1);
                 }
 
+                console.log("temp" + $scope.tempSelectCourse);
                 if (time_3 != undefined) {
 
                     for (var i = 0; i < time_3.slice(2, -1).length; i++) {
 
                         $scope.tempSelectCourse.push(((7 * time_3.slice(2, -1).slice(i, i + 1).replace(/C/, 9).replace(/D/, 10).replace(/E/, 11).replace(/F/, 12).replace(/G/, 13)) - (7 - time_3.slice(0, 1))) - 1);
                     }
+                    console.log("temp" + $scope.tempSelectCourse);
                 }
             }
 
@@ -197,8 +201,8 @@ app.controller('ListController', function($scope, $http) {
                 method: "GET",
             })
             .success(function(data, status, headers, config) {
-
-                angular.forEach(data, function(val, key) {
+                console.log(data.add_course);
+                angular.forEach(data.add_course, function(val, key) {
 
                     $scope.selectCourse.push({
                         'id': val.id,
@@ -238,8 +242,8 @@ app.controller('ListController', function($scope, $http) {
 
         for (var i = 0; i < id.length; i++) {
 
-            $scope.course_date[id[i]].id = name;
-            $scope.course_date[id[i]].teacher = teacher;
+            $scope.course_date[parseInt(id[i])].id = name;
+            $scope.course_date[parseInt(id[i])].teacher = teacher;
         }
     }
 
@@ -248,39 +252,18 @@ app.controller('ListController', function($scope, $http) {
     $scope.import = function() {
 
         $http({
-                url: $scope.baseUrl + 'added_course',
-                method: "GET",
+                url: $scope.baseUrl + 'import_course',
+                method: "POST",
+                data: $.param({
+
+                    "history_course": JSON.parse($scope.history_course),
+                }),
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+                },
             })
             .success(function(data, status, headers, config) {
-
-                angular.forEach(data, function(val, key) {
-
-                    $scope.selectCourse.push({
-                        'id': val.id,
-                        'name': val.name,
-                        "teacher": val.teacher,
-                        'time_1': val.time_1,
-                        'time_2': val.time_2,
-                        'time_3': val.time_3,
-                        "com_or_opt": val.com_or_opt,
-                        "point": val.point,
-                        "phase": val.phase
-                    });
-
-                    $scope.pushCourseToList(val.phase, val.name, val.teacher);
-
-                    // 把加選過的課程時間加到 selectCoursePhase 陣列   
-                    angular.forEach(val.phase, function(val, key) {
-
-                        $scope.selectCoursePhase.push(parseInt(val));
-                    });
-
-                });
-                console.log($scope.selectCoursePhase);
-
-
                 console.log(data);
-
             })
             .error(function(data, status, headers, config) {
                 console.log('failed');
@@ -296,7 +279,7 @@ app.controller('ListController', function($scope, $http) {
                 method: "GET",
             })
             .success(function(data, status, headers, config) {
-
+                console.log(data);
                 $scope.pushCourseToList(data, undefined, undefined);
                 angular.forEach($scope.selectCourse, function(val, key) {
 
@@ -305,18 +288,16 @@ app.controller('ListController', function($scope, $http) {
 
                         // 刪除該陣列值
                         $scope.selectCourse.splice($scope.selectCourse.indexOf(val), 1);
-
                     }
                 });
 
                 // 刪除課程所占用的格子                
                 angular.forEach(data, function(val, key) {
 
-                    $scope.selectCoursePhase.splice($scope.selectCoursePhase.indexOf(val), 1);
+                    $scope.selectCoursePhase.splice($scope.selectCoursePhase.indexOf(parseInt(val)), 1);
                 });
+                toastr["success"](" ", "退選成功")
 
-
-                console.log($scope.selectCoursePhase);
             })
             .error(function(data, status, headers, config) {
                 console.log('failed');
@@ -333,7 +314,7 @@ app.controller('ListController', function($scope, $http) {
         $scope.course_date.push({
             "id": "",
             "time": "",
-            "teacher": "快選好選滿"
+            "teacher": "選好選滿"
         });
     }
 
