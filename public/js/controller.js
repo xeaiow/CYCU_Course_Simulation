@@ -263,7 +263,8 @@ app.controller('ListController', function($scope, $http) {
                 },
             })
             .success(function(data, status, headers, config) {
-                console.log(data);
+                toastr["success"](" ", "匯入成功")
+                window.location.href = $scope.baseUrl;
             })
             .error(function(data, status, headers, config) {
                 console.log('failed');
@@ -319,7 +320,7 @@ app.controller('ListController', function($scope, $http) {
     }
 
 
-
+    // 快速登入
     $scope.loadProfile = function() {
 
         var provider = new firebase.auth.FacebookAuthProvider();

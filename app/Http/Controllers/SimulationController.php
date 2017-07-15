@@ -42,7 +42,7 @@ class SimulationController extends Controller
     // 儲存 fb 登入資訊
     public function saveProfile (Request $request)
     {
-
+        
         $joined = Users::where('fb_id', $request->fb_id);
 
         // 如果沒註冊才新增
@@ -83,7 +83,7 @@ class SimulationController extends Controller
             addCourse::create($simulation);
 
             Session::put('username', $request->name);
-            Session::put('id', $result[0]['fb_id']);
+            Session::put('id', $request->fb_id);
             Session::put('photo', $request->photo);
         }
         return redirect('/');
