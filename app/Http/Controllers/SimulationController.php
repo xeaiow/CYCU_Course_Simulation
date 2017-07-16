@@ -174,25 +174,35 @@ class SimulationController extends Controller
     }
 
 
-    // 已修習之課程清單
+    // 已修習之課程清單 json
     public function history ()
+    {
+        
+        echo historyCourse::Where('fb_id', Session::get('id'))->first(['history_course']);
+    }
+
+
+    // 我的資料
+    public function profile ()
     {
 
         $data = array(
             'username' => Session::get('username'),
             'photo' => Session::get('photo'),
-            'isImport' => Session::get('isImport')
+            'isImport' => Session::get('isImport'),
+            'collections' => Users::Where('fb_id', Session::get('id'))->Where('identify', 'exists', true)->first()
         );
 
-        return view('simulation.history')->with('profile', $data);
-    }
-    
-    public function test ()
-    {//Where('fb_id', Session::get('id'))->
-        $result = addCourse::where('add_course', 'elemMatch', array('id'=>'MA203E'))->get(['add_course.id', 'add_course.phase']);
-        echo $result;
+        return view('simulation.profile')->with('profile', $data);
     }
 
+
+    // 設定系所
+    public function saveDepartment (Request $request)
+    {
+
+        echo Users::Where('fb_id', Session::get('id'))->update(['identify.department_id' => $request->department_id, 'identify.department_name' => $request->department_name]);
+    } 
 
     // 登出
     public function logout ()

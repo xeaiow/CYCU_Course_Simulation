@@ -1,0 +1,82 @@
+[{
+    "department": "應用數學系",
+    "id": 1
+}, {
+    "department": "物理學系",
+    "id": 2
+}, {
+    "department": "化學系",
+    "id": 3
+}, {
+    "department": "心理學系",
+    "id": 4
+}, {
+    "department": "生物科技學系",
+    "id": 5
+}, {
+    "department": "化學工程學系",
+    "id": 6
+}, {
+    "department": "土木工程學系",
+    "id": 7
+}, {
+    "department": "機械工程學系",
+    "id": 8
+}, {
+    "department": "生物醫學工程學系",
+    "id": 9
+}, {
+    "department": "環境工程學系",
+    "id": 10
+}, {
+    "department": "企業管理學系",
+    "id": 11
+}, {
+    "department": "國際經營與貿易學系",
+    "id": 12
+}, {
+    "department": "會計學系",
+    "id": 13
+}, {
+    "department": "資訊管理學系",
+    "id": 14
+}, {
+    "department": "財務金融學系",
+    "id": 15
+}, {
+    "department": "建築學系",
+    "id": 16
+}, {
+    "department": "商業設計學系",
+    "id": 17
+}, {
+    "department": "室內設計學系",
+    "id": 18
+}, {
+    "department": "景觀學系",
+    "id": 19
+}, {
+    "department": "特殊教育學系",
+    "id": 20
+}, {
+    "department": "應用外國語文學系",
+    "id": 21
+}, {
+    "department": "應用華語學系",
+    "id": 22
+}, {
+    "department": "財經法律學系",
+    "id": 23
+}, {
+    "department": "工業與系統工程學系",
+    "id": 24
+}, {
+    "department": "電子工程學系",
+    "id": 25
+}, {
+    "department": "資訊工程學系",
+    "id": 26
+}, {
+    "department": "電機工程學系",
+    "id": 27
+}]

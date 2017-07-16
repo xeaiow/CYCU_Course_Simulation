@@ -15,7 +15,8 @@
         </div>
 
         <div class="ui info message">
-            請將上方代碼完整複製到下方後按儲存。
+            請將上方代碼完整複製到下方後按儲存。<br />
+            ※ 如看見 HTTP Status 401 請先登入 iTouch My File
         </div>
 
         <div class="ui form">

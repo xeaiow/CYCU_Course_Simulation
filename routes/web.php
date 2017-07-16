@@ -9,9 +9,9 @@ Route::get('/search_course/{keywords}', 'SimulationController@searchCourse');
 
 Route::post('/profile/save', 'SimulationController@saveProfile');
 
-Route::get('/logout', 'SimulationController@logout');
-
 Route::post('/course/save', 'SimulationController@saveCourse');
+
+Route::post('/department/save', 'SimulationController@saveDepartment');
 
 Route::get('/added_course', 'SimulationController@addedCourse');
 
@@ -21,9 +21,11 @@ Route::get('/import', 'SimulationController@import');
 
 Route::post('/import_course', 'SimulationController@importCourse');
 
-Route::get('/test', 'SimulationController@test');
-
 Route::get('/history', 'SimulationController@history');
+
+Route::get('/my', 'SimulationController@profile');
+
+Route::get('/logout', 'SimulationController@logout');
 
 
 // Route::get('/welcome', function() {

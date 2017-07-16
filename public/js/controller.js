@@ -54,11 +54,11 @@ app.controller('ListController', function($scope, $http) {
     $scope.selectCoursePhase = []; // 選擇的課程的絕對位置
     $scope.loadAddedCourse = []; // 從資料庫載入已加選課程資訊
     $scope.history_course = []; // 曾修過的課程
+    $scope.history_course_list = []; // 載入已修習之課程
     $scope.selectPoints = 0; // 目前學分數
+    $scope.department_id = ""; // 系所 id
+    $scope.department_name = ""; // 系所中文名稱
 
-    $scope.tt = function() {
-        console.log($scope.selectPoints);
-    }
 
 
     $scope.addCourse = function(id, name, teacher, time_1, time_2, time_3, com_or_opt, point, course_class) {
@@ -244,10 +244,7 @@ app.controller('ListController', function($scope, $http) {
                     });
 
                 });
-                console.log($scope.selectCoursePhase);
-
-
-                console.log(data);
+                // console.log($scope.selectCoursePhase);
 
             })
             .error(function(data, status, headers, config) {
@@ -409,7 +406,63 @@ app.controller('ListController', function($scope, $http) {
         });
     }
 
+    // 設定系所
+    $scope.setDepartment = function() {
 
+        // 取得系所中文名稱
+        $http({ method: 'GET', url: $scope.baseUrl + 'department.json' }).success(function(data, status, headers, config) {
+            angular.forEach(data, function(val, key) {
+
+                if (val.id == $scope.department_id) {
+                    $scope.department_name = val.department;
+                }
+
+            });
+
+            // 執行儲存腳色設定
+            $http({
+                    url: $scope.baseUrl + 'department/save',
+                    method: "POST",
+                    data: $.param({
+                        "department_id": $scope.department_id,
+                        "department_name": $scope.department_name
+                    }),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                    },
+                })
+                .success(function(data, status, headers, config) {
+
+                    if (data == 1) {
+                        toastr["success"](" ", "設定完成")
+                        setTimeout(function() { window.location.href = $scope.baseUrl + 'my'; }, 1000);
+                    }
+                })
+                .error(function(data, status, headers, config) {
+
+                    console.log('failed');
+                });
+        });
+    }
+
+
+    //載入已修習之課程
+    $scope.loadHistory = function() {
+
+        $http({
+                url: $scope.baseUrl + 'history',
+                method: "GET",
+            })
+            .success(function(data, status, headers, config) {
+                console.log(data.history_course);
+                $scope.history_course_list = data.history_course;
+            })
+            .error(function(data, status, headers, config) {
+
+            });
+    }
+
+    // 登出
     $scope.logout = function() {
 
         window.location.href = $scope.baseUrl + 'logout';

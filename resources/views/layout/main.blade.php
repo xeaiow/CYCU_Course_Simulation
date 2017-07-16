@@ -29,13 +29,10 @@
             <div class="item">
                 <img src="{{ $profile['photo'] }}">
             </div>
-            <a class="item">{{ $profile['username'] }}</a>
+            <a class="item" href="{{ url('/my') }}">{{ $profile['username'] }}</a>
             <a class="item"><i class="star icon"></i> <% selectPoints %> / 22</a>
             
-            @if ( $profile['isImport'] == 1 )
-
-                <a class="item"><button class="ui fluid facebook button" onclick="window.location.href='{{ url('/history') }}'">已修習課程</button></a> 
-            @elseif ( $profile['isImport'] == 0 )
+            @if ( $profile['isImport'] == 0 )
 
                 <a class="item"><button class="ui fluid facebook button" onclick="window.location.href='{{ url('/import') }}'">匯入已修課程</button></a>
             @endif
@@ -76,6 +73,7 @@
         $('.activating.element').popup();
         $('.menu .item').tab();
         $('.ui.accordion').accordion();
+        $('.ui.dropdown').dropdown();
     </script>
 
 </body>
