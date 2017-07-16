@@ -6,16 +6,16 @@
 
         <button class="ui button facebook fluid" onclick="window.open('https://itouch.cycu.edu.tw/myfile/student/#!/login?returnRoute=%2FpersonalInformation', '_blank')">登入 iTouch My File</button>
 
-        <div class="ui warning message">
-            <i class="close icon"></i>
-            <div class="header">
-                請將以下代碼複製到下方
-            </div>
-            登入 iTouch 後，務必請重新整理，方可取得已修習之課程代碼
+        <div class="ui info message">
+            登入 iTouch My File 後，重新整理頁面方可取得已修習之課程代碼。
         </div>
 
         <div class="ui segment basic">
             <iframe width="100%" ng-src="//itouch.cycu.edu.tw/myfile/student/json/pf_historyOfClass.jsp" frameborder="0"></iframe>
+        </div>
+
+        <div class="ui info message">
+            請將上方代碼完整複製到下方後按儲存。
         </div>
 
         <div class="ui form">

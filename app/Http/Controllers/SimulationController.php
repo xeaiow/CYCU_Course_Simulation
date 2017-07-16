@@ -49,7 +49,7 @@ class SimulationController extends Controller
         // 如果沒註冊才新增
         if ($joined->count() > 0) {
 
-            $result = $joined->get();
+            $result = $joined->first();
 
             // 如果沒匯入過就設為 0 否則 1
             ( $result['isImport'] == 0 ? Session::put('isImport', 0) : Session::put('isImport', 1) );     

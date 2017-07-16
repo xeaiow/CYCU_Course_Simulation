@@ -56,6 +56,10 @@ app.controller('ListController', function($scope, $http) {
     $scope.history_course = []; // 曾修過的課程
     $scope.selectPoints = 0; // 目前學分數
 
+    $scope.tt = function() {
+        console.log($scope.selectPoints);
+    }
+
 
     $scope.addCourse = function(id, name, teacher, time_1, time_2, time_3, com_or_opt, point, course_class) {
 
@@ -168,7 +172,7 @@ app.controller('ListController', function($scope, $http) {
                 "phase": $scope.tempSelectCourse,
             });
 
-            $scope.selectPoints += parseInt(point);
+            $scope.selectPoints += parseFloat(point);
 
             // 存入 mondodb
             $http({
@@ -266,25 +270,50 @@ app.controller('ListController', function($scope, $http) {
     // 匯入課程    
     $scope.import = function() {
 
-        $http({
-                url: $scope.baseUrl + 'import_course',
-                method: "POST",
-                data: $.param({
+        // 判斷是否為 json 格式
+        function isJSON(str) {
 
-                    "history_course": JSON.parse($scope.history_course),
-                }),
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-                },
-            })
-            .success(function(data, status, headers, config) {
-                toastr["success"](" ", "匯入成功")
-                window.location.href = $scope.baseUrl;
-            })
-            .error(function(data, status, headers, config) {
-                console.log('failed');
-            });
+            if (typeof str == 'string') {
+
+                try {
+
+                    JSON.parse(str);
+
+                    // 儲存到 mongodb
+                    $http({
+                            url: $scope.baseUrl + 'import_course',
+                            method: "POST",
+                            data: $.param({
+
+                                "history_course": JSON.parse($scope.history_course),
+                            }),
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+                            },
+                        })
+                        .success(function(data, status, headers, config) {
+                            toastr["success"](" ", "匯入成功")
+                            setTimeout(function() { window.location.href = $scope.baseUrl; }, 1000);
+
+                        })
+                        .error(function(data, status, headers, config) {
+                            console.log('failed');
+                        });
+
+                    return true;
+
+                } catch (e) {
+
+                    toastr["error"](" ", "請完整將上方代碼複製到下方！")
+                    return false;
+                }
+            }
+            toastr["error"](" ", "請完整將上方代碼複製到下方！")
+        }
+
+        isJSON($scope.history_course);
     }
+
 
     // 退選
     $scope.minusCourse = function(id) {
