@@ -15,16 +15,17 @@ span,
 }
 
 .course_block {
-    height: 50px;
+    max-height: 50px;
     min-width: 100px;
     max-width: 100px;
 }
 
-.course_block_schedule {
+
+/* .course_block_schedule {
     height: 50px;
     min-width: 50px;
     max-width: 50px;
-}
+} */
 
 .lists-max-height {
     max-height: 700px;

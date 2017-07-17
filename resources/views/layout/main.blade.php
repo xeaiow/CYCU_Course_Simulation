@@ -21,7 +21,7 @@
 
 <body ng-app="myApp" ng-controller="ListController" ng-init="loadAddedCourse()">
 
-    <div class="ui stackable inverted menu">
+    <div class="ui stackable inverted menu computer only">
 
         @if ( $profile['username'] != null )
 

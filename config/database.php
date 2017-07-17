@@ -33,14 +33,17 @@ return [
 
     'connections' => [
 
-        'mongodb' => [    
-            'driver'   => 'mongodb',    
-            'host'     => 'localhost',    
-            'port'     => 27017,    
-            'database' => 'course',    
-            'username' => '',    
-            'password' => '',
-    ],
+        'mongodb' => [
+            'driver'   => 'mongodb',
+            'host'     => '127.0.0.1',
+            'port'     => '27017',
+            'database' => 'course',
+            'username' => 'xeee',
+            'password' => 'a9b9c8d1',
+            'options' => [
+                'database' => 'course' // sets the authentication database required by mongo 3
+            ]
+        ],
 
         'sqlite' => [
             'driver' => 'sqlite',
