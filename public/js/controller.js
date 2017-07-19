@@ -468,6 +468,13 @@ app.controller('ListController', function($scope, $http) {
         window.location.href = $scope.baseUrl + 'logout';
     }
 
+
+    // 開啟 sidebar
+    $scope.openSidebar = function() {
+
+        $('.ui.sidebar').sidebar('toggle');
+    }
+
     // toastr dialog setting    
     toastr.options = {
         "closeButton": false,
