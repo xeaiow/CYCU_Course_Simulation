@@ -8,6 +8,7 @@
         <div class="ui pointing secondary menu">
             <a class="item active" data-tab="first">搜尋課程</a>
             <a class="item" data-tab="second">已選課程</a>
+            <a class="item"><% selectPoints %> / 22</a>
         </div>
         <!-- 搜尋課程 -->
         <div class="ui bottom basic tab segment active" data-tab="first">
@@ -100,7 +101,7 @@
     </div>
     <div class="nine wide column">
 
-        <div style="width:100%;overflow-x: scroll;">
+        <div class="course_scroll">
             <table class="ui unstackable celled inverted table">
                 <thead>
                     <tr class="center aligned">

@@ -367,7 +367,7 @@ app.controller('ListController', function($scope, $http) {
 
         var provider = new firebase.auth.FacebookAuthProvider();
         provider.setCustomParameters({
-            'display': 'page'
+            'display': 'popup'
         });
 
         firebase.auth().signInWithPopup(provider).then(function(result) {

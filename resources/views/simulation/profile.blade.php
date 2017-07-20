@@ -1,12 +1,26 @@
 @extends('layout.main') @section('content')
 
+<div class="ui grid stackable computer only">
+    <div class="sixteen wide column profile-bg">
+        <div class="ui link cards attached">
+            <div class="ui image tiny margin-right-20">
+                <img src="{{ $profile['collections']['photo'] }}">
+            </div>
+            <h1 class="ui header">{{ $profile['collections']['name'] }} - {{ $profile['collections']['identify']['department_name'] }}</h1>
+        </div>
+    </div>
+    <div class="ui button">收藏</div>
+    <div class="ui button">分享</div>
+</div>
+
+
 <div class="ui grid stackable">
-    <div class="five wide column">
+
+    <div class="sixteen wide column mobile only">
         @if ( count($profile['collections']) > 0 )
 
-        <div class="ui cards">
+        <div class="ui cards stackable">
             <div class="card">
-
                 <div class="content">
                     <img class="right floated mini ui image" src="{{ $profile['collections']['photo'] }}">
                     <div class="header">
@@ -19,10 +33,6 @@
                         {{ date("Y/m/d", strtotime($profile['collections']['birthday'])) }}
                     </div>
                 </div>
-                <div class="extra content">
-                    <i class="icon star"></i>
-                </div>
-
             </div>
         </div>
 
@@ -75,8 +85,10 @@
         </div>
         @endif
     </div>
+</div>
 
-    <div class="eleven wide column computer only">
+<div class="ui grid stackable">
+    <div class="sixteen wide column">
         <h2 class="ui icon header center aligned">
             <i class="bookmark icon"></i>
             <div class="content">
@@ -84,7 +96,7 @@
             </div>
         </h2>
 
-        <table class="ui tablet stackable table" ng-init="loadHistory()">
+        <table class="ui tablet unstackable table" ng-init="loadHistory()">
             <thead>
                 <tr>
                     <th>學年期</th>
