@@ -96,21 +96,21 @@ app.controller('ListController', function($scope, $http) {
 
 
         // 計算此課程有多少個上課時段
-        if (time_1 != undefined) {
+        if (time_1 != "") {
 
             for (var i = 0; i < time_1.slice(2, -1).length; i++) {
 
                 $scope.tempSelectCourse.push(((7 * time_1.slice(2, -1).slice(i, i + 1).replace(/C/, 9).replace(/D/, 10).replace(/E/, 11).replace(/F/, 12).replace(/G/, 13)) - (7 - time_1.slice(0, 1))) - 1);
             }
 
-            if (time_2 != undefined) {
+            if (time_2 != "") {
 
                 for (var i = 0; i < time_2.slice(2, -1).length; i++) {
 
                     $scope.tempSelectCourse.push(((7 * time_2.slice(2, -1).slice(i, i + 1).replace(/C/, 9).replace(/D/, 10).replace(/E/, 11).replace(/F/, 12).replace(/G/, 13)) - (7 - time_2.slice(0, 1))) - 1);
                 }
 
-                if (time_3 != undefined) {
+                if (time_3 != "") {
 
                     for (var i = 0; i < time_3.slice(2, -1).length; i++) {
 
@@ -123,7 +123,7 @@ app.controller('ListController', function($scope, $http) {
 
             swal({
                 title: "錯誤",
-                text: "暑修加選功能未開放！",
+                text: "此課程不開放主動加選！",
                 type: "error",
                 confirmButtonText: "知道了"
             });

@@ -1,10 +1,10 @@
-@import url(//fonts.googleapis.com/earlyaccess/cwtexhei.css);
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
 .secondary,
 .content,
 .button,
 .header,
 .item {
-    font-family: 'cwTeXHei', sans-serif !important;
+    font-family: 'Noto Sans TC', sans-serif !important;
 }
 
 p,
@@ -27,7 +27,7 @@ span,
 } */
 
 .lists-max-height {
-    max-height: 700px;
+    max-height: 500px;
     overflow-y: auto;
     overflow-x: hidden;
 }
