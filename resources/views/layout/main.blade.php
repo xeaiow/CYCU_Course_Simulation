@@ -85,15 +85,6 @@
         $(function() {
             FastClick.attach(document.body);
         });
-
-        // Export to image
-        $("#export").click(function(){
-            html2canvas($("#course_exports"), {
-                onrendered: function(canvas) {
-                    window.open(canvas.toDataURL("image/png"));
-                },
-            });
-        });
          
     </script>
 

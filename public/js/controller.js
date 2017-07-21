@@ -216,6 +216,7 @@ app.controller('ListController', function($scope, $http) {
                 });
         }
         // console.log("已選課程" + $scope.selectCoursePhase);
+        console.log($scope.selectCourse);
     }
 
 
@@ -227,7 +228,7 @@ app.controller('ListController', function($scope, $http) {
                 method: "GET",
             })
             .success(function(data, status, headers, config) {
-                console.log(data.add_course);
+
                 angular.forEach(data.add_course, function(val, key) {
 
                     $scope.selectCourse.push({
@@ -251,7 +252,7 @@ app.controller('ListController', function($scope, $http) {
 
                         $scope.selectCoursePhase.push(parseInt(val));
                     });
-
+                    console.log($scope.selectCourse);
                 });
                 // console.log($scope.selectCoursePhase);
 
@@ -503,17 +504,52 @@ app.controller('ListController', function($scope, $http) {
 
                 if (inputValue === false) {
 
-                    toastr["success"](" ", "已放棄儲存")
+                    toastr["error"](" ", "已放棄儲存")
                     return false;
+
+                } else {
+
+                    var timestamp = new Date();
+                    // 將 selectCourse push 課表名稱
+                    for (var i = 0; i < $scope.selectCourse.length; i++) {
+
+                        var rnd = Math.floor((Math.random() * 10) + timestamp.getDate() + timestamp.getDay() + timestamp.getTime() + timestamp.getSeconds());
+                        $scope.selectCourse[i].course_lists_title = inputValue;
+                        $scope.selectCourse[i].url = rnd;
+                    }
+
+                    $http({
+                            url: $scope.baseUrl + 'course_available/save',
+                            method: "POST",
+                            data: $.param({
+                                "added_course": JSON.parse(angular.toJson($scope.selectCourse)),
+                            }),
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                            },
+                        })
+                        .success(function(data, status, headers, config) {
+                            swal("儲存完成", "儲存的課表可從個人首頁查看", "success");
+                        })
+                        .error(function(data, status, headers, config) {
+
+                        });
                 }
 
-                if (inputValue === "") {
-                    swal.showInputError("名稱阿");
-                    return false
-                }
 
-                swal("儲存完成", "儲存的課表可從個人首頁查看", "success");
             });
+    }
+
+
+    // 下載課程
+    $scope.course_download = function() {
+
+        // Export to image
+        html2canvas($("#course_exports"), {
+            onrendered: function(canvas) {
+                window.open(canvas.toDataURL("image/png"));
+            },
+        });
     }
 
     // toastr dialog setting    

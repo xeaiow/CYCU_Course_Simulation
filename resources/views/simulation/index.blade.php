@@ -101,7 +101,7 @@
     <div class="nine wide column">
 
         <div class="ui small basic icon buttons right floated">
-            <button class="ui button" id="export"><i class="cloud download icon"></i></button>
+            <button class="ui button" ng-click="course_download()"><i class="cloud download icon"></i></button>
             <button class="ui button" ng-click="save_course()"><i class="save icon"></i></button>
         </div>
 

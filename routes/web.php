@@ -27,6 +27,8 @@ Route::get('/my', 'SimulationController@profile');
 
 Route::get('/logout', 'SimulationController@logout');
 
+Route::post('/course_available/save', 'SimulationController@courseAvailable');
+
 
 // Route::get('/welcome', function() {
 

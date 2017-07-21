@@ -7,6 +7,7 @@ use App\Course;
 use App\Users;
 use App\addCourse;
 use App\historyCourse;
+use App\courseAvailable;
 
 use Auth;
 use Redirect;
@@ -68,6 +69,7 @@ class SimulationController extends Controller
 
             Users::create($new);
 
+
             // 建立匯入已修過課程資料
             $history = [
                 'fb_id' => $request->fb_id,
@@ -75,12 +77,14 @@ class SimulationController extends Controller
             ];
             historyCourse::create($history);
 
-            // 建立模擬選課清單預設值
+
+            // 建立模擬選課清單預設資料
             $simulation = [
                 'fb_id' => $request->fb_id,
                 'add_course' => []
             ];
             addCourse::create($simulation);
+
 
             // 是否匯入過課程設為 0
             Session::put('isImport', 0);
@@ -121,8 +125,7 @@ class SimulationController extends Controller
     public function addedCourse ()
     {
 
-        $result = addCourse::Where('fb_id', Session::get('id'))->get(['add_course'])->first();
-        echo $result;
+        echo addCourse::Where('fb_id', Session::get('id'))->get(['add_course'])->first();
     }
 
 
@@ -199,6 +202,13 @@ class SimulationController extends Controller
         return view('simulation.profile')->with('profile', $data);
     }
 
+
+    // 儲存的課表
+    public function courseAvailable (Request $request)
+    {
+
+         courseAvailable::Where('fb_id', Session::get('id'))->push(['course_lists' => $request->added_course]);
+    }
 
     // 設定系所
     public function saveDepartment (Request $request)
