@@ -1,4 +1,4 @@
-@extends('layout.main') @section('content')
+@extends('layout.main') @section('content') @if ( count($profile['collections']) > 0 )
 
 <div class="ui grid stackable computer only">
     <div class="sixteen wide column profile-bg">
@@ -9,16 +9,10 @@
             <h1 class="ui header">{{ $profile['collections']['name'] }} - {{ $profile['collections']['identify']['department_name'] }}</h1>
         </div>
     </div>
-    <div class="ui button">收藏</div>
-    <div class="ui button">分享</div>
 </div>
 
-
-<div class="ui grid stackable">
-
-    <div class="sixteen wide column mobile only">
-        @if ( count($profile['collections']) > 0 )
-
+<div class="ui grid mobile only">
+    <div class="sixteen wide column">
         <div class="ui cards stackable">
             <div class="card">
                 <div class="content">
@@ -30,25 +24,32 @@
                         {{ $profile['collections']['identify']['department_name'] }}
                     </div>
                     <div class="description">
-                        {{ date("Y/m/d", strtotime($profile['collections']['birthday'])) }}
+                        {{ $profile['collections']['birthday'] }}
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
+@else
 
-        @else
-
-        <div class="ui success message">
-            <i class="close icon"></i>
-            <div class="header">
-                尚未設定，請選擇您的系所
+<div class="ui grid stackable computer only">
+    <div class="sixteen wide column profile-bg">
+        <div class="ui link cards attached">
+            <div class="ui image tiny margin-right-20">
+                <img src="{{ $profile['userdata']['photo'] }}">
             </div>
-            <p>
-                選擇系所後，即可使用修業計算功能
-            </p>
+            <h1 class="ui header">{{ $profile['userdata']['name'] }}</h1>
         </div>
+    </div>
+</div>
 
+<div class="ui grid">
+    <div class="sixteen wide column">
+        <h4 class="ui horizontal divider header">
+            <i class="icon calculator"></i>選擇您的系所後，即可使用修業計算功能
+        </h4>
         <select class="ui fluid dropdown" ng-model="department_id">
             <option value="">選擇系所</option>
             <option value="1">應用數學系</option>
@@ -80,15 +81,24 @@
             <option value="27">電機工程學系</option>
         </select>
 
-        <div class="margin-20">
-            <button class="ui button facebook fluid" ng-click="setDepartment()">設定</button>
+        <div class="ui segment basic">
+            <button class="ui button facebook right floated" ng-click="setDepartment()">設定</button>
         </div>
-        @endif
     </div>
 </div>
-
-<div class="ui grid stackable">
+@endif
+<div class="ui grid">
     <div class="sixteen wide column">
+        @if ( $profile['isImport'] == 0 )
+        <h4 class="ui horizontal divider header">
+            <i class="icon book"></i>已修習課程
+        </h4>
+
+        <div class="ui segment basic">
+            <button class="ui google plus button right floated" onclick="window.location.href='{{ url('/import') }}'">匯入</button> @else
+        </div>
+
+
         <h2 class="ui icon header center aligned">
             <i class="bookmark icon"></i>
             <div class="content">
@@ -130,8 +140,7 @@
                 </tr>
             </tbody>
         </table>
-        <%  %>
     </div>
-</div>
 
-@endsection
+    @endif
+</div> @endsection

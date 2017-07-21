@@ -186,11 +186,14 @@ class SimulationController extends Controller
     public function profile ()
     {
 
+        $find_user = Users::Where('fb_id', Session::get('id'));
+
         $data = array(
             'username' => Session::get('username'),
             'photo' => Session::get('photo'),
             'isImport' => Session::get('isImport'),
-            'collections' => Users::Where('fb_id', Session::get('id'))->Where('identify', 'exists', true)->first()
+            'userdata' => $find_user->first(),
+            'collections' => $find_user->Where('identify', 'exists', true)->first()
         );
 
         return view('simulation.profile')->with('profile', $data);

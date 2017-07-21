@@ -4,7 +4,7 @@
 .button,
 .header,
 .item {
-    font-family: 'Noto Sans TC', sans-serif !important;
+    font-family: '微軟正黑體', sans-serif !important;
 }
 
 p,
@@ -14,17 +14,26 @@ span,
 }
 
 .course_block {
-    max-height: 50px;
-    min-width: 100px;
-    max-width: 100px;
+    max-height: 100px;
+    min-height: 100px;
+    min-width: 60px;
+    max-width: 60px;
 }
 
 
-/* .course_block_schedule {
-    height: 50px;
-    min-width: 50px;
-    max-width: 50px;
-} */
+/* th */
+
+.course_block_schedule {
+    max-height: 20px;
+    min-height: 20px;
+    min-width: 20px;
+    max-width: 20px;
+}
+
+.course_scroll {
+    width: 100%;
+    overflow: auto;
+}
 
 .lists-max-height {
     max-height: 500px;
@@ -51,10 +60,11 @@ span,
     margin-top: 50px;
 }
 
-.course_scroll {
+
+/* .course_scroll {
     width: 100%;
     overflow: scroll;
-}
+} */
 
 .course-bg {
     background-color: #E9EAED;

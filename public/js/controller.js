@@ -32,8 +32,18 @@ app.controller('ListController', function($scope, $http) {
             })
             .success(function(data, status, headers, config) {
 
-                $scope.course = data;
-                console.log(data);
+
+                if (data.length !== 0) {
+                    $scope.course = data;
+                } else {
+                    swal({
+                        title: "糟糕",
+                        text: "找不到課程，換個關鍵字看看。",
+                        type: "error",
+                        confirmButtonText: "知道了"
+                    });
+                }
+
             })
             .error(function(data, status, headers, config) {
 
@@ -197,7 +207,6 @@ app.controller('ListController', function($scope, $http) {
                 })
                 .success(function(data, status, headers, config) {
 
-                    console.log(data);
                     toastr["success"](" ", "加選成功")
 
 
@@ -473,6 +482,38 @@ app.controller('ListController', function($scope, $http) {
     $scope.openSidebar = function() {
 
         $('.ui.sidebar').sidebar('toggle');
+    }
+
+
+    // 儲存課程
+    $scope.save_course = function() {
+
+        swal({
+                title: "儲存課表",
+                text: "給課表取個名稱",
+                type: "input",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                animation: "slide-from-top",
+                inputPlaceholder: "ex. 完美超修",
+                confirmButtonText: "來，儲存",
+                cancelButtonText: "放棄"
+            },
+            function(inputValue) {
+
+                if (inputValue === false) {
+
+                    toastr["success"](" ", "已放棄儲存")
+                    return false;
+                }
+
+                if (inputValue === "") {
+                    swal.showInputError("名稱阿");
+                    return false
+                }
+
+                swal("儲存完成", "儲存的課表可從個人首頁查看", "success");
+            });
     }
 
     // toastr dialog setting    

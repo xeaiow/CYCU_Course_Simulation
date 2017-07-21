@@ -1,6 +1,4 @@
-@extends('layout.main')
-
-@section('content')
+@extends('layout.main') @section('content')
 
 <!-- Grid -->
 <div class="ui grid stackable">
@@ -8,11 +6,12 @@
         <div class="ui pointing secondary menu">
             <a class="item active" data-tab="first">搜尋課程</a>
             <a class="item" data-tab="second">已選課程</a>
-            <a class="item"><% selectPoints %> / 22</a>
+            <a class="item">
+                <% selectPoints %> / 22</a>
         </div>
         <!-- 搜尋課程 -->
         <div class="ui bottom basic tab segment active" data-tab="first">
-            
+
             <!-- 搜尋列 -->
             <div class="ui fluid icon input">
                 <input type="text" ng-model="keywords" placeholder="課程 / 老師" press-Enter="search()">
@@ -59,7 +58,7 @@
 
         <!-- 加選課程 -->
         <div class="ui bottom basic tab segment" data-tab="second">
-            
+
             <!-- 加選結果列 -->
             <div class="lists-max-height">
                 <div class="ui card fluid" ng-repeat="item in selectCourse" ng-if="item.id!==undefined">
@@ -101,8 +100,13 @@
     </div>
     <div class="nine wide column">
 
+        <div class="ui small basic icon buttons right floated">
+            <button class="ui button" id="export"><i class="cloud download icon"></i></button>
+            <button class="ui button" ng-click="save_course()"><i class="save icon"></i></button>
+        </div>
+
         <div class="course_scroll">
-            <table class="ui unstackable celled inverted table">
+            <table class="ui unstackable celled inverted table" id="course_exports">
                 <thead>
                     <tr class="center aligned">
                         <th></th>

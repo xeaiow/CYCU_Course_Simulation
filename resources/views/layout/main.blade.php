@@ -12,6 +12,7 @@
     <script src="{{ asset('/js/sweetalert.min.js') }}"></script>
     <script src="{{ asset('/js/toastr.min.js') }}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+    <script src="{{ asset('js/html2canvas.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('/semantic.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('/style.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('/sweetalert.css') }}">
@@ -23,15 +24,16 @@
 <body ng-app="myApp" ng-controller="ListController" ng-init="loadAddedCourse()">
 
     <div class="ui sidebar inverted vertical menu">
+    
         @if ( $profile['username'] != null )
 
         <div class="item">
             <img class="ui tiny image centered" src="{{ $profile['photo'] }}">
         </div>
-        <a class="item" href="{{ url('/my') }}">{{ $profile['username'] }}</a>
-        <a class="item"><i class="star icon"></i> <% selectPoints %> / 22</a> @if ( $profile['isImport'] == 0 )
-
-        <a class="item"><button class="ui fluid facebook button" onclick="window.location.href='{{ url('/import') }}'">匯入已修課程</button></a> @endif
+        <a class="item" href="{{ url('/my') }}">我的資料</a>
+        <a class="item"><i class="star icon"></i> <% selectPoints %> / 22</a>
+        <a class="item">找工作</a>
+         <a class="item">找物品</a>
 
         <div class="right menu">
             <a class="item"><button class="ui fluid grey button" ng-click="logout()">登出</button></a>
@@ -83,6 +85,16 @@
         $(function() {
             FastClick.attach(document.body);
         });
+
+        // Export to image
+        $("#export").click(function(){
+            html2canvas($("#course_exports"), {
+                onrendered: function(canvas) {
+                    window.open(canvas.toDataURL("image/png"));
+                },
+            });
+        });
+         
     </script>
 
 </body>
