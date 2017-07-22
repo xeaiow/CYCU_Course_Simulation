@@ -251,10 +251,10 @@ class SimulationController extends Controller
     }
 
 
-    // 讀取公開課表 ajax
+    // 讀取公開課表 ajax (不需登入)
     public function loadOpenCourse (Request $request)
     {
-        echo courseAvailable::Where('fb_id', Session::get('id'))->Where('rnd_id', $request->id)->first();
+        echo courseAvailable::Where('rnd_id', $request->id)->first();
     }
 
 

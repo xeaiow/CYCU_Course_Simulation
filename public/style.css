@@ -8,6 +8,7 @@
 }
 
 @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+table,
 .secondary,
 .content,
 .button,
@@ -33,10 +34,10 @@ span,
 /* th */
 
 .course_block_schedule {
-    max-height: 20px;
     min-height: 20px;
-    min-width: 20px;
-    max-width: 20px;
+    max-height: 20px;
+    min-width: 30px;
+    max-width: 30px;
 }
 
 .course_scroll {

@@ -32,7 +32,6 @@
         </div>
         <a class="item" href="{{ url('/my') }}">我的資料</a>
         <a class="item" href="{{ url('/mycourse') }}">我的課表</a>
-        <a class="item"><i class="star icon"></i> <% selectPoints %> / 22</a>
         <a class="item">找工作</a>
         <a class="item">找物品</a>
         <a class="item">找房子</a>
