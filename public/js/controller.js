@@ -560,11 +560,11 @@ app.controller('ListController', function($scope, $http) {
             })
             .success(function(data, status, headers, config) {
 
-                for (let i = 0; i < data.length; i++) {
+                for (var i = 0; i < data.length; i++) {
 
-                    let totalCourse = 0; // init total points
+                    var totalCourse = 0; // init total points
 
-                    for (let j = 0; j < data[i].course_lists.length; j++) {
+                    for (var j = 0; j < data[i].course_lists.length; j++) {
 
                         totalCourse += parseInt(data[i].course_lists[j].point)
                     }
@@ -604,7 +604,7 @@ app.controller('ListController', function($scope, $http) {
             .success(function(data, status, headers, config) {
 
                 $scope.course_info = data.course_lists;
-                let course = data.course_lists; // 將結果存在 course
+                var course = data.course_lists; // 將結果存在 course
 
                 angular.forEach(course, function(val, i) {
 

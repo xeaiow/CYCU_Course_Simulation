@@ -9,13 +9,15 @@ use App\addCourse;
 use App\historyCourse;
 use App\courseAvailable;
 
-use Auth;
+
 use Redirect;
 use Session;
 
 class SimulationController extends Controller
 {
     
+   
+
     public function index()
     {
         $data = array(

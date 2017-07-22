@@ -1,55 +1,59 @@
 <?php
 
-
+// 登入頁面
 Route::get('/login', 'LoginController@index');
 
+// 登入後首頁
 Route::get('/', 'SimulationController@index');
 
-Route::get('/search_course/{keywords}', 'SimulationController@searchCourse');
-
-Route::post('/profile/save', 'SimulationController@saveProfile');
-
-Route::post('/course/save', 'SimulationController@saveCourse');
-
-Route::post('/department/save', 'SimulationController@saveDepartment');
-
-Route::get('/added_course', 'SimulationController@addedCourse');
-
-Route::get('/minus_course/{course_id}', 'SimulationController@minusCourse');
-
-Route::get('/import', 'SimulationController@import');
-
-Route::post('/import_course', 'SimulationController@importCourse');
-
-Route::get('/history', 'SimulationController@history');
-
-Route::get('/my', 'SimulationController@profile');
-
-Route::get('/logout', 'SimulationController@logout');
-
-Route::post('/course_available/save', 'SimulationController@courseAvailable');
-
-Route::get('/mycourse', 'SimulationController@myCourse');
-
-Route::get('/get_my_course', 'SimulationController@getMyCourse');
-
-Route::get('/load_open_course/{id}', 'SimulationController@loadOpenCourse');
-
+// 載入公開的課表頁面
 Route::get('/course/{id}', 'SimulationController@course');
 
+// 載入公開的課表 ajax
+Route::get('/load_open_course/{id}', 'SimulationController@loadOpenCourse')->where('id', '[0-9]+');;
 
-// Route::get('/welcome', function() {
 
-//     // $crawler = Goutte::request('GET', 'https://itouch.cycu.edu.tw/');
-//     // $crawler->filterXPath('//a[contains(@class, "PostEntry_unread_")]')->each(function ($node) {
-//     //   echo json_encode($node->text());
-//     // });
+Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
 
-//     $crawler = Goutte::request('GET', 'https://selene.tw/a');
+    // 登入或註冊
+    Route::post('/profile/save', 'SimulationController@saveProfile');
 
-//     return $result = $crawler->filter('.ui .raised .fluid .card')->each(function ($node){
-//         return $posts[] = $node->text();
-//     });
-  
-//     return view('simulation.crawler');
-// });
+    // 搜尋課程
+    Route::get('/search_course/{keywords}', 'SimulationController@searchCourse');
+
+    // 儲存課程
+    Route::post('/course/save', 'SimulationController@saveCourse');
+
+    // 設定系所
+    Route::post('/department/save', 'SimulationController@saveDepartment');
+
+    // 加選課程
+    Route::get('/added_course', 'SimulationController@addedCourse');
+
+    // 退選課程
+    Route::get('/minus_course/{course_id}', 'SimulationController@minusCourse')->where('course_id', '[0-9A-Za-z]+');
+
+    // 匯入 iTouch 已修過課程頁面
+    Route::get('/import', 'SimulationController@import');
+
+    // 匯入 iTouch 已修過課程動作 ajax
+    Route::post('/import_course', 'SimulationController@importCourse');
+
+    // 載入已修過課程 ajax
+    Route::get('/history', 'SimulationController@history');
+
+    // 我的資料頁面
+    Route::get('/my', 'SimulationController@profile');
+
+    // 登出
+    Route::get('/logout', 'SimulationController@logout');
+
+    // 儲存課表動作
+    Route::post('/course_available/save', 'SimulationController@courseAvailable');
+
+    // 我儲存過的課表頁面
+    Route::get('/mycourse', 'SimulationController@myCourse');
+
+    // 載入我的儲存的課表 ajax
+    Route::get('/get_my_course', 'SimulationController@getMyCourse');
+});
