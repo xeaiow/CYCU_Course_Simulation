@@ -1,3 +1,12 @@
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+    display: none !important;
+}
+
 @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
 .secondary,
 .content,
@@ -59,12 +68,6 @@ span,
 .margin-50 {
     margin-top: 50px;
 }
-
-
-/* .course_scroll {
-    width: 100%;
-    overflow: scroll;
-} */
 
 .course-bg {
     background-color: #E9EAED;

@@ -179,7 +179,7 @@ app.controller('ListController', function($scope, $http) {
                 'time_3': $scope.pushCourseTimes(time_3),
                 "com_or_opt": com_or_opt,
                 "point": point,
-                "phase": $scope.tempSelectCourse,
+                "phase": $scope.tempSelectCourse
             });
 
             $scope.selectPoints += parseFloat(point);
@@ -216,7 +216,6 @@ app.controller('ListController', function($scope, $http) {
                 });
         }
         // console.log("已選課程" + $scope.selectCoursePhase);
-        console.log($scope.selectCourse);
     }
 
 
@@ -300,7 +299,7 @@ app.controller('ListController', function($scope, $http) {
                         })
                         .success(function(data, status, headers, config) {
                             toastr["success"](" ", "匯入成功")
-                            setTimeout(function() { window.location.href = $scope.baseUrl; }, 1000);
+                            setTimeout(function() { window.location.href = $scope.baseUrl + 'my'; }, 1000);
 
                         })
                         .error(function(data, status, headers, config) {
@@ -510,19 +509,15 @@ app.controller('ListController', function($scope, $http) {
                 } else {
 
                     var timestamp = new Date();
-                    // 將 selectCourse push 課表名稱
-                    for (var i = 0; i < $scope.selectCourse.length; i++) {
-
-                        var rnd = Math.floor((Math.random() * 10) + timestamp.getDate() + timestamp.getDay() + timestamp.getTime() + timestamp.getSeconds());
-                        $scope.selectCourse[i].course_lists_title = inputValue;
-                        $scope.selectCourse[i].url = rnd;
-                    }
+                    var rnd = Math.floor((Math.random() * 10) + timestamp.getDate() + timestamp.getDay() + timestamp.getTime() + timestamp.getSeconds());
 
                     $http({
                             url: $scope.baseUrl + 'course_available/save',
                             method: "POST",
                             data: $.param({
                                 "added_course": JSON.parse(angular.toJson($scope.selectCourse)),
+                                "title": inputValue,
+                                "rnd_id": rnd
                             }),
                             headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -544,12 +539,82 @@ app.controller('ListController', function($scope, $http) {
     // 下載課程
     $scope.course_download = function() {
 
+        swal("下載完成", "請自行另存圖片", "success");
         // Export to image
         html2canvas($("#course_exports"), {
             onrendered: function(canvas) {
                 window.open(canvas.toDataURL("image/png"));
             },
         });
+    }
+
+    $scope.mySaveCourse = []; // 儲存的課表資訊
+    $scope.mySaveCoursePoint = []; // 儲存的各課表總學分數
+
+    // 讀取我的課表
+    $scope.load_my_course = function() {
+
+        $http({
+                url: $scope.baseUrl + 'get_my_course',
+                method: "GET",
+            })
+            .success(function(data, status, headers, config) {
+
+                for (let i = 0; i < data.length; i++) {
+
+                    let totalCourse = 0; // init total points
+
+                    for (let j = 0; j < data[i].course_lists.length; j++) {
+
+                        totalCourse += parseInt(data[i].course_lists[j].point)
+                    }
+
+                    // 取得所有課表的 id
+                    $scope.mySaveCourse.push({
+                        'url': data[i].rnd_id,
+                        'title': data[i].title,
+                        'point': totalCourse,
+                        'course': data[i].course_lists,
+                    });
+                }
+
+                console.log($scope.mySaveCourse);
+            })
+            .error(function(data, status, headers, config) {
+
+            });
+    }
+
+
+    // 連結到課表
+    $scope.link_course = function(link) {
+
+        window.location.href = $scope.baseUrl + 'course/' + link;
+    }
+
+
+    $scope.course_info = []; // 課表中其餘資訊
+    // 使用編號讀取課表
+    $scope.load_open_course = function(id) {
+
+        $http({
+                url: $scope.baseUrl + 'load_open_course/' + id,
+                method: "GET",
+            })
+            .success(function(data, status, headers, config) {
+
+                $scope.course_info = data.course_lists;
+                let course = data.course_lists; // 將結果存在 course
+
+                angular.forEach(course, function(val, i) {
+
+                    $scope.pushCourseToList(course[i].phase, course[i].name, course[i].teacher);
+                });
+                console.log($scope.course_info);
+            })
+            .error(function(data, status, headers, config) {
+
+            });
     }
 
     // toastr dialog setting    

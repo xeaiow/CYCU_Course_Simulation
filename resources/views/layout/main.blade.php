@@ -21,7 +21,7 @@
     <title>Simulation</title>
 </head>
 
-<body ng-app="myApp" ng-controller="ListController" ng-init="loadAddedCourse()">
+<body ng-app="myApp" ng-controller="ListController">
 
     <div class="ui sidebar inverted vertical menu">
     
@@ -31,9 +31,11 @@
             <img class="ui tiny image centered" src="{{ $profile['photo'] }}">
         </div>
         <a class="item" href="{{ url('/my') }}">我的資料</a>
+        <a class="item" href="{{ url('/mycourse') }}">我的課表</a>
         <a class="item"><i class="star icon"></i> <% selectPoints %> / 22</a>
         <a class="item">找工作</a>
-         <a class="item">找物品</a>
+        <a class="item">找物品</a>
+        <a class="item">找房子</a>
 
         <div class="right menu">
             <a class="item"><button class="ui fluid grey button" ng-click="logout()">登出</button></a>

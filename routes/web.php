@@ -29,6 +29,14 @@ Route::get('/logout', 'SimulationController@logout');
 
 Route::post('/course_available/save', 'SimulationController@courseAvailable');
 
+Route::get('/mycourse', 'SimulationController@myCourse');
+
+Route::get('/get_my_course', 'SimulationController@getMyCourse');
+
+Route::get('/load_open_course/{id}', 'SimulationController@loadOpenCourse');
+
+Route::get('/course/{id}', 'SimulationController@course');
+
 
 // Route::get('/welcome', function() {
 

@@ -1,7 +1,7 @@
 @extends('layout.main') @section('content')
 
 <!-- Grid -->
-<div class="ui grid stackable">
+<div class="ui grid stackable" ng-init="loadAddedCourse()">
     <div class="seven wide column">
         <div class="ui pointing secondary menu">
             <a class="item active" data-tab="first">搜尋課程</a>
@@ -101,8 +101,8 @@
     <div class="nine wide column">
 
         <div class="ui small basic icon buttons right floated">
-            <button class="ui button" ng-click="course_download()"><i class="cloud download icon"></i></button>
-            <button class="ui button" ng-click="save_course()"><i class="save icon"></i></button>
+            <button class="ui button" ng-click="course_download()" data-tooltip="下載課表" data-position="top left"><i class="cloud download icon"></i></button>
+            <button class="ui button" ng-click="save_course()" data-tooltip="儲存課表" data-position="top left"><i class="save icon"></i></button>
         </div>
 
         <div class="course_scroll">

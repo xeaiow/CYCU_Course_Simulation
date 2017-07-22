@@ -206,8 +206,15 @@ class SimulationController extends Controller
     // 儲存的課表
     public function courseAvailable (Request $request)
     {
+        $new = [
+            'fb_id' => Session::get('id'),
+            'course_lists' => $request->added_course,
+            'title' => $request->title,
+            'rnd_id' => $request->rnd_id
+        ];
+        courseAvailable::create($new);
 
-         courseAvailable::Where('fb_id', Session::get('id'))->push(['course_lists' => $request->added_course]);
+        //courseAvailable::Where('fb_id', Session::get('id'))->push(['course_lists' => $request->added_course]);
     }
 
     // 設定系所
@@ -216,6 +223,40 @@ class SimulationController extends Controller
 
         echo Users::Where('fb_id', Session::get('id'))->update(['identify.department_id' => $request->department_id, 'identify.department_name' => $request->department_name]);
     } 
+
+
+    // 我的課表頁面
+    public function myCourse ()
+    {
+
+        $data = array(
+            'username' => Session::get('username'),
+            'photo' => Session::get('photo')
+        );
+
+        return view('simulation.mycourse')->with('profile', $data);
+    }
+
+
+    // 我的課表 ajax
+    public function getMyCourse ()
+    {
+        echo courseAvailable::Where('fb_id', Session::get('id'))->get(['course_lists.point', 'course_lists.name', 'rnd_id', 'title']);
+    }
+
+    // 檢視公開課表
+    public function course ()
+    {
+        return view('simulation.course');
+    }
+
+
+    // 讀取公開課表 ajax
+    public function loadOpenCourse (Request $request)
+    {
+        echo courseAvailable::Where('fb_id', Session::get('id'))->Where('rnd_id', $request->id)->first();
+    }
+
 
     // 登出
     public function logout ()
