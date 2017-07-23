@@ -66,6 +66,7 @@ class SimulationController extends Controller
                 'name'      => $request->name,
                 'gender'    => $request->gender,
                 'photo'     => $request->photo,
+                'email'     => $request->email,
                 'isImport'  => 0
             ];
 
@@ -135,11 +136,17 @@ class SimulationController extends Controller
     public function import ()
     {
 
+        if (Session::get('isImport') === 1) {
+
+            return redirect('/');
+        }
+
         $data = array(
             'username' => Session::get('username'),
             'photo' => Session::get('photo'),
             'isImport' => Session::get('isImport')
         );
+
         return view('simulation.import')->with('profile', $data);
     }
 
@@ -247,16 +254,21 @@ class SimulationController extends Controller
     }
 
     // 檢視公開課表
-    public function course ()
+    public function course (Request $request)
     {
-        return view('simulation.course');
+        $exists = courseAvailable::Where('rnd_id', $request->id);
+        if ($exists->count() == 0) {
+
+            return redirect('/');
+        }
+        return view('simulation.course')->with('data', $exists->first());
     }
 
 
     // 讀取公開課表 ajax (不需登入)
     public function loadOpenCourse (Request $request)
     {
-        echo courseAvailable::Where('rnd_id', $request->id)->first();
+        echo $exists = courseAvailable::Where('rnd_id', $request->id)->first();
     }
 
 

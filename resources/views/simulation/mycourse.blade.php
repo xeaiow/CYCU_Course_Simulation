@@ -1,5 +1,15 @@
-@extends('layout.main') @section('content')
+@extends('layout.main') @section('pageTitle', '我的課表') @section('content')
 
+
+<div class="ui success message" ng-if="mySaveCourse.length == 0">
+    <div class="header">
+        還沒有建立過課表呢。
+    </div>
+    <ul class="list">
+        <li>加選完，在課表右上方點選儲存即可。</li>
+        <li>課表還能分享給同學看。</li>
+    </ul>
+</div>
 
 <div class="ui stackable four column grid" ng-init="load_my_course()">
 

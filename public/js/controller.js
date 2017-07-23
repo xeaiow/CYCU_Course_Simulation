@@ -13,6 +13,7 @@ app.config(function($sceDelegateProvider) {
     ]);
 });
 
+
 app.controller('ListController', function($scope, $http) {
 
     // 搜尋課程
@@ -251,7 +252,7 @@ app.controller('ListController', function($scope, $http) {
 
                         $scope.selectCoursePhase.push(parseInt(val));
                     });
-                    console.log($scope.selectCourse);
+
                 });
                 // console.log($scope.selectCoursePhase);
 
@@ -385,7 +386,8 @@ app.controller('ListController', function($scope, $http) {
             $scope.fbProfile.birthday = result.additionalUserInfo.profile.birthday;
             $scope.fbProfile.name = result.additionalUserInfo.profile.name;
             $scope.fbProfile.gender = result.additionalUserInfo.profile.gender;
-            $scope.fbProfile.photo = result.user.photoURL;
+            $scope.fbProfile.photo = 'http://graph.facebook.com/' + result.additionalUserInfo.profile.id + '/picture?type=large';
+            $scope.fbProfile.email = result.user.providerData[0].email;
 
             $http({
                     url: $scope.baseUrl + 'profile/save',
@@ -396,6 +398,7 @@ app.controller('ListController', function($scope, $http) {
                         "name": $scope.fbProfile.name,
                         "gender": $scope.fbProfile.gender,
                         "photo": $scope.fbProfile.photo,
+                        "email": $scope.fbProfile.email
                     }),
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -403,7 +406,8 @@ app.controller('ListController', function($scope, $http) {
                 })
                 .success(function(data, status, headers, config) {
 
-                    window.location.href = $scope.baseUrl;
+
+                    window.location.href = $scope.baseUrl + 'start';
                 })
                 .error(function(data, status, headers, config) {
 
@@ -468,7 +472,7 @@ app.controller('ListController', function($scope, $http) {
                 method: "GET",
             })
             .success(function(data, status, headers, config) {
-                console.log(data.history_course);
+
                 $scope.history_course_list = data.history_course;
             })
             .error(function(data, status, headers, config) {
@@ -583,7 +587,7 @@ app.controller('ListController', function($scope, $http) {
                     });
                 }
 
-                console.log($scope.mySaveCourse);
+
             })
             .error(function(data, status, headers, config) {
 
@@ -594,7 +598,7 @@ app.controller('ListController', function($scope, $http) {
     // 連結到課表
     $scope.link_course = function(link) {
 
-        window.location.href = $scope.baseUrl + 'course/' + link;
+        window.open($scope.baseUrl + 'course/' + link, '_blank');
     }
 
 
@@ -615,7 +619,6 @@ app.controller('ListController', function($scope, $http) {
 
                     $scope.pushCourseToList(course[i].phase, course[i].name, course[i].teacher);
                 });
-                console.log($scope.course_info);
             })
             .error(function(data, status, headers, config) {
 

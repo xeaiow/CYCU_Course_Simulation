@@ -1,4 +1,8 @@
-@extends('layout.main') @section('content')
+@extends('layout.main')
+
+@section('pageTitle', '模擬中原')
+
+@section('content')
 
 <!-- Grid -->
 <div class="ui grid stackable" ng-init="loadAddedCourse()">
@@ -22,7 +26,7 @@
             <div class="lists-max-height">
                 <div class="ui card fluid" ng-repeat="item in course">
                     <div class="content">
-                        <i class="right floated star icon"></i>
+                        <a href="http://cmap.cycu.edu.tw:8080/Syllabus/CoursePreview.html?yearTerm=1061&opCode=<% item.course_id %>" target="_blank"><i class="right floated star icon"></i></a>
                         <div class="header">
                             <a target="_blank" href="https://coursewiki.clouder.today/courses/<% item.course_id %>">
                                 <% item.course_name %> /

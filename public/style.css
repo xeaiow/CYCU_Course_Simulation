@@ -15,12 +15,14 @@ table,
 .header,
 .story-text,
 .item,
+li,
 a .item {
     font-family: '微軟正黑體', sans-serif !important;
 }
 
 p,
 span,
+li,
 .meta {
     font-weight: 900;
 }
@@ -72,6 +74,10 @@ span,
     margin-top: 50px;
 }
 
+.margin-60 {
+    margin-top: 60px;
+}
+
 .course-bg {
     background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
     border-radius: 5px;
@@ -109,7 +115,16 @@ span,
 }
 
 .simulation-theme {
-    background-color: #066FA5 !important;
+    background-color: #4C5870 !important;
+}
+
+.simulation-menu {
+    min-height: 50px !important;
+}
+
+.none-link,
+.none-link:hover {
+    color: #FFF;
 }
 
 

@@ -1,4 +1,8 @@
-@extends('layout.main') @section('content')
+@extends('layout.main')
+
+@section('pageTitle', '匯入已修習課程')
+
+@section('content')
 
 <div class="ui stackable two column grid">
 

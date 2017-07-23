@@ -12,10 +12,10 @@ class LoginMiddleware
     
     public function handle($request, Closure $next)
     {
-        // 判斷登入
+        // 判斷是否已登入，如果沒登入就踢去登入頁面
         if (!Session::has('id') || !Session::has('username') || !Session::has('photo')) {
             
-            return Redirect::to('/login');
+            return Redirect::to('/');
         }
         return $next($request);
     }

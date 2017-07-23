@@ -5,23 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="author" content="CYCU Simulation">
+    <meta name="og:description" content="這個課表選不到，還有千千萬萬個..." />
+    <meta property="og:title" content="{{ $data['title'] }}"/>
+    <meta property="og:type" content="模擬選課"/>
+    <meta property="og:url" content="{{ Request::url() }}"/>
+    <meta property="og:image" content="//i.imgur.com/QEobY1P.png"/>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
     <script src="{{ asset('/js/controller.js') }}"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="{{ asset('/js/semantic.min.js') }}"></script>
-    <script src="{{ asset('/js/sweetalert.min.js') }}"></script>
-    <script src="{{ asset('/js/toastr.min.js') }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
-    <script src="{{ asset('js/html2canvas.js') }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="{{ asset('/semantic.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('/style.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('/sweetalert.css') }}">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('/themes/facebook/facebook.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/toastr.min.css') }}">
-    <title>Simulation</title>
+    <title>{{ ( $data['title'] == null ? "模擬中原" : $data['title'] ) }} - 模擬中原 CYCU Simulation</title>
 </head>
 
-<body ng-app="myApp" ng-controller="ListController">
+<body ng-app="myApp" ng-controller="ListController" ng-cloak>
 
     <div class="ui container">
         <div class="ui stackable one column grid" ng-init="load_open_course({{ request()->route('id') }})">
@@ -357,6 +363,13 @@
                 </table>
             </div>
 
+            <h4 class="ui horizontal divider header">
+                <i class="share icon"></i> 分享這個課表
+            </h4>
+            <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button" data-size="large" data-mobile-iframe="true">
+                <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F140.135.112.96%2Fsimulation%2Fpublic&amp;src=sdkpreparse"></a>
+            </div>
+
             <!-- courseInfo -->
             <div class="ui card fluid" ng-repeat="item in course_info">
                 <div class="content">
@@ -388,6 +401,18 @@
             </div>
         </div>
     </div>
+
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.10&appId=452934435085965";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 
     <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
     <script>

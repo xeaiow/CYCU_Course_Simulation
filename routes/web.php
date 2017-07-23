@@ -1,7 +1,10 @@
 <?php
 
 // 登入頁面
-Route::get('/login', 'LoginController@index');
+Route::group(['prefix' => '/', 'middleware' => 'isLogin'], function () {
+
+    Route::get('/', 'LoginController@index');
+});
 
 // 登入或註冊
 Route::post('/profile/save', 'SimulationController@saveProfile');
@@ -16,7 +19,7 @@ Route::get('/load_open_course/{id}', 'SimulationController@loadOpenCourse')->whe
 Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
 
     // 登入後首頁
-    Route::get('/', 'SimulationController@index');
+    Route::get('/start', 'SimulationController@index');
 
     // 搜尋課程
     Route::get('/search_course/{keywords}', 'SimulationController@searchCourse');
