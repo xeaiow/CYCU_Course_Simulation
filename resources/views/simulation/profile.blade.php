@@ -1,12 +1,19 @@
 @extends('layout.main') @section('content') @if ( count($profile['collections']) > 0 )
 
-<div class="ui grid stackable computer only">
-    <div class="sixteen wide column profile-bg">
-        <div class="ui link cards attached">
-            <div class="ui image tiny margin-right-20">
-                <img src="{{ $profile['collections']['photo'] }}">
+<div class="ui stackable one column grid computer only">
+    <div class="column bg-1">
+        <div class="ui grid">
+            <div class="sixteen wide column bg-2">
+                <img class="ui small rounded bordered image" src="{{ $profile['collections']['photo'] }}">
             </div>
-            <h1 class="ui header">{{ $profile['collections']['name'] }} - {{ $profile['collections']['identify']['department_name'] }}</h1>
+            <div class="profile-button">
+                <a href="https://fb.com/{{ $profile['collections']['fb_id'] }}" target="_blank"><button class="ui circular basic icon button"><i class="facebook icon"></i></button></a>
+            </div>
+            <div class="profile-name">
+                <h2 class="ui header">
+                    {{ $profile['collections']['name'] }} - {{ $profile['collections']['identify']['department_name'] }}
+                </h2>
+            </div>
         </div>
     </div>
 </div>

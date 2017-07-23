@@ -403,7 +403,7 @@ app.controller('ListController', function($scope, $http) {
                 })
                 .success(function(data, status, headers, config) {
 
-                    window.location.href = $scope.baseUrl + '';
+                    window.location.href = $scope.baseUrl;
                 })
                 .error(function(data, status, headers, config) {
 
@@ -418,14 +418,19 @@ app.controller('ListController', function($scope, $http) {
     // 設定系所
     $scope.setDepartment = function() {
 
+        if (!$scope.department_id) {
+
+            toastr["error"](" ", "請選擇您的系所！")
+            return false;
+        }
         // 取得系所中文名稱
         $http({ method: 'GET', url: $scope.baseUrl + 'department.json' }).success(function(data, status, headers, config) {
             angular.forEach(data, function(val, key) {
 
                 if (val.id == $scope.department_id) {
+
                     $scope.department_name = val.department;
                 }
-
             });
 
             // 執行儲存腳色設定

@@ -3,8 +3,8 @@
 // 登入頁面
 Route::get('/login', 'LoginController@index');
 
-// 登入後首頁
-Route::get('/', 'SimulationController@index');
+// 登入或註冊
+Route::post('/profile/save', 'SimulationController@saveProfile');
 
 // 載入公開的課表頁面
 Route::get('/course/{id}', 'SimulationController@course');
@@ -15,8 +15,8 @@ Route::get('/load_open_course/{id}', 'SimulationController@loadOpenCourse')->whe
 
 Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
 
-    // 登入或註冊
-    Route::post('/profile/save', 'SimulationController@saveProfile');
+    // 登入後首頁
+    Route::get('/', 'SimulationController@index');
 
     // 搜尋課程
     Route::get('/search_course/{keywords}', 'SimulationController@searchCourse');

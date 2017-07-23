@@ -30,7 +30,7 @@
         <div class="item">
             <img class="ui tiny image centered" src="{{ $profile['photo'] }}">
         </div>
-        <a class="item" href="{{ url('/my') }}">我的資料</a>
+        <a class="item" href="{{ url('/my') }}">個人資料</a>
         <a class="item" href="{{ url('/mycourse') }}">我的課表</a>
         <a class="item">找工作</a>
         <a class="item">找物品</a>
