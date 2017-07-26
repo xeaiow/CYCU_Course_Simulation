@@ -1,8 +1,4 @@
-@extends('layout.main')
-
-@section('pageTitle', $profile['userdata']['name'])
-
-@section('content') @if ( count($profile['collections']) > 0 )
+@extends('layout.main') @section('pageTitle', $profile['userdata']['name']) @section('content') @if ( count($profile['collections']) > 0 )
 
 <div class="ui stackable one column grid computer only">
     <div class="column bg-1">

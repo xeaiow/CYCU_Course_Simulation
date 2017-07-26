@@ -32,15 +32,63 @@ class SimulationController extends Controller
     // 關鍵字搜尋課程
     public function searchCourse (Request $request)
     {
-        $keywords = $request->keywords;
+        $fuzzy = explode(" ", $request->keywords); // ex. ['教育實習', '5-2345.']
+        $year_class = $request->year_class; // 篩選開課系所
 
-        $result = Course::
-        where('course_name', 'regex', "/.*$keywords.*/i")
-        ->orWhere('course_id', $keywords)
-        ->orWhere('teacher', $keywords)
-        ->get();
+        if ($year_class !== null)
+        {
 
-        echo $result;
+            // 如果使用者輸入的是一般搜尋，就用 %LIKE% 找課程
+            if (count($fuzzy) == 1)
+            {
+
+                $keywords = $request->keywords;
+
+                echo Course::
+                where('course_name', 'regex', "/.*$keywords.*/i")
+                    ->orWhere('course_id', $keywords)
+                    ->orWhere('teacher', 'regex', "/.*$keywords.*/i")
+                    ->orWhere('time_1', 'regex', "/.*$keywords.*/i")
+                    ->Where('class', $year_class)
+                ->get();
+            }
+            // 如果使用者用模糊搜尋，就將課程及時間解析再搜尋
+            else
+            {
+
+                $time = $fuzzy[1]."."; // 資料當初結構問題，所以結尾要加一個 .
+
+                echo Course::Where('course_name', 'regex', "/.*$fuzzy[0].*/i")
+                ->Where('time_1', $time)
+                ->Where('class', $year_class)
+                ->get();
+            }
+        }
+        else
+        {
+            // 如果使用者輸入的是一般搜尋，就用 %LIKE% 找課程
+            if (count($fuzzy) == 1)
+            {
+
+                $keywords = $request->keywords;
+
+                echo Course::
+                where('course_name', 'regex', "/.*$keywords.*/i")
+                    ->orWhere('course_id', $keywords)
+                    ->orWhere('teacher', 'regex', "/.*$keywords.*/i")
+                    ->orWhere('time_1', 'regex', "/.*$keywords.*/i")
+                ->get();
+            }
+            // 如果使用者用模糊搜尋，就將課程及時間解析再搜尋
+            else
+            {
+
+                $time = $fuzzy[1]."."; // 資料當初結構問題，所以結尾要加一個 .
+
+                echo Course::Where('course_name', 'regex', "/.*$fuzzy[0].*/i")->
+                Where('time_1', $time)->get();
+            }   
+        }
     }
 
     // 儲存 fb 登入資訊
@@ -250,7 +298,7 @@ class SimulationController extends Controller
     // 我的課表 ajax
     public function getMyCourse ()
     {
-        echo courseAvailable::Where('fb_id', Session::get('id'))->get(['course_lists.point', 'course_lists.name', 'rnd_id', 'title']);
+        echo courseAvailable::Where('fb_id', Session::get('id'))->orderBy('_id', 'desc')->get(['course_lists.point', 'course_lists.name', 'rnd_id', 'title']);
     }
 
     // 檢視公開課表
@@ -277,5 +325,43 @@ class SimulationController extends Controller
     {
         Session::flush();
         return redirect('/');
+    }
+
+    public function test (Request $request)
+    {
+
+        $fuzzy = explode(" ", $request->id); // ex. ['教育實習', '5-2345.']
+        
+        // 如果使用者輸入的是一般搜尋，就用 %LIKE% 找課程
+        if (count($fuzzy) == 1) {
+
+            $keywords = $request->id;
+
+            echo Course::
+            where('course_name', 'regex', "/.*$keywords.*/i")
+                ->orWhere('course_id', $keywords)
+                ->orWhere('teacher', 'regex', "/.*$keywords.*/i")
+                ->orWhere('time_1', 'regex', "/.*$keywords.*/i")
+            ->get();
+        }
+        // 如果使用者用模糊搜尋，就將課程及時間解析再搜尋
+        else{
+
+            $time = $fuzzy[1]."."; // 資料當初結構問題，所以結尾要加一個 .
+
+            echo Course::Where('course_name', 'regex', "/.*$fuzzy[0].*/i")->
+            Where('time_1', $time)->get();
+        }
+
+        
+
+
+        // echo Course::
+        // where('course_name', 'regex', "/.*$keywords.*/i")
+        //     ->orWhere('course_id', $keywords)
+        //     ->orWhere('teacher', 'regex', "/.*$keywords.*/i")
+        //     ->orWhere('time_1', 'regex', "/.*$keywords.*/i")
+        // ->get();
+   
     }
 }

@@ -22,7 +22,7 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
     Route::get('/start', 'SimulationController@index');
 
     // 搜尋課程
-    Route::get('/search_course/{keywords}', 'SimulationController@searchCourse');
+    Route::post('/search_course', 'SimulationController@searchCourse');
 
     // 儲存課程
     Route::post('/course/save', 'SimulationController@saveCourse');
@@ -59,4 +59,7 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
 
     // 載入我的儲存的課表 ajax
     Route::get('/get_my_course', 'SimulationController@getMyCourse');
+
+
+    Route::get('/test/{id}', 'SimulationController@test');
 });

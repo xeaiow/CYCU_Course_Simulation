@@ -1,8 +1,4 @@
-@extends('layout.main')
-
-@section('pageTitle', '模擬中原')
-
-@section('content')
+@extends('layout.main') @section('pageTitle', '模擬中原') @section('content')
 
 <!-- Grid -->
 <div class="ui grid stackable" ng-init="loadAddedCourse()">
@@ -11,10 +7,18 @@
             <a class="item active" data-tab="first">搜尋課程</a>
             <a class="item" data-tab="second">已選課程</a>
             <a class="item">
-                <% selectPoints %> / 22</a>
+                <span ng-class="{'over_points' : selectPoints > 22}"><% selectPoints %></span> &nbsp;/ 22</a>
         </div>
         <!-- 搜尋課程 -->
         <div class="ui bottom basic tab segment active" data-tab="first">
+
+            <!-- 開課系級 -->
+            <div class="margin-bottom-20">
+                <select class="ui fluid search dropdown" ng-model="select_class">
+                    <option value="">開課系級</option>
+                    <option value="<% item %>" ng-repeat="item in year_class"><% item %></option>
+                </select>
+            </div>
 
             <!-- 搜尋列 -->
             <div class="ui fluid icon input">
@@ -105,8 +109,8 @@
     <div class="nine wide column">
 
         <div class="ui small basic icon buttons right floated">
-            <button class="ui button" ng-click="course_download()" data-tooltip="下載課表" data-position="top left"><i class="cloud download icon"></i></button>
-            <button class="ui button" ng-click="save_course()" data-tooltip="儲存課表" data-position="top left"><i class="save icon"></i></button>
+            <button class="ui button" ng-click="course_download()" data-tooltip="下載課表" data-position="bottom left"><i class="cloud download icon"></i></button>
+            <button class="ui button" ng-click="save_course()" data-tooltip="儲存課表" data-position="bottom left"><i class="save icon"></i></button>
         </div>
 
         <div class="course_scroll">

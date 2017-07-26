@@ -70,6 +70,10 @@ li,
     margin-top: 20px;
 }
 
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
+
 .margin-50 {
     margin-top: 50px;
 }
@@ -125,6 +129,11 @@ li,
 .none-link,
 .none-link:hover {
     color: #FFF;
+}
+
+.over_points {
+    color: #D11C16 !important;
+    font-weight: 900 !important;
 }
 
 

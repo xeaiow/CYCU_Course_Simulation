@@ -16,6 +16,14 @@ app.config(function($sceDelegateProvider) {
 
 app.controller('ListController', function($scope, $http) {
 
+    $scope.year_class = []; // 開課系級
+    $scope.select_class = ""; // 所選擇的開課系級
+    // 載入開課系級
+    $http({ method: 'GET', url: 'class.json' }).success(function(data, status, headers, config) {
+
+        $scope.year_class = data;
+    });
+
     // 搜尋課程
     $scope.course = [];
     $scope.loging = false;
@@ -24,9 +32,12 @@ app.controller('ListController', function($scope, $http) {
     $scope.search = function() {
 
         $http({
-                url: $scope.baseUrl + 'search_course/' + $scope.keywords,
-                method: "GET",
-                // data: $.param({ "keywords": $scope.keywords }),
+                url: $scope.baseUrl + 'search_course',
+                method: "POST",
+                data: $.param({
+                    "keywords": $scope.keywords,
+                    "year_class": $scope.select_class
+                }),
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                 },
@@ -94,16 +105,16 @@ app.controller('ListController', function($scope, $http) {
 
 
         // 判斷是否超過一學期可修習學分數
-        if ($scope.selectPoints + parseInt(point) > 22) {
+        // if ($scope.selectPoints + parseInt(point) > 22) {
 
-            swal({
-                title: "錯誤",
-                text: "學分超過上限！",
-                type: "error",
-                confirmButtonText: "知道了"
-            });
-            $scope.keepGoing = false;
-        }
+        //     swal({
+        //         title: "錯誤",
+        //         text: "學分超過上限！",
+        //         type: "error",
+        //         confirmButtonText: "知道了"
+        //     });
+        //     $scope.keepGoing = false;
+        // }
 
 
         // 計算此課程有多少個上課時段
