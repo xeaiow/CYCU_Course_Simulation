@@ -61,5 +61,4 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
     Route::get('/get_my_course', 'SimulationController@getMyCourse');
 
 
-    Route::get('/test/{id}', 'SimulationController@test');
 });

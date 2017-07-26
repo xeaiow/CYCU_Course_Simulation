@@ -327,41 +327,4 @@ class SimulationController extends Controller
         return redirect('/');
     }
 
-    public function test (Request $request)
-    {
-
-        $fuzzy = explode(" ", $request->id); // ex. ['教育實習', '5-2345.']
-        
-        // 如果使用者輸入的是一般搜尋，就用 %LIKE% 找課程
-        if (count($fuzzy) == 1) {
-
-            $keywords = $request->id;
-
-            echo Course::
-            where('course_name', 'regex', "/.*$keywords.*/i")
-                ->orWhere('course_id', $keywords)
-                ->orWhere('teacher', 'regex', "/.*$keywords.*/i")
-                ->orWhere('time_1', 'regex', "/.*$keywords.*/i")
-            ->get();
-        }
-        // 如果使用者用模糊搜尋，就將課程及時間解析再搜尋
-        else{
-
-            $time = $fuzzy[1]."."; // 資料當初結構問題，所以結尾要加一個 .
-
-            echo Course::Where('course_name', 'regex', "/.*$fuzzy[0].*/i")->
-            Where('time_1', $time)->get();
-        }
-
-        
-
-
-        // echo Course::
-        // where('course_name', 'regex', "/.*$keywords.*/i")
-        //     ->orWhere('course_id', $keywords)
-        //     ->orWhere('teacher', 'regex', "/.*$keywords.*/i")
-        //     ->orWhere('time_1', 'regex', "/.*$keywords.*/i")
-        // ->get();
-   
-    }
 }
