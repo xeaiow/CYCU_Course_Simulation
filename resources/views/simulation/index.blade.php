@@ -226,7 +226,7 @@
                         </td>
                     </tr>
                     <tr class="center aligned">
-                        <td class="course_block_schedule" data-tooltip="13:10 ~ 14:00" data-position="top left">5</td>
+                        <td class="course_block_schedule" data-tooltip="12:10 ~ 13:00" data-position="top left">B</td>
                         <td class="course_block" data-tooltip="<% course_date[28].teacher %>" data-position="top left">
                             <% course_date[28].id %>
                         </td>
@@ -250,7 +250,7 @@
                         </td>
                     </tr>
                     <tr class="center aligned">
-                        <td class="course_block_schedule" data-tooltip="14:10 ~ 15:00" data-position="top left">6</td>
+                        <td class="course_block_schedule" data-tooltip="13:10 ~ 14:00" data-position="top left">5</td>
                         <td class="course_block" data-tooltip="<% course_date[35].teacher %>" data-position="top left">
                             <% course_date[35].id %>
                         </td>
@@ -274,7 +274,7 @@
                         </td>
                     </tr>
                     <tr class="center aligned">
-                        <td class="course_block_schedule" data-tooltip="15:10 ~ 16:00" data-position="top left">7</td>
+                        <td class="course_block_schedule" data-tooltip="14:10 ~ 15:00" data-position="top left">6</td>
                         <td class="course_block" data-tooltip="<% course_date[42].teacher %>" data-position="top left">
                             <% course_date[42].id %>
                         </td>
@@ -298,7 +298,7 @@
                         </td>
                     </tr>
                     <tr class="center aligned">
-                        <td class="course_block_schedule" data-tooltip="16:10 ~ 17:00" data-position="top left">8</td>
+                        <td class="course_block_schedule" data-tooltip="15:10 ~ 16:00" data-position="top left">7</td>
                         <td class="course_block" data-tooltip="<% course_date[49].teacher %>" data-position="top left">
                             <% course_date[49].id %>
                         </td>
@@ -322,7 +322,7 @@
                         </td>
                     </tr>
                     <tr class="center aligned">
-                        <td class="course_block_schedule" data-tooltip="17:05 ~ 17:55" data-position="top left">C</td>
+                        <td class="course_block_schedule" data-tooltip="16:10 ~ 17:00" data-position="top left">8</td>
                         <td class="course_block" data-tooltip="<% course_date[56].teacher %>" data-position="top left">
                             <% course_date[56].id %>
                         </td>
@@ -346,7 +346,7 @@
                         </td>
                     </tr>
                     <tr class="center aligned">
-                        <td class="course_block_schedule" data-tooltip="18:00 ~ 18:50" data-position="top left">D</td>
+                        <td class="course_block_schedule" data-tooltip="17:05 ~ 17:55" data-position="top left">C</td>
                         <td class="course_block" data-tooltip="<% course_date[63].teacher %>" data-position="top left">
                             <% course_date[63].id %>
                         </td>
@@ -370,7 +370,7 @@
                         </td>
                     </tr>
                     <tr class="center aligned">
-                        <td class="course_block_schedule" data-tooltip="18:55 ~ 19:45" data-position="top left">E</td>
+                        <td class="course_block_schedule" data-tooltip="18:00 ~ 18:50" data-position="top left">D</td>
                         <td class="course_block" data-tooltip="<% course_date[70].teacher %>" data-position="top left">
                             <% course_date[70].id %>
                         </td>
@@ -394,7 +394,7 @@
                         </td>
                     </tr>
                     <tr class="center aligned">
-                        <td class="course_block_schedule" data-tooltip="19:50 ~ 20:40" data-position="top left">F</td>
+                        <td class="course_block_schedule" data-tooltip="18:55 ~ 19:45" data-position="top left">E</td>
                         <td class="course_block" data-tooltip="<% course_date[77].teacher %>" data-position="top left">
                             <% course_date[77].id %>
                         </td>
@@ -418,7 +418,7 @@
                         </td>
                     </tr>
                     <tr class="center aligned">
-                        <td class="course_block_schedule" data-tooltip="20:45 ~ 21:35" data-position="top left">G</td>
+                        <td class="course_block_schedule" data-tooltip="19:50 ~ 20:40" data-position="top left">F</td>
                         <td class="course_block" data-tooltip="<% course_date[84].teacher %>" data-position="top left">
                             <% course_date[84].id %>
                         </td>
@@ -439,6 +439,30 @@
                         </td>
                         <td class="course_block" data-tooltip="<% course_date[90].teacher %>" data-position="top left">
                             <% course_date[90].id %>
+                        </td>
+                    </tr>
+                    <tr class="center aligned">
+                        <td class="course_block_schedule" data-tooltip="20:45 ~ 21:35" data-position="top left">G</td>
+                        <td class="course_block" data-tooltip="<% course_date[91].teacher %>" data-position="top left">
+                            <% course_date[91].id %>
+                        </td>
+                        <td class="course_block" data-tooltip="<% course_date[92].teacher %>" data-position="top left">
+                            <% course_date[92].id %>
+                        </td>
+                        <td class="course_block" data-tooltip="<% course_date[93].teacher %>" data-position="top left">
+                            <% course_date[93].id %>
+                        </td>
+                        <td class="course_block" data-tooltip="<% course_date[94].teacher %>" data-position="top left">
+                            <% course_date[94].id %>
+                        </td>
+                        <td class="course_block" data-tooltip="<% course_date[95].teacher %>" data-position="top left">
+                            <% course_date[95].id %>
+                        </td>
+                        <td class="course_block" data-tooltip="<% course_date[96].teacher %>" data-position="top left">
+                            <% course_date[96].id %>
+                        </td>
+                        <td class="course_block" data-tooltip="<% course_date[97].teacher %>" data-position="top left">
+                            <% course_date[97].id %>
                         </td>
                     </tr>
                 </tbody>

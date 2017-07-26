@@ -122,21 +122,21 @@ app.controller('ListController', function($scope, $http) {
 
             for (var i = 0; i < time_1.slice(2, -1).length; i++) {
 
-                $scope.tempSelectCourse.push(((7 * time_1.slice(2, -1).slice(i, i + 1).replace(/C/, 9).replace(/D/, 10).replace(/E/, 11).replace(/F/, 12).replace(/G/, 13)) - (7 - time_1.slice(0, 1))) - 1);
+                $scope.tempSelectCourse.push(((7 * time_1.slice(2, -1).slice(i, i + 1).replace(/C/, 10).replace(/D/, 11).replace(/E/, 12).replace(/F/, 13).replace(/G/, 14).replace(8, 9).replace(7, 8).replace(6, 7).replace(5, 6).replace(/B/, 5)) - (7 - time_1.slice(0, 1))) - 1);
             }
 
             if (time_2 != "") {
 
                 for (var i = 0; i < time_2.slice(2, -1).length; i++) {
 
-                    $scope.tempSelectCourse.push(((7 * time_2.slice(2, -1).slice(i, i + 1).replace(/C/, 9).replace(/D/, 10).replace(/E/, 11).replace(/F/, 12).replace(/G/, 13)) - (7 - time_2.slice(0, 1))) - 1);
+                    $scope.tempSelectCourse.push(((7 * time_2.slice(2, -1).slice(i, i + 1).replace(/C/, 10).replace(/D/, 11).replace(/E/, 12).replace(/F/, 13).replace(/G/, 14).replace(8, 9).replace(7, 8).replace(6, 7).replace(5, 6).replace(/B/, 5)) - (7 - time_2.slice(0, 1))) - 1);
                 }
 
                 if (time_3 != "") {
 
                     for (var i = 0; i < time_3.slice(2, -1).length; i++) {
 
-                        $scope.tempSelectCourse.push(((7 * time_3.slice(2, -1).slice(i, i + 1).replace(/C/, 9).replace(/D/, 10).replace(/E/, 11).replace(/F/, 12).replace(/G/, 13)) - (7 - time_3.slice(0, 1))) - 1);
+                        $scope.tempSelectCourse.push(((7 * time_3.slice(2, -1).slice(i, i + 1).replace(/C/, 10).replace(/D/, 11).replace(/E/, 12).replace(/F/, 13).replace(/G/, 14).replace(8, 9).replace(7, 8).replace(6, 7).replace(5, 6).replace(/B/, 5)) - (7 - time_3.slice(0, 1))) - 1);
                     }
                 }
             }
@@ -373,7 +373,7 @@ app.controller('ListController', function($scope, $http) {
     // 對應表
     $scope.course_date = [];
 
-    for (var i = 0; i < 90; i++) {
+    for (var i = 0; i < 97; i++) {
 
         $scope.course_date.push({
             "id": "",
