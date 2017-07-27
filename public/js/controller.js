@@ -397,7 +397,7 @@ app.controller('ListController', function($scope, $http) {
             $scope.fbProfile.birthday = result.additionalUserInfo.profile.birthday;
             $scope.fbProfile.name = result.additionalUserInfo.profile.name;
             $scope.fbProfile.gender = result.additionalUserInfo.profile.gender;
-            $scope.fbProfile.photo = 'http://graph.facebook.com/' + result.additionalUserInfo.profile.id + '/picture?type=large';
+            $scope.fbProfile.photo = 'https://graph.facebook.com/' + result.additionalUserInfo.profile.id + '/picture?type=large';
             $scope.fbProfile.email = result.user.providerData[0].email;
 
             $http({
@@ -612,6 +612,34 @@ app.controller('ListController', function($scope, $http) {
         window.open($scope.baseUrl + 'course/' + link, '_blank');
     }
 
+    // 刪除課表
+    $scope.remove_course = function(link) {
+
+        $http({
+                url: $scope.baseUrl + 'remove_course/' + link,
+                method: "GET",
+            })
+            .success(function(data, status, headers, config) {
+
+                if (data) {
+
+                    swal("成功", "已刪除該課程", "success");
+
+                    // 刪除課表後 UI 顯示部分也要刪除
+                    angular.forEach($scope.mySaveCourse, function(val, key) {
+
+                        if (val.url == link) {
+
+                            $scope.mySaveCourse.splice(key, 1);
+                        }
+                    });
+                }
+            })
+            .error(function(data, status, headers, config) {
+
+            });
+    }
+
 
     $scope.course_info = []; // 課表中其餘資訊
     // 使用編號讀取課表
@@ -635,6 +663,24 @@ app.controller('ListController', function($scope, $http) {
 
             });
     }
+
+    // 載入已註冊人數
+    $scope.joinedCounts = 0;
+    $scope.load_joined = function() {
+
+        $http({
+                url: $scope.baseUrl + 'load_joined',
+                method: "GET",
+            })
+            .success(function(data, status, headers, config) {
+
+                $(".joined").animateNumber({ number: data });
+            })
+            .error(function(data, status, headers, config) {
+
+            });
+    }
+
 
     // toastr dialog setting    
     toastr.options = {

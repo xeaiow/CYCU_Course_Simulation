@@ -320,6 +320,29 @@ class SimulationController extends Controller
     }
 
 
+    // 載入已註冊人數
+    public function getJoined ()
+    {
+        echo Users::count();
+    }
+
+
+    // 刪除我的課表
+    public function removeCourse (Request $request)
+    {
+
+        $remove_course = courseAvailable::Where('fb_id', Session::get('id'))->Where('rnd_id', $request->id)->first();
+        
+        // 如果該編號是我的課表才刪除
+        if ($remove_course !== null) {
+
+            echo $remove_course->delete();
+        }
+
+        return redirect('/start');
+    }
+
+
     // 登出
     public function logout ()
     {

@@ -13,7 +13,10 @@ Route::post('/profile/save', 'SimulationController@saveProfile');
 Route::get('/course/{id}', 'SimulationController@course');
 
 // 載入公開的課表 ajax
-Route::get('/load_open_course/{id}', 'SimulationController@loadOpenCourse')->where('id', '[0-9]+');;
+Route::get('/load_open_course/{id}', 'SimulationController@loadOpenCourse')->where('id', '[0-9]+');
+
+// 載入已註冊人數
+Route::get('/load_joined', 'SimulationController@getJoined');
 
 
 Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
@@ -60,5 +63,7 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
     // 載入我的儲存的課表 ajax
     Route::get('/get_my_course', 'SimulationController@getMyCourse');
 
-
+    // 刪除我的課表
+    Route::get('/remove_course/{id}', 'SimulationController@removeCourse');
+    
 });

@@ -6,11 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="author" content="CYCU Simulation">
-    <meta name="og:description" content="這個課表選不到，還有千千萬萬個..." />
+    <meta name="og:description" content="每學期選課前，總是要手動列出欲選課清單，但往往沒想像中順利，得預備許多課表組合，因此誕生了此系統，希望能幫助到大家。" />
     <meta property="og:title" content="{{ $data['title'] }}"/>
+    <meta property="og:site_name" content="{{ $data['title'] }}"></meta>
     <meta property="og:type" content="模擬選課"/>
-    <meta property="og:url" content="{{ Request::url() }}"/>
-    <meta property="og:image" content="//i.imgur.com/QEobY1P.png"/>
+    <meta property="og:url" content="{{ Request::url() }}"/> 
+    <meta property="og:image" content="https://i.imgur.com/QEobY1P.png"/>
+    <meta property="og:image:secure_url" content="https://i.imgur.com/QEobY1P.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="630">
+    <meta property="og:image:height" content="760">
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
     <script src="{{ asset('/js/controller.js') }}"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -46,7 +51,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="center aligned">
+                       <tr class="center aligned">
                         <td class="course_block_schedule" data-tooltip="08:10 ~ 09:00" data-position="top left">1</td>
                         <td class="course_block" data-tooltip="<% course_date[0].teacher %>" data-position="top left">
                             <% course_date[0].id %>
@@ -391,7 +396,7 @@
                 <i class="share icon"></i> 分享這個課表
             </h4>
             <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button" data-size="large" data-mobile-iframe="true">
-                <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F140.135.112.96%2Fsimulation%2Fpublic&amp;src=sdkpreparse"></a>
+                <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsimulation.com.tw%2F&amp;src=sdkpreparse"></a>
             </div>
 
             <!-- courseInfo -->
@@ -436,6 +441,16 @@
             js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.10&appId=452934435085965";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-103170316-1', 'auto');
+        ga('send', 'pageview');
     </script>
 
     <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
