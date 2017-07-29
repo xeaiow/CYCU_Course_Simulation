@@ -29,16 +29,16 @@
                         <% item.year %>
                     </td>
                     <td>
-                        <% item.course_name %>
+                        <% item.course_id %>
                     </td>
                     <td>
-                       <% item.com_or_opt %>
+                       <% item.course_name %>
                     </td>
                     <td>
-                        <% item.point %>
+                       <% item.point %>
                     </td>
                     <td>
-                       <% item.nature %>
+                        <% item.type %>
                     </td>
                     <td>
                         <% item.score %>
