@@ -388,7 +388,7 @@ app.controller('ListController', function($scope, $http) {
 
         var provider = new firebase.auth.FacebookAuthProvider();
         provider.setCustomParameters({
-            'display': 'popup'
+            'display': 'page'
         });
 
         firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -484,7 +484,45 @@ app.controller('ListController', function($scope, $http) {
             })
             .success(function(data, status, headers, config) {
 
-                $scope.history_course_list = data.history_course;
+                // 如果有抓到資料就秀出來
+                if (data.history_course.length !== 0) {
+
+                    $scope.history_course_list = data.history_course;
+                    return false;
+                }
+
+                // 引導匯入已修習課程 輸入 student ID
+                swal({
+                        title: "匯入課程",
+                        text: "輸入學號匯入已修過課程。",
+                        type: "input",
+                        showCancelButton: true,
+                        closeOnConfirm: false,
+                        confirmButtonText: "繼續",
+                        cancelButtonText: "放棄",
+                        animation: "slide-from-top",
+                        inputPlaceholder: "學號"
+                    },
+                    function(username) {
+
+                        // password
+                        swal({
+                                title: "匯入課程",
+                                text: "輸入 iTouch 密碼完成匯入！",
+                                type: "input",
+                                showCancelButton: true,
+                                closeOnConfirm: false,
+                                confirmButtonText: "完成",
+                                cancelButtonText: "放棄",
+                                animation: "slide-from-top",
+                                inputPlaceholder: "密碼"
+                            },
+                            function(password) {
+
+                                // 呼叫登入 itouch 模組
+                                $scope.login_itouch(username, password);
+                            });
+                    });
             })
             .error(function(data, status, headers, config) {
 
@@ -681,6 +719,230 @@ app.controller('ListController', function($scope, $http) {
             });
     }
 
+    $scope.passCourse = []; // 已修習之課程
+    $scope.login_itouch = function(username, password) {
+
+        $http({
+                url: $scope.baseUrl + 'load_mymentor',
+                method: "POST",
+                data: $.param({
+                    "userId": username,
+                    "password": password
+                }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                },
+            })
+            .success(function(data, status, headers, config) {
+
+                // 學號或密碼錯誤就終止程式
+                if (data.length == 0) {
+
+                    swal("失敗", "學號或密碼錯誤！", "error");
+                    return false;
+                }
+
+                var result = new Array(); // 回傳結果暫存位置
+                var course_type; // 課程類別 ex. 天學、必修、體育
+
+                var isNumOrEng = new RegExp("[A-Za-z0-9]+"); // 是否為英文或數字
+
+                // 處理擷取到的課程課程
+                angular.forEach(data, function(val, key) {
+
+                    // 清除空格及 html tag
+                    var res = result[key] = val.replace(/\s\s+/g, ' ').replace(/(<([^>]+)>)/ig, "").split(" ");
+                    var demand = new Array(); // 需存入的值
+
+                    // 排除重複資料
+                    if (res[5] === "") return false;
+
+                    // 本學期修習課程，成績尚未登陸
+                    if (res[10] == "" && res[11] == "" && isNumOrEng.test(res[1])) {
+
+                        demand = [4, 5, 6, 9, "成績未出", course_type, 1];
+
+                        $scope.passCourse.push({
+                            'year': res[demand[0]],
+                            'course_id': res[demand[1]],
+                            'course_name': res[demand[2]],
+                            'point': res[demand[3]],
+                            'score': demand[4],
+                            'type': demand[5],
+                            'class': demand[6]
+                        });
+
+                    } else if (res[10] == "" && res[11] == "") {
+
+                        demand = [4, 5, 6, 9, "成績未出", course_type, 1];
+
+                        $scope.passCourse.push({
+                            'year': res[demand[0]],
+                            'course_id': res[demand[1]],
+                            'course_name': res[demand[2]],
+                            'point': res[demand[3]],
+                            'score': demand[4],
+                            'type': demand[5],
+                            'class': demand[6]
+                        });
+
+                        course_type == res[1]; // 換課程類別
+
+                    } else if (res[12] == "" && res[13] == "") {
+
+                        if (!isNumOrEng.test(res[1]) && res[1] != "") {
+
+                            course_type = res[1];
+                        }
+
+                        demand = [5, 6, res[7] + res[8], 11, "成績未出", course_type, 2];
+
+                        // 本學期修習之課程 (例外)
+                        $scope.passCourse.push({
+                            'year': res[demand[0]],
+                            'course_id': res[demand[1]],
+                            'course_name': demand[2],
+                            'point': res[demand[3]],
+                            'score': demand[4],
+                            'type': demand[5],
+                            'class': demand[6]
+                        });
+                        return false;
+
+                    } else if (res[13] == "") {
+
+                        if (!isNumOrEng.test(res[1]) && res[1] != "") {
+
+                            course_type = res[1];
+                        }
+
+                        demand = [5, 6, res[7] + res[8], 11, 12, course_type, 2];
+
+                        $scope.passCourse.push({
+                            'year': res[demand[0]],
+                            'course_id': res[demand[1]],
+                            'course_name': demand[2],
+                            'point': res[demand[3]],
+                            'score': res[demand[4]],
+                            'type': demand[5],
+                            'class': demand[6]
+                        });
+                        return false;
+
+
+                    } else if (res[4] == "" && res[11] == "") {
+
+                        if (!isNumOrEng.test(res[1]) && res[1] != "") {
+
+                            course_type = res[1];
+                        }
+
+                        demand = [5, 6, 7, 10, "成績未出", course_type, 1];
+
+                        // 為課程類別之首，但剛好是本學期修習課程 ex. 天類 - 宗教哲學
+                        $scope.passCourse.push({
+                            'year': res[demand[0]],
+                            'course_id': res[demand[1]],
+                            'course_name': res[demand[2]],
+                            'point': res[demand[3]],
+                            'score': demand[4],
+                            'type': demand[5],
+                            'class': demand[6]
+                        });
+
+                    } else if (res[11] == "" || res[12] == "") {
+
+                        if (!isNumOrEng.test(res[1]) && res[1] != "") {
+
+                            course_type = res[1];
+
+                            if (res[12] == "") {
+
+                                demand = [5, 6, 7, 10, 11, course_type, 3];
+
+                                // 抵免或已修習之課程
+                                $scope.passCourse.push({
+                                    'year': res[demand[0]],
+                                    'course_id': res[demand[1]],
+                                    'course_name': res[demand[2]],
+                                    'point': res[demand[3]],
+                                    'score': res[demand[4]],
+                                    'type': demand[5],
+                                    'class': demand[6]
+                                });
+                                return false;
+                            }
+                        }
+
+                        if (res[4] != "") {
+
+                            demand = [4, 5, 6, 9, 10, course_type, 3];
+
+                            // 抵免或已修習之課程
+                            $scope.passCourse.push({
+                                'year': res[demand[0]],
+                                'course_id': res[demand[1]],
+                                'course_name': res[demand[2]],
+                                'point': res[demand[3]],
+                                'score': res[demand[4]],
+                                'type': demand[5],
+                                'class': demand[6]
+                            });
+                            return false;
+                        }
+
+                        if (res[10] == "") {
+
+                            demand = [4, 5, 6, 9, 10, course_type, 3];
+
+                            $scope.passCourse.push({
+                                'year': res[demand[0]],
+                                'course_id': res[demand[1]],
+                                'course_name': res[demand[2]],
+                                'point': res[demand[3]],
+                                'score': res[demand[4]],
+                                'type': demand[5],
+                                'class': demand[6]
+                            });
+                            return false;
+                        }
+                    }
+                });
+                console.log(result);
+
+                // save pass course
+                $http({
+                        url: $scope.baseUrl + 'pass/save',
+                        method: "POST",
+                        data: $.param({
+                            "history_course": $scope.passCourse,
+                        }),
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                        },
+                    })
+                    .success(function(data, status, headers, config) {
+
+                        swal({
+                                title: "成功",
+                                text: "下載完成，系統將自動計算學分！",
+                                type: "success",
+                                showCancelButton: false,
+                                closeOnConfirm: false,
+                                confirmButtonText: "知道了"
+                            },
+                            function() {
+                                window.location.href = $scope.baseUrl + 'pass';
+                            });
+                    })
+                    .error(function(data, status, headers, config) {
+
+                    });
+            })
+            .error(function(data, status, headers, config) {
+
+            });
+    }
 
     // toastr dialog setting    
     toastr.options = {

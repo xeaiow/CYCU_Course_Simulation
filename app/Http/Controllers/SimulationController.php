@@ -16,8 +16,6 @@ use Session;
 class SimulationController extends Controller
 {
     
-   
-
     public function index()
     {
         $data = array(
@@ -316,7 +314,7 @@ class SimulationController extends Controller
     // 讀取公開課表 ajax (不需登入)
     public function loadOpenCourse (Request $request)
     {
-        echo $exists = courseAvailable::Where('rnd_id', $request->id)->first();
+        echo $exists = courseAvailable::Where('rnd_id', $request->id)->first(['course_lists', 'created_at', 'rnd_id', 'title']);
     }
 
 
@@ -340,6 +338,86 @@ class SimulationController extends Controller
         }
 
         return redirect('/start');
+    }
+
+
+    public function loadMymentor (Request $request)
+    {
+
+        $url        = "http://cmap.cycu.edu.tw:8080//MyMentor/stdLogin.do" ;
+        $ref_url    = "http://cmap.cycu.edu.tw:8080/MyMentor/courseCreditStructure.do";
+        $userId     = $request->userId;
+        $password   = $request->password;
+        
+
+        $cookie_jar = tempnam('./tmp','cookie.txt');
+        
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie_jar);
+        curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)");
+        curl_setopt($ch, CURLOPT_TIMEOUT, 40);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_REFERER, $ref_url);
+        curl_setopt($ch, CURLOPT_HEADER, TRUE);
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "userId=". $userId ."&password=". $password);
+        curl_exec ($ch);
+    
+        curl_close ($ch);
+
+        $ch2 = curl_init();
+
+        curl_setopt($ch2, CURLOPT_URL, "http://cmap.cycu.edu.tw:8080/MyMentor/courseCreditStructure.do");
+        curl_setopt($ch2, CURLOPT_HEADER, 0);
+        curl_setopt($ch2, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch2, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)" );
+        curl_setopt($ch2, CURLOPT_CONNECTTIMEOUT, 0);
+
+        curl_setopt($ch2, CURLOPT_COOKIEFILE, $cookie_jar);
+        
+        $orders = curl_exec($ch2);
+        curl_close($ch2);
+        
+
+        $preg = "/<tr>(.*?)<\/tr>/si"; 
+        preg_match_all($preg, $orders, $arr);
+
+        echo json_encode($arr[0]);
+    }
+
+
+    // 儲存已爬到的已修習之課程
+    public function savePassCourse (Request $request)
+    {
+
+        $historyCourse = historyCourse::Where('fb_id', Session::get('id'));
+        $historyCourse->update(['history_course' => $request->history_course]);
+
+        // 設定該使用者為已匯入過
+        //Users::Where('fb_id', Session::get('id'))->update(['isImport' => 1]);
+
+        // 建立 Session 且設定為已匯入 
+        //Session::put('isImport', 1);
+    }
+
+
+    // 列出已修習的清單
+    public function passCourse ()
+    {
+
+        $data = array(
+            'username' => Session::get('username'),
+            'photo' => Session::get('photo'),
+            'isImport' => Session::get('isImport')
+        );
+
+        return view('simulation.pass')->with('profile', $data);
     }
 
 

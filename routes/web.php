@@ -65,5 +65,14 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
 
     // 刪除我的課表
     Route::get('/remove_course/{id}', 'SimulationController@removeCourse');
+
+    // 已修習的學分清單
+    Route::get('/pass', 'SimulationController@passCourse');
+
+    // 儲存爬到的已修習之課程
+    Route::post('/pass/save', 'SimulationController@savePassCourse');
+
+    // 儲存 MyMentor 下載的課程
+    Route::post('/load_mymentor', 'SimulationController@loadMymentor');
     
 });
