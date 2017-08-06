@@ -137,6 +137,14 @@ td,
     font-weight: 900 !important;
 }
 
+.table-th {
+    width: 40%;
+}
+
+.very .basic th {
+    widows: 60%;
+}
+
 
 /* Front Login */
 

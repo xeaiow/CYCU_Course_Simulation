@@ -74,5 +74,16 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
 
     // 儲存 MyMentor 下載的課程
     Route::post('/load_mymentor', 'SimulationController@loadMymentor');
+
+    // test
+    Route::get('/test', 'SimulationController@test');
+
+    // 找房子頁面
+    Route::get('/house', 'SimulationController@house');
+
+    // 新增屋子資訊
+    Route::get('/house/post', 'SimulationController@post_house');
+    Route::post('/house/post', 'SimulationController@post_house_handle');
+
     
 });

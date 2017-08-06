@@ -412,12 +412,56 @@ class SimulationController extends Controller
     {
 
         $data = array(
-            'username' => Session::get('username'),
-            'photo' => Session::get('photo'),
-            'isImport' => Session::get('isImport')
+            'username'  => Session::get('username'),
+            'photo'     => Session::get('photo'),
+            'isImport'  => Session::get('isImport')
         );
 
         return view('simulation.pass')->with('profile', $data);
+    }
+
+
+    public function test ()
+    {
+        $data = array(
+            'username'  => Session::get('username'),
+            'photo'     => Session::get('photo'),
+            'id'        => Session::get('id'),
+            'isImport'  => Session::get('isImport')
+        );
+
+        return view('simulation.test')->with('profile', $data);
+    }
+
+    // 找房子頁面
+    public function house ()
+    {
+        $data = array(
+            'username'  => Session::get('username'),
+            'photo'     => Session::get('photo'),
+            'isImport'  => Session::get('isImport')
+        );
+
+        return view('house.index')->with('profile', $data);
+    }
+
+
+    // 新增屋子資訊
+    public function post_house (Request $request)
+    {
+        $data = array(
+            'username'  => Session::get('username'),
+            'photo'     => Session::get('photo'),
+            'isImport'  => Session::get('isImport')
+        );
+
+        return view('house.post')->with('profile', $data);
+    }
+
+    // 新增屋子資訊 post
+    public function post_house_handle ()
+    {
+
     }
 
 

@@ -18,9 +18,11 @@
     <meta property="og:image:secure_url" content="https://i.imgur.com/QEobY1P.png" />
     <title>@yield('pageTitle') - CYCU Simulation</title>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
-    <script src="{{ asset('/js/controller.js') }}"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.js"></script>
+    <script src="{{ asset('/js/angularify.semantic.js') }}"></script>
+    <script src="{{ asset('/js/rating.js') }}"></script>
+     <script src="{{ asset('/js/controller.js') }}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
@@ -45,7 +47,7 @@
         <a class="item" href="{{ url('/mycourse') }}">我的課表</a>
         <a class="item">找工作</a>
         <a class="item">找物品</a>
-        <a class="item">找房子</a>
+        <a class="item" href="{{ url('house') }}">找屋子</a>
         <a class="item" href="//fb.me/cycusimulation">Fans</a>
         <a class="item" href="//m.me/cycusimulation">feedback</a>
 
@@ -87,7 +89,7 @@
         ga('create', 'UA-103170316-1', 'auto');
         ga('send', 'pageview');
     </script>
-    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
     <script>
         // Initialize Firebase
         var config = {
