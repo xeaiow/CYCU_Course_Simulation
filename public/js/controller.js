@@ -1,4 +1,4 @@
-var app = angular.module('myApp', []);
+var app = angular.module('myApp', ['ui.mask']);
 app.config(function($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
@@ -13,11 +13,65 @@ app.config(function($sceDelegateProvider) {
     ]);
 });
 
+app.filter('landlord_gender', function() {
+    return function(val) {
+        switch (val) {
+            case "1":
+                return "男";
+                break;
+            case "2":
+                return "女";
+                break;
+            default:
+                return "請選擇房東性別";
+                break;
+        }
+    };
+})
+app.filter('house_type', function() {
+    return function(val) {
+        switch (val) {
+            case "1":
+                return "套房";
+                break;
+            case "2":
+                return "雅房";
+                break;
+            case "3":
+                return "家庭式";
+                break;
+            case "4":
+                return "酒店式公寓";
+                break;
+            case "5":
+                return "摩天大樓";
+                break;
+            case "6":
+                return "其他";
+                break;
+            default:
+                return "請選擇房型";
+                break;
+        }
+    };
+});
+
+app.filter('checkbox', function() {
+    return function(val) {
+        if (val != "1") {
+            return "否";
+        }
+        return "是";
+    };
+});
+
+
 
 app.controller('ListController', function($scope, $http) {
 
     $scope.year_class = []; // 開課系級
     $scope.select_class = ""; // 所選擇的開課系級
+
     // 載入開課系級
     $http({ method: 'GET', url: 'class.json' }).success(function(data, status, headers, config) {
 
@@ -942,6 +996,11 @@ app.controller('ListController', function($scope, $http) {
             .error(function(data, status, headers, config) {
 
             });
+
+        $scope.progress = function() {
+
+
+        }
     }
 
     // toastr dialog setting    

@@ -20,9 +20,8 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.js"></script>
-    <script src="{{ asset('/js/angularify.semantic.js') }}"></script>
-    <script src="{{ asset('/js/rating.js') }}"></script>
-     <script src="{{ asset('/js/controller.js') }}"></script>
+    <script src="{{ asset('/js/controller.js') }}"></script>
+    <script src="{{ asset('/js/mask.min.js') }}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>

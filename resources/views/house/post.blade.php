@@ -1,45 +1,55 @@
 @extends('layout.main') @section('pageTitle', '新增屋子') @section('content')
 
 <div class="ui grid stackable">
-    <!-- 標題 -->
-    <div class="five wide column">
+    <div class="seven wide column">
+        <!-- 標題 -->
         <div class="ui form">
             <div class="field">
-                <h4 class="ui horizontal divider header">
-                    標題
-                </h4>
+                <h3 class="ui header blue">標題</h3>
                 <input type="text" ng-model="title" placeholder="中原大草皮">
-                <p ng-show="postTitle.length > 0" class="ng-hide">字數限制 <span ng-bind="postTitle.length" class="ng-binding"></span>/30</p>
             </div>
         </div>
-
-        <!-- 價格 -->
-
-        <h4 class="ui horizontal divider header">
-            資料
-        </h4>
-
+        <!-- 地址 -->
+        <div class="ui form margin-20">
+            <div class="field">
+                <h3 class="ui header blue">地址</h3>
+                <input type="text" placeholder="桃園市中壢區中北路200號" ng-model="marker">
+            </div>
+        </div>
+        <h3 class="ui header blue">資訊</h3>
+        <!--價格-->
         <div class="ui right labeled input fluid">
             <label class="ui label">價格</label>
             <input type="text" ng-model="rent">
             <div class="ui basic label">月</div>
         </div>
-
+        <!--樓高-->
         <div class="ui right labeled input fluid margin-20">
             <label class="ui label">樓高</label>
             <input type="text" ng-model="floor">
             <div class="ui basic label">樓</div>
         </div>
-
+        <!--戶數-->
         <div class="ui right labeled input fluid margin-20">
             <label class="ui label">戶數</label>
             <input type="text" ng-model="door">
             <div class="ui basic label">戶</div>
         </div>
-
-
-        <select class="ui fluid dropdown margin-20">
-            <option value="">選擇房型</option>
+        <!--坪數-->
+        <div class="ui right labeled input fluid margin-20">
+            <label class="ui label">坪數</label>
+            <input type="text" ng-model="space">
+            <div class="ui basic label">坪</div>
+        </div>
+        <!--房東性別-->
+        <select class="ui fluid dropdown margin-20" ng-model="landlord_gender">
+            <option value="">房東性別</option>
+            <option value="1">男</option>
+            <option value="2">女</option>
+        </select>
+        <!--房型-->
+        <select class="ui fluid dropdown margin-20" ng-model="house_type">
+            <option value="">房型</option>
             <option value="1">套房</option>
             <option value="2">雅房</option>
             <option value="3">家庭式</option>
@@ -47,24 +57,12 @@
             <option value="5">摩天大樓</option>
             <option value="6">其他</option>
         </select>
-
-        <div class="ui form margin-20">
-            <div class="field">
-                <h4 class="ui horizontal divider header">
-                    地標
-                </h4>
-                <input type="text" placeholder="21 鐘">
-                <p ng-show="postTitle.length > 0" class="ng-hide">字數限制 <span ng-bind="postTitle.length" class="ng-binding"></span>/30</p>
-            </div>
-        </div>
-
-        <h4 class="ui horizontal divider header">
-            規定
-        </h4>
+        <!--規定-->
+        <h3 class="ui header blue">規定</h3>
         <div class="ui form">
             <div class="field">
                 <div class="ui checkbox">
-                    <input type="checkbox" name="example">
+                    <input type="checkbox" ng-model="safe" ng-true-value="1" ng-false-value="0">
                     <label>安全設備 (滅火器、灑水器等)</label>
                 </div>
             </div>
@@ -72,7 +70,7 @@
         <div class="ui form">
             <div class="field">
                 <div class="ui checkbox">
-                    <input type="checkbox" name="example">
+                    <input type="checkbox" ng-model="extra_pay" ng-true-value="1" ng-false-value="0">
                     <label>額外費用</label>
                 </div>
             </div>
@@ -80,26 +78,53 @@
         <div class="ui form">
             <div class="field">
                 <div class="ui checkbox">
-                    <input type="checkbox" name="example">
+                    <input type="checkbox" ng-model="cooking" ng-true-value="1" ng-false-value="0">
                     <label>開伙</label>
                 </div>
             </div>
         </div>
-
-        <h4 class="ui horizontal divider header">
-            滿意度
-        </h4>
-        <h4 class="ui header">房東</h4>
-        <div class="ui star rating"></div>
-        <h4 class="ui header">居住</h4>
-        <div class="ui star rating"></div>
+        <!--滿意度-->
+        <h3 class="ui header blue">滿意度</h3>
+        <div class="ui right labeled input fluid margin-20">
+            <label class="ui label">房東</label>
+            <input type="text" ng-model="landlord_score" ui-mask="9">
+            <div class="ui basic label">/ 9</div>
+        </div>
+        <div class="ui right labeled input fluid margin-20">
+            <label class="ui label">居住</label>
+            <input type="text" ng-model="live_score" ui-mask="9">
+            <div class="ui basic label">/ 9</div>
+        </div>
+        <!-- 評論 -->
+        <h3 class="ui header blue">評論房東 (可空)</h3>
+        <div class="ui form">
+            <div class="field">
+                <textarea ng-model="landlord_comment"></textarea>
+            </div>
+        </div>
+        <!-- 評論 -->
+        <h3 class="ui header blue">居住心得 (可空)</h3>
+        <div class="ui form">
+            <div class="field">
+                <textarea ng-model="live_comment"></textarea>
+            </div>
+        </div>
     </div>
 
-    <div class="eleven wide column">
+    <div class="nine wide column">
 
-        <h1 class="ui header">
-            <% title %>
-        </h1>
+        <h2 class="ui header">
+            <i class="bookmark icon"></i>
+            <div class="content">
+                <% title %>
+            </div>
+        </h2>
+        <h2 class="ui header">
+            <i class="marker icon"></i>
+            <div class="content">
+                <% marker %>
+            </div>
+        </h2>
         <table class="ui very basic table">
             <tbody>
                 <tr>
@@ -120,44 +145,52 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="table-th">房東性別</td>
+                    <td>
+                        <% landlord_gender | landlord_gender %>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-th">坪數</td>
+                    <td>
+                        <% space %>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-th">房型</td>
+                    <td>
+                        <% house_type | house_type %>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-th">安全設備 (滅火器、逃生口)</td>
+                    <td>
+                        <% safe | checkbox %>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-th">額外費用 (管理費)</td>
+                    <td>
+                        <% extra_pay | checkbox %>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-th">開伙</td>
+                    <td>
+                        <% cooking | checkbox %>
+                    </td>
+                </tr>
+                <tr>
                     <td class="table-th">房東滿意度</td>
                     <td>
-                        <rating id="my-rating" size="large" type="heart" ng-model="rating"></rating>
+                        <% landlord_score %> / 9
                     </td>
                 </tr>
                 <tr>
                     <td class="table-th">居住滿意度</td>
                     <td>
-                        <rating id="my-rating" size="large" type="heart" ng-model="rating"></rating>
+                        <% live_score %> / 9
                     </td>
-                </tr>
-                <tr>
-                    <td class="table-th">房東性別</td>
-                    <td>男</td>
-                </tr>
-                <tr>
-                    <td class="table-th">附近地標</td>
-                    <td>21鐘</td>
-                </tr>
-                <tr>
-                    <td class="table-th">額外費用 (管理費)</td>
-                    <td>600</td>
-                </tr>
-                <tr>
-                    <td class="table-th">房屋類型</td>
-                    <td>無</td>
-                </tr>
-                <tr>
-                    <td class="table-th">居住人數</td>
-                    <td>雙人</td>
-                </tr>
-                <tr>
-                    <td class="table-th">安全設備 (滅火器、逃生口)</td>
-                    <td>有</td>
-                </tr>
-                <tr>
-                    <td class="table-th">開伙</td>
-                    <td>不可</td>
                 </tr>
             </tbody>
         </table>
@@ -166,19 +199,15 @@
         <div class="ui piled segment">
             <h4 class="ui header">評論房東</h4>
             <p>
-                她兒子會從窗戶跑進房間偷錢。明明不是我的電費，也叫我分攤。常常說謊騙人，環境髒亂，老鼠蟑螂很多。整天大叫罵人。
+                <% landlord_comment %>
             </p>
         </div>
         <div class="ui piled segment">
             <h4 class="ui header">居住心得</h4>
             <p>
-                很開心
+                <% live_comment %>
             </p>
         </div>
-
-        <!-- google map -->
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.2859675646937!2d121.23763801821511!3d24.95638338825835!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2adee07c063e88d1!2z5Lit5Y6f5aSc5biC!5e0!3m2!1szh-TW!2stw!4v1501491266363"
-            width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
 
     </div>
 
