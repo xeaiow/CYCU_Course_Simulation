@@ -12,6 +12,7 @@ use App\courseAvailable;
 
 use Redirect;
 use Session;
+use Mail;
 
 class SimulationController extends Controller
 {
@@ -423,14 +424,8 @@ class SimulationController extends Controller
 
     public function test ()
     {
-        $data = array(
-            'username'  => Session::get('username'),
-            'photo'     => Session::get('photo'),
-            'id'        => Session::get('id'),
-            'isImport'  => Session::get('isImport')
-        );
-
-        return view('simulation.test')->with('profile', $data);
+        $is = Users::Where('fb_id', Session::get('id'))->Where('isVerify', 'exists', true)->count();
+        echo $is;
     }
 
     // 找房子頁面
@@ -462,6 +457,23 @@ class SimulationController extends Controller
     public function post_house_handle ()
     {
 
+    }
+
+
+    public function upload_image ()
+    {
+        $file       = file_get_contents($_FILES['userImage']['tmp_name']);
+        $ch         = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.imgur.com/3/image.json');
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Client-ID '.'5f2eaa3314e3d73'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, array('image' => base64_encode($file)));
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $reply      = curl_exec($ch);
+        curl_close($ch);
+        $result = json_decode($reply)->data->link;
+        return json_encode($result);
     }
 
 

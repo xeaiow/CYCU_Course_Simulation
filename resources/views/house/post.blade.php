@@ -96,22 +96,36 @@
             <div class="ui basic label">/ 9</div>
         </div>
         <!-- 評論 -->
-        <h3 class="ui header blue">評論房東 (可空)</h3>
+        <h3 class="ui header blue">評論房東</h3>
         <div class="ui form">
             <div class="field">
                 <textarea ng-model="landlord_comment"></textarea>
             </div>
         </div>
         <!-- 評論 -->
-        <h3 class="ui header blue">居住心得 (可空)</h3>
+        <h3 class="ui header blue">居住心得</h3>
         <div class="ui form">
             <div class="field">
                 <textarea ng-model="live_comment"></textarea>
             </div>
         </div>
+
+        <h3 class="ui header blue">圖片 (可多張)</h3>
+        <button class="ui button fluid simulation-theme" id="house-browser-images"><i class="file white image outline icon"></i></button>
+       
+        <form ng-cloak method="post" class="house-imgur" enctype="multipart/images">
+            {{ csrf_field() }}
+            <input name="userImage" id="house-choose-image" type="file" accept="image/*">
+            <input type="submit" id="house-upload-image" class="ui button blue" value="上傳">
+        </form>
+
     </div>
 
-    <div class="nine wide column">
+    <!-- 弱弱的隔開 -->
+    <div class="one wide column">
+    </div>
+
+    <div class="eight wide column">
 
         <h2 class="ui header">
             <i class="bookmark icon"></i>
@@ -198,17 +212,83 @@
         <!-- 評論 -->
         <div class="ui piled segment">
             <h4 class="ui header">評論房東</h4>
-            <p>
+            <p class="marker-text">
                 <% landlord_comment %>
             </p>
         </div>
         <div class="ui piled segment">
             <h4 class="ui header">居住心得</h4>
-            <p>
+            <p class="marker-text">
                 <% live_comment %>
             </p>
         </div>
 
+        <!-- 圖片 -->
+        <div class="ui basic segment stackable four column grid" id="image-result"></div>
+
     </div>
+    <div class="ui segment basic">
+        <button class="ui button simulation-theme white fluid">發布</button>
+    </div>
+    
+
+    <script>
+        var images = new Array(); // 存放 imgur 回傳網址
+
+        $(".house-imgur").on('submit', (function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: "//localhost/simulation/public/upload/image",
+                type: "POST",
+                dataType: 'json',
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(response) {
+                    var response = $.parseJSON(JSON.stringify(response));
+                    
+                    // 將網址存回陣列
+                    images[images.length] = response;
+                    $("#image-result").append(
+                        '<div class="column" id="view-images-' + images.length + '">'+
+                            '<div class="ui card fluid">'+
+                                '<a class="ui left corner label">'+
+                                    '<i class="remove red icon remove-image" id="' + images.length + '"></i>'+
+                                '</a>'+
+                                '<a class="ui">'+
+                                    '<div class="image-square bordered ui image" style="background-image: url('+response+')"></div>'+
+                                '</a>'+
+                            '</div>'+
+                        '</div>'
+                    );
+                    toastr["success"](" ", "上傳成功！")
+                    console.log(images);
+                },
+                error: function() {
+                    
+                }
+            });
+        }));
+
+        // auto choose image and upload
+        $("#house-browser-images").click(function(){
+            $("#house-choose-image").click();
+        });
+        
+        $("#house-choose-image").change(function(){
+            $("#house-upload-image").click();
+            toastr["success"](" ", "上傳中！")
+        });
+
+        // remove image arrays el
+        $(document).on('click', '.remove-image', function(){
+
+            delete images[$(this).attr('id')-1];
+            console.log(images);
+            $("#view-images-"+$(this).attr('id')).remove();
+        });
+    </script>
 
     @endsection

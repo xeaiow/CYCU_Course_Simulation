@@ -1,6 +1,30 @@
+<!--
+                       _oo0oo_
+                      o8888888o
+                      88" . "88
+                      (| -_- |)
+                      0\  =  /0
+                    ___/`---'\___
+                  .' \\|     |// '.
+                 / \\|||  :  |||// \
+                / _||||| -:- |||||- \
+               |   | \\\  -  /// |   |
+               | \_|  ''\---/''  |_/ |
+               \  .-\__  '-'  ___/-. /
+             ___'. .'  /--.--\  `. .'___
+          ."" '<  `.___\_<|>_/___.' >' "".
+         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+         \  \ `_.   \_ __\ /__ _/   .-` /  /
+     =====`-.____`.___ \_____/___.-`___.-'=====
+                       `=---='
+
+
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+               佛祖保佑         永無bug
+-->
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -44,9 +68,8 @@
         </div>
         <a class="item" href="{{ url('/my') }}">個人資料</a>
         <a class="item" href="{{ url('/mycourse') }}">我的課表</a>
-        <a class="item">找工作</a>
-        <a class="item">找物品</a>
-        <a class="item" href="{{ url('house') }}">找屋子</a>
+        <a class="item" href="{{ url('house') }}">租屋評價</a>
+        <a class="item">考古題</a>
         <a class="item" href="//fb.me/cycusimulation">Fans</a>
         <a class="item" href="//m.me/cycusimulation">feedback</a>
 
@@ -105,6 +128,7 @@
         $('.menu .item').tab();
         $('.ui.accordion').accordion();
         $('.ui.dropdown').dropdown();
+        
 
         $(function() {
             FastClick.attach(document.body);

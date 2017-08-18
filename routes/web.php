@@ -79,11 +79,25 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
     Route::get('/test', 'SimulationController@test');
 
     // 找房子頁面
-    Route::get('/house', 'SimulationController@house');
+    Route::get('/house', 'SimulationController@house')->middleware('isVerify');
 
     // 新增屋子資訊
     Route::get('/house/post', 'SimulationController@post_house');
     Route::post('/house/post', 'SimulationController@post_house_handle');
 
+    // 上傳圖片到 imgur
+    Route::post('/upload/image', 'SimulationController@upload_image');
+
+
+                            /* VerifyController */
+
+    // 認證信輸入頁面
+    Route::get('/verify', 'VerifyController@verify')->middleware('isVerifyed');
+
+    // 認證信寄件功能
+    Route::post('/verify', 'VerifyController@sendMail')->middleware('isVerifyed');
+
+    // 認證信成功寄出頁面
+    Route::get('/verify/send', 'VerifyController@sendMailSuccess')->middleware('isVerifyed');
     
 });

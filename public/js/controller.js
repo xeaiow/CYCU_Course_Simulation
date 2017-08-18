@@ -651,11 +651,17 @@ app.controller('ListController', function($scope, $http) {
     // 下載課程
     $scope.course_download = function() {
 
-        swal("下載完成", "請自行另存圖片", "success");
+        var images;
         // Export to image
         html2canvas($("#course_exports"), {
             onrendered: function(canvas) {
-                window.open(canvas.toDataURL("image/png"));
+                images = canvas.toDataURL("image/png");
+                swal({
+                    title: "請自行另存圖片！",
+                    text: '<img src=' + images + ' class="ui image tiny centered"></img>',
+                    html: true,
+                    confirmButtonText: "存好了"
+                });
             },
         });
     }
@@ -773,7 +779,9 @@ app.controller('ListController', function($scope, $http) {
             });
     }
 
+
     $scope.passCourse = []; // 已修習之課程
+    // 抓取 itouch 課程資料
     $scope.login_itouch = function(username, password) {
 
         $http({
@@ -1002,6 +1010,7 @@ app.controller('ListController', function($scope, $http) {
 
         }
     }
+
 
     // toastr dialog setting    
     toastr.options = {

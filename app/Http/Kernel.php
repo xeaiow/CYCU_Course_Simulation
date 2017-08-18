@@ -58,5 +58,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'simu' => \App\Http\Middleware\LoginMiddleware::class,
         'isLogin' => \App\Http\Middleware\isLoginMiddleware::class,
+        'isVerify' => \App\Http\Middleware\isVerifyMiddleware::class,
+        'isVerifyed' => \App\Http\Middleware\isVerifyedMiddleware::class,
     ];
 }
