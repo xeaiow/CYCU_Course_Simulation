@@ -72,11 +72,17 @@ app.controller('ListController', function($scope, $http) {
     $scope.year_class = []; // 開課系級
     $scope.select_class = ""; // 所選擇的開課系級
 
-    // 載入開課系級
-    $http({ method: 'GET', url: 'class.json' }).success(function(data, status, headers, config) {
 
-        $scope.year_class = data;
-    });
+
+    // 載入開課系級
+    $scope.loadClass = function() {
+
+        $http({ method: 'GET', url: 'class.json' }).success(function(data, status, headers, config) {
+
+            $scope.year_class = data;
+        });
+    }
+
 
     // 搜尋課程
     $scope.course = [];
@@ -529,6 +535,37 @@ app.controller('ListController', function($scope, $http) {
     }
 
 
+    $scope.inputiTouchModal = function() {
+
+        // 引導匯入已修習課程 輸入 student ID
+        swal.setDefaults({
+            input: 'text',
+            confirmButtonText: '下一步 &rarr;',
+            animation: false,
+            progressSteps: ['1', '2'],
+            allowOutsideClick: false
+        })
+
+        var steps = [{
+                title: '匯入課程',
+                text: '請輸入學號',
+                showCancelButton: true,
+                cancelButtonText: '取消'
+            },
+            '輸入 iTouch 密碼完成匯入！'
+        ]
+
+        swal.queue(steps).then(function(result) {
+
+            swal.resetDefaults()
+            $scope.login_itouch(result[0], result[1]);
+
+        }, function() {
+            window.location.href = $scope.baseUrl + 'my';
+            return false;
+        })
+    }
+
     //載入已修習之課程
     $scope.loadHistory = function() {
 
@@ -544,39 +581,7 @@ app.controller('ListController', function($scope, $http) {
                     $scope.history_course_list = data.history_course;
                     return false;
                 }
-
-                // 引導匯入已修習課程 輸入 student ID
-                swal({
-                        title: "匯入課程",
-                        text: "輸入學號匯入已修過課程。",
-                        type: "input",
-                        showCancelButton: true,
-                        closeOnConfirm: false,
-                        confirmButtonText: "繼續",
-                        cancelButtonText: "放棄",
-                        animation: "slide-from-top",
-                        inputPlaceholder: "學號"
-                    },
-                    function(username) {
-
-                        // password
-                        swal({
-                                title: "匯入課程",
-                                text: "輸入 iTouch 密碼完成匯入！",
-                                type: "input",
-                                showCancelButton: true,
-                                closeOnConfirm: false,
-                                confirmButtonText: "完成",
-                                cancelButtonText: "放棄",
-                                animation: "slide-from-top",
-                                inputPlaceholder: "密碼"
-                            },
-                            function(password) {
-
-                                // 呼叫登入 itouch 模組
-                                $scope.login_itouch(username, password);
-                            });
-                    });
+                $scope.inputiTouchModal();
             })
             .error(function(data, status, headers, config) {
 
@@ -601,50 +606,49 @@ app.controller('ListController', function($scope, $http) {
     $scope.save_course = function() {
 
         swal({
-                title: "儲存課表",
-                text: "給課表取個名稱",
-                type: "input",
-                showCancelButton: true,
-                closeOnConfirm: false,
-                animation: "slide-from-top",
-                inputPlaceholder: "ex. 完美超修",
-                confirmButtonText: "來，儲存",
-                cancelButtonText: "放棄"
+            title: "儲存課表",
+            text: "給課表取個名稱",
+            input: "text",
+            showCancelButton: true,
+            confirmButtonText: '儲存',
+            cancelButtonText: '取消',
+            showLoaderOnConfirm: true,
+            preConfirm: function(inputValue) {
+                return new Promise(function(resolve, reject) {
+
+                    if (inputValue === false) {
+
+                        toastr["error"](" ", "已放棄儲存")
+                        return false;
+
+                    } else {
+
+                        var timestamp = new Date();
+                        var rnd = Math.floor((Math.random() * 10) + timestamp.getDate() + timestamp.getDay() + timestamp.getTime() + timestamp.getSeconds());
+
+                        $http({
+                                url: $scope.baseUrl + 'course_available/save',
+                                method: "POST",
+                                data: $.param({
+                                    "added_course": JSON.parse(angular.toJson($scope.selectCourse)),
+                                    "title": inputValue,
+                                    "rnd_id": rnd
+                                }),
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                                },
+                            })
+                            .success(function(data, status, headers, config) {
+                                swal("儲存完成", "儲存的課表可從個人首頁查看", "success");
+                            })
+                            .error(function(data, status, headers, config) {
+
+                            });
+                    }
+                })
             },
-            function(inputValue) {
-
-                if (inputValue === false) {
-
-                    toastr["error"](" ", "已放棄儲存")
-                    return false;
-
-                } else {
-
-                    var timestamp = new Date();
-                    var rnd = Math.floor((Math.random() * 10) + timestamp.getDate() + timestamp.getDay() + timestamp.getTime() + timestamp.getSeconds());
-
-                    $http({
-                            url: $scope.baseUrl + 'course_available/save',
-                            method: "POST",
-                            data: $.param({
-                                "added_course": JSON.parse(angular.toJson($scope.selectCourse)),
-                                "title": inputValue,
-                                "rnd_id": rnd
-                            }),
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-                            },
-                        })
-                        .success(function(data, status, headers, config) {
-                            swal("儲存完成", "儲存的課表可從個人首頁查看", "success");
-                        })
-                        .error(function(data, status, headers, config) {
-
-                        });
-                }
-
-
-            });
+            allowOutsideClick: false
+        });
     }
 
 
@@ -658,8 +662,7 @@ app.controller('ListController', function($scope, $http) {
                 images = canvas.toDataURL("image/png");
                 swal({
                     title: "請自行另存圖片！",
-                    text: '<img src=' + images + ' class="ui image tiny centered"></img>',
-                    html: true,
+                    html: '<img src=' + images + ' class="ui image tiny centered"></img>',
                     confirmButtonText: "存好了"
                 });
             },
@@ -800,7 +803,18 @@ app.controller('ListController', function($scope, $http) {
                 // 學號或密碼錯誤就終止程式
                 if (data.length == 0) {
 
-                    swal("失敗", "學號或密碼錯誤！", "error");
+                    swal({
+                        title: '失敗',
+                        text: '學號或密碼錯誤！',
+                        type: 'error',
+                        confirmButtonText: '知道了',
+                        allowOutsideClick: false
+                    }).then(
+                        function() {
+                            $scope.inputiTouchModal();
+                        },
+                    )
+
                     return false;
                 }
 
@@ -970,7 +984,7 @@ app.controller('ListController', function($scope, $http) {
                         }
                     }
                 });
-                console.log(result);
+
 
                 // save pass course
                 $http({
@@ -986,16 +1000,15 @@ app.controller('ListController', function($scope, $http) {
                     .success(function(data, status, headers, config) {
 
                         swal({
-                                title: "成功",
-                                text: "下載完成，系統將自動計算學分！",
-                                type: "success",
-                                showCancelButton: false,
-                                closeOnConfirm: false,
-                                confirmButtonText: "知道了"
-                            },
+                            title: '成功',
+                            text: '下載完成，系統將自動計算學分！',
+                            type: 'success',
+                            allowOutsideClick: false
+                        }).then(
                             function() {
                                 window.location.href = $scope.baseUrl + 'pass';
-                            });
+                            },
+                        )
                     })
                     .error(function(data, status, headers, config) {
 
@@ -1011,6 +1024,42 @@ app.controller('ListController', function($scope, $http) {
         }
     }
 
+
+    // 發布房屋資訊
+    $scope.house_post = function() {
+
+        $http({
+                url: $scope.baseUrl + 'house/post',
+                method: "POST",
+                data: $.param({
+                    "title": $scope.title,
+                    "marker": $scope.marker,
+                    "pirce": $scope.rent,
+                    "floor": $scope.floor,
+                    "door": $scope.door,
+                    "space": $scope.space,
+                    "landlord_gender": $scope.landlord_gender,
+                    "house_type": $scope.house_type,
+                    "safe": $scope.safe,
+                    "extra_pay": $scope.extra_pay,
+                    "cooking": $scope.cooking,
+                    "landlord_score": $scope.landlord_score,
+                    "live_score": $scope.live_score,
+                    "landlord_comment": $scope.landlord_comment,
+                    "live_comment": $scope.live_comment,
+                }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                },
+            })
+            .success(function(data, status, headers, config) {
+
+                window.location.href = $scope.baseUrl;
+            })
+            .error(function(data, status, headers, config) {
+
+            });
+    }
 
     // toastr dialog setting    
     toastr.options = {

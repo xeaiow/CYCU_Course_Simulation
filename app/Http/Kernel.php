@@ -60,5 +60,6 @@ class Kernel extends HttpKernel
         'isLogin' => \App\Http\Middleware\isLoginMiddleware::class,
         'isVerify' => \App\Http\Middleware\isVerifyMiddleware::class,
         'isVerifyed' => \App\Http\Middleware\isVerifyedMiddleware::class,
+        'verifySuccess' => \App\Http\Middleware\verifySuccessMiddleware::class,
     ];
 }

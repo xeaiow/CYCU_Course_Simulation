@@ -16,7 +16,12 @@ class VerifyController extends Controller
     // 認證信寄件功能
     public function sendMail (emailVerifyRequest $request)
     {
-        $data = array( 'email' => $request->email, 'title' => $request->email, 'from' => '學生認證啟用 - 模擬中原' );
+
+        $verifyToken = sha1(time());
+        // 產生一組 token 作為認證網址後綴
+        Users::Where('fb_id', Session::get('id'))->update(['verify.token' => $verifyToken]);
+
+        $data = array( 'email' => $request->email, 'title' => $request->email, 'from' => '學生認證啟用 - 模擬中原', 'token' => $verifyToken );
 
         Mail::send( 'emails.welcome', $data, function( $message ) use ($data)
         {
@@ -51,5 +56,34 @@ class VerifyController extends Controller
         );
 
         return view('auth.sendSuccess')->with('profile', $data);
+    }
+
+    
+    // 認證啟用
+    public function verifyConfirm (Request $request)
+    {
+        $isTokenExists = Users::Where('fb_id', Session::get('id'))->Where(['verify.token' => $request->token])->count();
+        
+        if ($isTokenExists !== 1)
+        {
+            return "認證碼已過期，請重新填寫認證！";
+        }
+        
+        Users::Where('fb_id', Session::get('id'))->update(['verify.isVerify' => 1]);
+
+        return redirect('/verify/info');
+    }
+
+
+    // 認證啟用成功資訊 
+    public function verifySuccessInfo ()
+    {
+        $data = array(
+            'username' => Session::get('username'),
+            'photo' => Session::get('photo'),
+            'isImport' => Session::get('isImport')
+        );
+
+        return view('auth.verifySuccess')->with('profile', $data);
     }
 }

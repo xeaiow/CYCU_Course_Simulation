@@ -20,7 +20,7 @@
         <!--價格-->
         <div class="ui right labeled input fluid">
             <label class="ui label">價格</label>
-            <input type="text" ng-model="rent">
+            <input type="text" ng-model="pirce">
             <div class="ui basic label">月</div>
         </div>
         <!--樓高-->
@@ -62,7 +62,7 @@
         <div class="ui form">
             <div class="field">
                 <div class="ui checkbox">
-                    <input type="checkbox" ng-model="safe" ng-true-value="1" ng-false-value="0">
+                    <input type="checkbox" ng-model="safe" ng-init="safe='false'" ng-true-value="1" ng-false-value="0">
                     <label>安全設備 (滅火器、灑水器等)</label>
                 </div>
             </div>
@@ -70,7 +70,7 @@
         <div class="ui form">
             <div class="field">
                 <div class="ui checkbox">
-                    <input type="checkbox" ng-model="extra_pay" ng-true-value="1" ng-false-value="0">
+                    <input type="checkbox" ng-model="extra_pay" ng-init="extra_pay='false'" g-true-value="1" ng-false-value="0">
                     <label>額外費用</label>
                 </div>
             </div>
@@ -78,7 +78,7 @@
         <div class="ui form">
             <div class="field">
                 <div class="ui checkbox">
-                    <input type="checkbox" ng-model="cooking" ng-true-value="1" ng-false-value="0">
+                    <input type="checkbox" ng-model="cooking" ng-init="cooking='false'" ng-true-value="1" ng-false-value="0">
                     <label>開伙</label>
                 </div>
             </div>
@@ -111,8 +111,9 @@
         </div>
 
         <h3 class="ui header blue">圖片 (可多張)</h3>
+
         <button class="ui button fluid simulation-theme" id="house-browser-images"><i class="file white image outline icon"></i></button>
-       
+
         <form ng-cloak method="post" class="house-imgur" enctype="multipart/images">
             {{ csrf_field() }}
             <input name="userImage" id="house-choose-image" type="file" accept="image/*">
@@ -228,9 +229,9 @@
 
     </div>
     <div class="ui segment basic">
-        <button class="ui button simulation-theme white fluid">發布</button>
+        <button class="ui button simulation-theme white fluid" ng-click="house_post()">發布</button>
     </div>
-    
+
 
     <script>
         var images = new Array(); // 存放 imgur 回傳網址
@@ -248,46 +249,62 @@
                 processData: false,
                 success: function(response) {
                     var response = $.parseJSON(JSON.stringify(response));
-                    
+
                     // 將網址存回陣列
                     images[images.length] = response;
                     $("#image-result").append(
-                        '<div class="column" id="view-images-' + images.length + '">'+
-                            '<div class="ui card fluid">'+
-                                '<a class="ui left corner label">'+
-                                    '<i class="remove red icon remove-image" id="' + images.length + '"></i>'+
-                                '</a>'+
-                                '<a class="ui">'+
-                                    '<div class="image-square bordered ui image" style="background-image: url('+response+')"></div>'+
-                                '</a>'+
-                            '</div>'+
+                        '<div class="column" id="view-images-' + images.length + '">' +
+                        '<div class="ui card fluid">' +
+                        '<a class="ui left corner label">' +
+                        '<i class="remove red icon remove-image" id="' + images.length + '"></i>' +
+                        '</a>' +
+                        '<a class="ui">' +
+                        '<div class="image-square bordered ui image" style="background-image: url(' + response + ')"></div>' +
+                        '</a>' +
+                        '</div>' +
                         '</div>'
                     );
                     toastr["success"](" ", "上傳成功！")
                     console.log(images);
                 },
                 error: function() {
-                    
+
                 }
             });
         }));
 
         // auto choose image and upload
-        $("#house-browser-images").click(function(){
+        $("#house-browser-images").click(function() {
             $("#house-choose-image").click();
         });
-        
-        $("#house-choose-image").change(function(){
+
+        $("#house-choose-image").change(function() {
             $("#house-upload-image").click();
             toastr["success"](" ", "上傳中！")
         });
 
         // remove image arrays el
-        $(document).on('click', '.remove-image', function(){
+        $(document).on('click', '.remove-image', function() {
 
-            delete images[$(this).attr('id')-1];
-            console.log(images);
-            $("#view-images-"+$(this).attr('id')).remove();
+            var thisImage = $(this);
+            swal({
+                    title: "要刪除這張照片？",
+                    text: "是的，請將它刪除",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    cancelButtonText: "取消",
+                    confirmButtonText: "好的",
+                    closeOnConfirm: false
+                },
+                function() {
+
+                    delete images[thisImage.attr('id') - 1];
+                    console.log(images);
+                    $("#view-images-" + thisImage.attr('id')).remove();
+                    swal("已刪除照片", "您可以繼續上傳其他照片", "success");
+                });
+
         });
     </script>
 

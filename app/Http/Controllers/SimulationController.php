@@ -8,7 +8,7 @@ use App\Users;
 use App\addCourse;
 use App\historyCourse;
 use App\courseAvailable;
-
+use App\House;
 
 use Redirect;
 use Session;
@@ -400,11 +400,11 @@ class SimulationController extends Controller
         $historyCourse = historyCourse::Where('fb_id', Session::get('id'));
         $historyCourse->update(['history_course' => $request->history_course]);
 
-        // 設定該使用者為已匯入過
-        //Users::Where('fb_id', Session::get('id'))->update(['isImport' => 1]);
+        //設定該使用者為已匯入過
+        Users::Where('fb_id', Session::get('id'))->update(['isImport' => 1]);
 
-        // 建立 Session 且設定為已匯入 
-        //Session::put('isImport', 1);
+        //建立 Session 且設定為已匯入 
+        Session::put('isImport', 1);
     }
 
 
@@ -424,8 +424,8 @@ class SimulationController extends Controller
 
     public function test ()
     {
-        $is = Users::Where('fb_id', Session::get('id'))->Where('isVerify', 'exists', true)->count();
-        echo $is;
+        //echo Users::Where('fb_id', Session::get('id'))->Where(['verify.token' => $request->token])->count();
+    
     }
 
     // 找房子頁面
@@ -454,9 +454,28 @@ class SimulationController extends Controller
     }
 
     // 新增屋子資訊 post
-    public function post_house_handle ()
+    public function post_house_handle (Request $request)
     {
+        $new = [
+            'fb_id' => Session::get('id'),
+            'title' => $request->title,
+            'marker' => $request->marker,
+            'price' => $request->price,
+            'floor' => $request->floor,
+            'door' => $request->door,
+            'space' => $request->space,
+            'landlord_gender' => $request->landlord_gender,
+            'house_type' => $request->house_type,
+            'safe' => $request->safe,
+            'extra_pay' => $request->extra_pay,
+            'cooking' => $request->cooking,
+            'landlord_score' => $request->landlord_score,
+            'live_score' => $request->live_score,
+            'landlord_comment' => $request->landlord_comment,
+            'live_comment' => $request->live_comment
+        ];
 
+        House::create($new);
     }
 
 

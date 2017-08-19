@@ -1,7 +1,7 @@
 @extends('layout.main') @section('pageTitle', '模擬中原') @section('content')
 
 <!-- Grid -->
-<div class="ui grid stackable" ng-init="loadAddedCourse()">
+<div class="ui grid stackable" ng-init="loadAddedCourse();loadClass()">
     <div class="seven wide column">
         <div class="ui pointing secondary menu">
             <a class="item active" data-tab="first">搜尋課程</a>

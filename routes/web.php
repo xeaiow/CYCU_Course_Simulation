@@ -91,6 +91,9 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
 
                             /* VerifyController */
 
+    // 認證成功顯示資訊
+    Route::get('/verify/info', 'VerifyController@verifySuccessInfo');
+
     // 認證信輸入頁面
     Route::get('/verify', 'VerifyController@verify')->middleware('isVerifyed');
 
@@ -99,5 +102,10 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
 
     // 認證信成功寄出頁面
     Route::get('/verify/send', 'VerifyController@sendMailSuccess')->middleware('isVerifyed');
+
+    // 認證啟用功能
+    Route::get('/verify/{token}', 'VerifyController@verifyConfirm')->middleware('verifySuccess');
+
     
+
 });

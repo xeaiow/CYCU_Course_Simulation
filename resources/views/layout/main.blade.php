@@ -46,14 +46,14 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.js"></script>
     <script src="{{ asset('/js/controller.js') }}"></script>
     <script src="{{ asset('/js/mask.min.js') }}"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
+    <script src="{{ asset('/js/sweetalert2.min.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('/sweetalert2.min.css') }}">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="{{ asset('/semantic.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('/style.css') }}" />
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/themes/facebook/facebook.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/toastr.min.css') }}">
 </head>
 

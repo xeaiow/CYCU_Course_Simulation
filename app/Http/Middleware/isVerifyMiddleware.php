@@ -13,7 +13,7 @@ class isVerifyMiddleware
     
     public function handle($request, Closure $next)
     {
-        $isVerify = Users::Where('fb_id', Session::get('id'))->Where('isVerify', 'exists', true)->count();
+        $isVerify = Users::Where('fb_id', Session::get('id'))->Where('verify.isVerify', 'exists', true)->count();
 
         if ($isVerify === 0)
         {
