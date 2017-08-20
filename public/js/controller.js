@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ui.mask']);
+var app = angular.module('myApp', ['ngMask']);
 app.config(function($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
@@ -12,6 +12,7 @@ app.config(function($sceDelegateProvider) {
         'https://itouch.cycu.edu.tw/myfile/student/json/pf_historyOfClass.jsp'
     ]);
 });
+
 
 app.filter('landlord_gender', function() {
     return function(val) {
@@ -55,13 +56,31 @@ app.filter('house_type', function() {
         }
     };
 });
+app.filter('pictures', function() {
+    return function(val) {
+        if (val === undefined) {
+            return "http://alumni.cycu.edu.tw/alumni/upload/editor/campus%20view/%E4%B8%AD%E5%8E%9F%E6%A0%A1%E6%99%AF-%20979x648.jpg";
+        }
+        return val;
+    };
+});
+
 
 app.filter('checkbox', function() {
     return function(val) {
-        if (val != "1") {
-            return "否";
+        if (val != "true") {
+            return "✖";
         }
-        return "是";
+        return "✔";
+    };
+});
+
+app.filter('postcheckbox', function() {
+    return function(val) {
+        if (val != true) {
+            return "✖";
+        }
+        return "✔";
     };
 });
 
@@ -1024,7 +1043,6 @@ app.controller('ListController', function($scope, $http) {
         }
     }
 
-
     // 發布房屋資訊
     $scope.house_post = function() {
 
@@ -1034,7 +1052,7 @@ app.controller('ListController', function($scope, $http) {
                 data: $.param({
                     "title": $scope.title,
                     "marker": $scope.marker,
-                    "pirce": $scope.rent,
+                    "rent_price": $scope.rent_price,
                     "floor": $scope.floor,
                     "door": $scope.door,
                     "space": $scope.space,
@@ -1047,6 +1065,7 @@ app.controller('ListController', function($scope, $http) {
                     "live_score": $scope.live_score,
                     "landlord_comment": $scope.landlord_comment,
                     "live_comment": $scope.live_comment,
+                    "pic": images
                 }),
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -1059,6 +1078,45 @@ app.controller('ListController', function($scope, $http) {
             .error(function(data, status, headers, config) {
 
             });
+    }
+
+    $scope.houseInfo = [];
+    // 搜尋房屋資訊
+    $scope.search_house = function() {
+
+        $http({
+                url: $scope.baseUrl + '/house/search',
+                method: "POST",
+                data: $.param({
+                    "keywords": $scope.keywords
+                }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                },
+            })
+            .success(function(data, status, headers, config) {
+
+                if (data.length !== 0) {
+
+                    $scope.houseInfo = data;
+                    console.log(data);
+                }
+            })
+            .error(function(data, status, headers, config) {
+
+            });
+    }
+
+
+    $scope.houseIndex;
+    // 進入房屋資訊頁面
+    $scope.view_house = function(index) {
+
+        $scope.houseIndex = index;
+    }
+
+    $scope.view_house_mobile = function(id) {
+        window.location.href = $scope.baseUrl + 'house/' + id;
     }
 
     // toastr dialog setting    

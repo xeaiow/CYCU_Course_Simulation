@@ -53,6 +53,7 @@ td,
 
 .lists-max-height {
     max-height: 500px;
+    padding: 5px;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -168,6 +169,26 @@ td,
 
 .marker-text {
     color: #003666 !important;
+}
+
+.margin-bottom-less-30 {
+    margin-bottom: -30px !important;
+}
+
+.margin-top-less-30 {
+    margin-top: -30px !important;
+}
+
+.margin-bottom-zero {
+    margin-bottom: 0px !important;
+}
+
+.house-check-info {
+    margin-bottom: 30px;
+}
+
+.view-house:hover {
+    cursor: pointer;
 }
 
 

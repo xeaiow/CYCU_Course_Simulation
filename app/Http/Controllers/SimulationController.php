@@ -424,58 +424,8 @@ class SimulationController extends Controller
 
     public function test ()
     {
-        //echo Users::Where('fb_id', Session::get('id'))->Where(['verify.token' => $request->token])->count();
+        echo House::Where('fb_id', Session::get('id'))->Where('_id', '599964fca3e92e282800155c')->first();
     
-    }
-
-    // 找房子頁面
-    public function house ()
-    {
-        $data = array(
-            'username'  => Session::get('username'),
-            'photo'     => Session::get('photo'),
-            'isImport'  => Session::get('isImport')
-        );
-
-        return view('house.index')->with('profile', $data);
-    }
-
-
-    // 新增屋子資訊
-    public function post_house (Request $request)
-    {
-        $data = array(
-            'username'  => Session::get('username'),
-            'photo'     => Session::get('photo'),
-            'isImport'  => Session::get('isImport')
-        );
-
-        return view('house.post')->with('profile', $data);
-    }
-
-    // 新增屋子資訊 post
-    public function post_house_handle (Request $request)
-    {
-        $new = [
-            'fb_id' => Session::get('id'),
-            'title' => $request->title,
-            'marker' => $request->marker,
-            'price' => $request->price,
-            'floor' => $request->floor,
-            'door' => $request->door,
-            'space' => $request->space,
-            'landlord_gender' => $request->landlord_gender,
-            'house_type' => $request->house_type,
-            'safe' => $request->safe,
-            'extra_pay' => $request->extra_pay,
-            'cooking' => $request->cooking,
-            'landlord_score' => $request->landlord_score,
-            'live_score' => $request->live_score,
-            'landlord_comment' => $request->landlord_comment,
-            'live_comment' => $request->live_comment
-        ];
-
-        House::create($new);
     }
 
 

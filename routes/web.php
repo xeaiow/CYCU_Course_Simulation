@@ -79,11 +79,16 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
     Route::get('/test', 'SimulationController@test');
 
     // 找房子頁面
-    Route::get('/house', 'SimulationController@house')->middleware('isVerify');
+    Route::get('/house', 'HouseController@house')->middleware('isVerify');
 
     // 新增屋子資訊
-    Route::get('/house/post', 'SimulationController@post_house');
-    Route::post('/house/post', 'SimulationController@post_house_handle');
+    Route::get('/house/post', 'HouseController@post_house');
+
+    Route::post('/house/post', 'HouseController@post_house_handle');
+
+    Route::post('/house/search', 'HouseController@search_house');
+
+    Route::get('/house/{id}', 'HouseController@view_house');
 
     // 上傳圖片到 imgur
     Route::post('/upload/image', 'SimulationController@upload_image');

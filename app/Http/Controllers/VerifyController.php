@@ -8,7 +8,7 @@ use App\Users;
 use Redirect;
 use Session;
 use Mail;
-use App\Http\Requests\emailVerifyRequest;
+use App\Http\Requests\EmailVerifyRequest;
 
 class VerifyController extends Controller
 {

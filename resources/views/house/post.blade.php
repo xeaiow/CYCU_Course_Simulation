@@ -1,54 +1,56 @@
 @extends('layout.main') @section('pageTitle', '新增屋子') @section('content')
 
 <div class="ui grid stackable">
-    <div class="seven wide column">
+    <div class="seven wide column" ng-init="safe=false;extra_pay=false;cooking=false">
+
         <!-- 標題 -->
         <div class="ui form">
             <div class="field">
-                <h3 class="ui header blue">標題</h3>
-                <input type="text" ng-model="title" placeholder="中原大草皮">
+                <h3 class="ui header blue">標題*</h3>
+                <input type="text" ng-model="title" name="title" placeholder="中原大草皮" required>
             </div>
+
         </div>
         <!-- 地址 -->
         <div class="ui form margin-20">
             <div class="field">
-                <h3 class="ui header blue">地址</h3>
-                <input type="text" placeholder="桃園市中壢區中北路200號" ng-model="marker">
+                <h3 class="ui header blue">地址/地標*</h3>
+                <input type="text" placeholder="桃園市中壢區中北路200號" ng-model="marker" required>
             </div>
         </div>
-        <h3 class="ui header blue">資訊</h3>
+        <h3 class="ui header blue">資訊*</h3>
         <!--價格-->
         <div class="ui right labeled input fluid">
             <label class="ui label">價格</label>
-            <input type="text" ng-model="pirce">
+            <input type="text" ng-model="rent_price" mask="99999" required>
             <div class="ui basic label">月</div>
         </div>
         <!--樓高-->
         <div class="ui right labeled input fluid margin-20">
             <label class="ui label">樓高</label>
-            <input type="text" ng-model="floor">
+            <input type="text" ng-model="floor" mask="999" required>
             <div class="ui basic label">樓</div>
         </div>
         <!--戶數-->
         <div class="ui right labeled input fluid margin-20">
             <label class="ui label">戶數</label>
-            <input type="text" ng-model="door">
+            <input type="text" ng-model="door" mask="999" required>
             <div class="ui basic label">戶</div>
         </div>
         <!--坪數-->
         <div class="ui right labeled input fluid margin-20">
             <label class="ui label">坪數</label>
-            <input type="text" ng-model="space">
+            <input type="text" ng-model="space" mask="999" required>
             <div class="ui basic label">坪</div>
         </div>
         <!--房東性別-->
-        <select class="ui fluid dropdown margin-20" ng-model="landlord_gender">
+        <select class="ui fluid dropdown margin-20" ng-model="landlord_gender" required>
             <option value="">房東性別</option>
             <option value="1">男</option>
             <option value="2">女</option>
         </select>
         <!--房型-->
-        <select class="ui fluid dropdown margin-20" ng-model="house_type">
+        <select class="ui fluid dropdown margin-20" ng-model="house_type" required>
             <option value="">房型</option>
             <option value="1">套房</option>
             <option value="2">雅房</option>
@@ -62,7 +64,7 @@
         <div class="ui form">
             <div class="field">
                 <div class="ui checkbox">
-                    <input type="checkbox" ng-model="safe" ng-init="safe='false'" ng-true-value="1" ng-false-value="0">
+                    <input type="checkbox" ng-model="safe">
                     <label>安全設備 (滅火器、灑水器等)</label>
                 </div>
             </div>
@@ -70,7 +72,7 @@
         <div class="ui form">
             <div class="field">
                 <div class="ui checkbox">
-                    <input type="checkbox" ng-model="extra_pay" ng-init="extra_pay='false'" g-true-value="1" ng-false-value="0">
+                    <input type="checkbox" ng-model="extra_pay">
                     <label>額外費用</label>
                 </div>
             </div>
@@ -78,21 +80,21 @@
         <div class="ui form">
             <div class="field">
                 <div class="ui checkbox">
-                    <input type="checkbox" ng-model="cooking" ng-init="cooking='false'" ng-true-value="1" ng-false-value="0">
+                    <input type="checkbox" ng-model="cooking">
                     <label>開伙</label>
                 </div>
             </div>
         </div>
         <!--滿意度-->
-        <h3 class="ui header blue">滿意度</h3>
+        <h3 class="ui header blue">滿意度*</h3>
         <div class="ui right labeled input fluid margin-20">
             <label class="ui label">房東</label>
-            <input type="text" ng-model="landlord_score" ui-mask="9">
+            <input type="text" ng-model="landlord_score" mask="9">
             <div class="ui basic label">/ 9</div>
         </div>
         <div class="ui right labeled input fluid margin-20">
             <label class="ui label">居住</label>
-            <input type="text" ng-model="live_score" ui-mask="9">
+            <input type="text" ng-model="live_score" mask="9">
             <div class="ui basic label">/ 9</div>
         </div>
         <!-- 評論 -->
@@ -112,7 +114,13 @@
 
         <h3 class="ui header blue">圖片 (可多張)</h3>
 
-        <button class="ui button fluid simulation-theme" id="house-browser-images"><i class="file white image outline icon"></i></button>
+        <div class="ui segment basic">
+            <button class="ui button fluid grey" id="house-browser-images"><i class="file white image outline icon"></i></button>
+        </div>
+
+        <div class="ui segment basic margin-top-less-30">
+            <button class="ui button simulation-theme white fluid" ng-click="house_post()">發布</button>
+        </div>
 
         <form ng-cloak method="post" class="house-imgur" enctype="multipart/images">
             {{ csrf_field() }}
@@ -145,7 +153,7 @@
                 <tr>
                     <td class="table-th">價錢</td>
                     <td>
-                        <% rent | number:0 %> / 月</td>
+                        <% rent_price | number:0 %> / 月</td>
                 </tr>
                 <tr>
                     <td class="table-th">樓高</td>
@@ -180,19 +188,19 @@
                 <tr>
                     <td class="table-th">安全設備 (滅火器、逃生口)</td>
                     <td>
-                        <% safe | checkbox %>
+                        <% safe | postcheckbox %>
                     </td>
                 </tr>
                 <tr>
                     <td class="table-th">額外費用 (管理費)</td>
                     <td>
-                        <% extra_pay | checkbox %>
+                        <% extra_pay | postcheckbox %>
                     </td>
                 </tr>
                 <tr>
                     <td class="table-th">開伙</td>
                     <td>
-                        <% cooking | checkbox %>
+                        <% cooking | postcheckbox %>
                     </td>
                 </tr>
                 <tr>
@@ -226,10 +234,6 @@
 
         <!-- 圖片 -->
         <div class="ui basic segment stackable four column grid" id="image-result"></div>
-
-    </div>
-    <div class="ui segment basic">
-        <button class="ui button simulation-theme white fluid" ng-click="house_post()">發布</button>
     </div>
 
 
@@ -288,23 +292,21 @@
 
             var thisImage = $(this);
             swal({
-                    title: "要刪除這張照片？",
-                    text: "是的，請將它刪除",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    cancelButtonText: "取消",
-                    confirmButtonText: "好的",
-                    closeOnConfirm: false
-                },
-                function() {
+                title: "要刪除這張照片？",
+                text: "是的，請將它刪除",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                cancelButtonText: "取消",
+                confirmButtonText: "好的",
 
-                    delete images[thisImage.attr('id') - 1];
-                    console.log(images);
-                    $("#view-images-" + thisImage.attr('id')).remove();
-                    swal("已刪除照片", "您可以繼續上傳其他照片", "success");
-                });
+            }).then(function() {
 
+                // 清除占用的陣列位址
+                delete images[thisImage.attr('id') - 1];
+                $("#view-images-" + thisImage.attr('id')).remove();
+                swal("已刪除照片", "您可以繼續上傳其他照片", "success");
+            });
         });
     </script>
 

@@ -1,128 +1,203 @@
 @extends('layout.main') @section('pageTitle', '找屋子') @section('content')
 
 <div class="ui grid stackable">
-    <div class="seven wide column">
+
+    <div class="seven wide column mobile only">
 
         <!-- 搜尋列 -->
-        <div class="ui fluid icon input">
-            <input type="text" ng-model="keywords" placeholder="路段 / 地標" press-Enter="search()">
-            <i class="search icon"></i>
+        <div class="twelve wide column mobile only">
+            <div class="ui fluid icon input">
+                <input type="text" ng-model="keywords" placeholder="路段 / 地標" press-Enter="search_house()">
+                <i class="search icon"></i>
+            </div>
         </div>
 
         <!-- 搜尋結果 -->
         <div class="lists-max-height">
-            <div class="ui card fluid">
+
+            <div class="ui card fluid view-house" ng-repeat="item in houseInfo" ng-click="view_house_mobile(item._id)">
                 <div class="content">
                     <div class="header">
-                        中原校門大草皮 /
-                        <div class="ui rating" data-max-rating="3"></div>
+                        <% item.title %>
                     </div>
                     <div class="description">
-                        <img src="http://thumb.s3.hicloud.net.tw/0017388/A1.jpg" alt="">
+                        <img class="ui image samll" ng-src="<% item.pictures[0] | pictures %>" alt="">
                     </div>
                 </div>
-                <div class="extra content">
-                    <span class="left floated like">
-                            <i class="marker icon"></i>桃園市中壢區新中北路一段
-                        </span>
-                    <span class="right floated star">
-                            $2,000 / 月
-                        </span>
+                <div class="ui segment basic margin-bottom-less-30">
+                    <span class="left floated like"><i class="icon marker"></i><% item.marker %></span>
                 </div>
-                <div class="ui bottom attached button" ng-click="addCourse(item.course_id , item.course_name, item.teacher, item.time_1, item.time_2, item.time_3, item.com_or_opt, item.point, item.class)">
-                    <i class="hand pointer icon"></i>看看
+                <div class="ui segment basic">
+                    <span class="left floated like"><i class="icon dollar"></i><% item.rent_price %> / 月</span>
+                    <span class="right floated like"><i class="star icon"></i>
+                                            <% (item.landlord_score+item.live_score)/2 %></span>
                 </div>
             </div>
         </div>
-
     </div>
-    <div class="nine wide column">
 
-        <h1 class="ui header">中原校門大草皮</h1>
-        <table class="ui very basic table">
-            <tbody>
-                <tr>
-                    <td class="table-th">價錢</td>
-                    <td>$6,500 / 月</td>
-                </tr>
-                <tr>
-                    <td class="table-th">樓高</td>
-                    <td>7</td>
-                </tr>
-                <tr>
-                    <td class="table-th">戶數</td>
-                    <td>3</td>
-                </tr>
-                <tr>
-                    <td class="table-th">房東滿意度</td>
-                    <td>
-                        <div class="ui star rating" data-rating="3"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="table-th">居住滿意度</td>
-                    <td>
-                        <div class="ui star rating" data-rating="2"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="table-th">房東性別</td>
-                    <td>男</td>
-                </tr>
-                <tr>
-                    <td class="table-th">附近地標</td>
-                    <td>21鐘</td>
-                </tr>
-                <tr>
-                    <td class="table-th">額外費用 (管理費)</td>
-                    <td>600</td>
-                </tr>
-                <tr>
-                    <td class="table-th">房屋類型</td>
-                    <td>無</td>
-                </tr>
-                <tr>
-                    <td class="table-th">居住人數</td>
-                    <td>雙人</td>
-                </tr>
-                <tr>
-                    <td class="table-th">安全設備 (滅火器、逃生口)</td>
-                    <td>有</td>
-                </tr>
-                <tr>
-                    <td class="table-th">開伙</td>
-                    <td>不可</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="seven wide column computer only">
 
-        <!-- 評論 -->
-        <div class="ui piled segment">
-            <h4 class="ui header">評論房東</h4>
-            <p>
-                她兒子會從窗戶跑進房間偷錢。明明不是我的電費，也叫我分攤。常常說謊騙人，環境髒亂，老鼠蟑螂很多。整天大叫罵人。
-            </p>
-        </div>
-        <div class="ui piled segment">
-            <h4 class="ui header">居住心得</h4>
-            <p>
-                很開心
-            </p>
+        <!-- 搜尋列 -->
+        <div class="twelve wide column">
+            <div class="ui fluid icon input">
+                <input type="text" ng-model="keywords" placeholder="路段 / 地標" press-Enter="search_house()">
+                <i class="search icon"></i>
+            </div>
         </div>
 
-        <!-- google map -->
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.2859675646937!2d121.23763801821511!3d24.95638338825835!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2adee07c063e88d1!2z5Lit5Y6f5aSc5biC!5e0!3m2!1szh-TW!2stw!4v1501491266363"
-            width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+        <!-- 搜尋結果 -->
+        <div class="lists-max-height">
 
+            <div ng-repeat="item in houseInfo">
+                <div class="ui card fluid view-house margin-bottom-zero" ng-click="view_house($index)">
+                    <div class="content">
+                        <div class="header">
+                            <% item.title %>
+                        </div>
+                        <div class="description">
+                            <img class="ui image samll" ng-src="<% item.pictures[0] | pictures %>" alt="">
+                        </div>
+                    </div>
+                    <div class="ui segment basic margin-bottom-less-30">
+                        <span class="left floated like"><i class="icon marker"></i><% item.marker %></span>
+                    </div>
+                    <div class="ui segment basic">
+                        <span class="left floated like"><i class="icon dollar"></i><% item.rent_price %> / 月</span>
+                        <span class="right floated like"><i class="star icon"></i>
+                                <% (item.landlord_score+item.live_score)/2 %></span>
+                    </div>
+                </div>
+                <div class="content house-check-info">
+                    <a href="{{ url('/house') }}/<% item._id %>">
+                        <div class="ui bottom attached button"><i class="ui icon hand pointer"></i>查看完整資訊</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="one wide column"></div>
+
+    <div class="eight wide column computer only">
+
+        <!-- 新增房屋資訊 -->
+        <div class="ui grid">
+            <div class="sixteen wide column">
+                <button class="ui simulation-theme white button right floated" onclick="window.location.href='{{ url('/house/post') }}'">發布</button>
+            </div>
+        </div>
+
+        <div ng-if="houseIndex != null">
+            <h2 class="ui header">
+                <i class="bookmark icon"></i>
+                <div class="content">
+                    <% houseInfo[houseIndex].title %>
+                </div>
+            </h2>
+            <h2 class="ui header">
+                <i class="marker icon"></i>
+                <div class="content">
+                    <% houseInfo[houseIndex].marker %>
+                </div>
+            </h2>
+            <table class="ui very basic table">
+                <tbody>
+                    <tr>
+                        <td class="table-th">價錢</td>
+                        <td>
+                            <% houseInfo[houseIndex].rent_price | number:0 %> / 月</td>
+                    </tr>
+                    <tr>
+                        <td class="table-th">樓高</td>
+                        <td>
+                            <% houseInfo[houseIndex].floor %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-th">戶數</td>
+                        <td>
+                            <% houseInfo[houseIndex].door %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-th">房東性別</td>
+                        <td>
+                            <% houseInfo[houseIndex].landlord_gender.toString() | landlord_gender %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-th">坪數</td>
+                        <td>
+                            <% houseInfo[houseIndex].space %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-th">房型</td>
+                        <td>
+                            <% houseInfo[houseIndex].house_type.toString() | house_type %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-th">安全設備 (滅火器、逃生口)</td>
+                        <td>
+                            <% houseInfo[houseIndex].safe.toString() | checkbox %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-th">額外費用 (管理費)</td>
+                        <td>
+                            <% houseInfo[houseIndex].extra_pay.toString() | checkbox %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-th">開伙</td>
+                        <td>
+                            <% houseInfo[houseIndex].cooking.toString() | checkbox %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-th">房東滿意度</td>
+                        <td>
+                            <% houseInfo[houseIndex].landlord_score %> / 9
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-th">居住滿意度</td>
+                        <td>
+                            <% houseInfo[houseIndex].live_score %> / 9
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- 評論 -->
+            <div class="ui piled segment">
+                <h4 class="ui header">評論房東</h4>
+                <p class="marker-text">
+                    <% houseInfo[houseIndex].landlord_comment %>
+                </p>
+            </div>
+            <div class="ui piled segment">
+                <h4 class="ui header">居住心得</h4>
+                <p class="marker-text">
+                    <% houseInfo[houseIndex].live_comment %>
+                </p>
+            </div>
+
+            <!-- 圖片 -->
+            <div class="ui basic segment stackable three column grid">
+                <div class="column" ng-repeat="pic in houseInfo[houseIndex].pictures">
+                    <div class="ui card fluid">
+                        <a class="ui">
+                            <div class="image-square bordered ui image" style="background-image: url(<% pic %>)"></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
-
-<script>
-    $('.ui.rating').rating({
-        initialRating: 3,
-        maxRating: 5,
-        interactive: false
-    });
-</script>
 
 @endsection
