@@ -14,7 +14,11 @@ class emailVerifyRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email',
+            'email' => [
+                'required',
+                'email',
+                'regex:/(.*)@cycu\.+(edu|org)+.tw/i'
+            ],
         ];
     }
 
@@ -31,6 +35,7 @@ class emailVerifyRequest extends FormRequest
         return [
             'email.required' => '校園信箱未填寫',
             'email.email' => '請填寫正確信的箱格式',
+            'email.regex' => '校園信箱格式錯誤，請參考右側提示！'
         ];
     }
 

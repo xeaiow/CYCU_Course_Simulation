@@ -233,7 +233,10 @@
         </div>
 
         <!-- 圖片 -->
-        <div class="ui basic segment stackable four column grid" id="image-result"></div>
+        <div class="ui piled segment">
+            <h4 class="ui header">圖片預覽</h4>
+            <div class="marker-text ui basic segment stackable two column grid" id="image-result"></div>
+        </div> 
     </div>
 
 

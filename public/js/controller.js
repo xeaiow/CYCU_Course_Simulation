@@ -110,6 +110,11 @@ app.controller('ListController', function($scope, $http) {
     $scope.baseUrl = "//localhost/simulation/public/";
     $scope.search = function() {
 
+        if ($scope.select_class == "" && $scope.keywords == null) {
+
+            return false;
+        }
+
         $http({
                 url: $scope.baseUrl + 'search_course',
                 method: "POST",
@@ -139,6 +144,7 @@ app.controller('ListController', function($scope, $http) {
             .error(function(data, status, headers, config) {
 
             });
+
     }
 
     // 把課程上課時間的 . 去除
@@ -506,6 +512,7 @@ app.controller('ListController', function($scope, $http) {
 
         }).catch(function(error) {
 
+            window.location.href = $scope.baseUrl + 'start';
         });
     }
 

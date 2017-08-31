@@ -79,12 +79,12 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
     Route::get('/test', 'SimulationController@test');
 
     // 找房子頁面
-    Route::get('/house', 'HouseController@house')->middleware('isVerify');
+    Route::get('/house', 'HouseController@house');
 
-    // 新增屋子資訊
-    Route::get('/house/post', 'HouseController@post_house');
+    // 新增屋子資訊 middleware 判斷是否已認證啟用
+    Route::get('/house/post', 'HouseController@post_house')->middleware('isVerify');
 
-    Route::post('/house/post', 'HouseController@post_house_handle');
+    Route::post('/house/post', 'HouseController@post_house_handle')->middleware('isVerify');
 
     Route::post('/house/search', 'HouseController@search_house');
 
@@ -92,6 +92,10 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
 
     // 上傳圖片到 imgur
     Route::post('/upload/image', 'SimulationController@upload_image');
+
+    Route::get('/exams', 'ExamController@past_year');
+
+    Route::post('/exams/add', 'ExamController@upload_handle');
 
 
                             /* VerifyController */
@@ -111,6 +115,10 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
     // 認證啟用功能
     Route::get('/verify/{token}', 'VerifyController@verifyConfirm')->middleware('verifySuccess');
 
-    
+
+    Route::get('tests', function() {
+
+        Storage::disk('google')->put('test.pdf', 'Hello World');
+    });
 
 });

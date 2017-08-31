@@ -6,12 +6,15 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
-        "mongodb/mongodb": "^1.0.0",
+        "guzzlehttp/guzzle": "~5.3|~6.0",
+        "illuminate/filesystem": "5.*",
         "jenssegers/mongodb": "^3.2",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "weidner/goutte": "^1.0",
-        "guzzlehttp/guzzle": "~5.3|~6.0"
+        "mongodb/mongodb": "^1.0.0",
+        "nao-pon/flysystem-google-drive": "~1.1",
+        "superbalist/laravel-google-cloud-storage": "^1.0",
+        "weidner/goutte": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
