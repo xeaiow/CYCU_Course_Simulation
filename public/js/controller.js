@@ -84,6 +84,15 @@ app.filter('postcheckbox', function() {
     };
 });
 
+app.filter('strcut', function() {
+    return function(val) {
+        if (val.length > 15) {
+            return val.substring(0, 15) + " ..."
+        }
+        return val;
+    };
+});
+
 
 
 app.controller('ListController', function($scope, $http) {
@@ -1092,7 +1101,7 @@ app.controller('ListController', function($scope, $http) {
     $scope.search_house = function() {
 
         $http({
-                url: $scope.baseUrl + '/house/search',
+                url: $scope.baseUrl + 'house/search',
                 method: "POST",
                 data: $.param({
                     "keywords": $scope.keywords
@@ -1125,6 +1134,66 @@ app.controller('ListController', function($scope, $http) {
     $scope.view_house_mobile = function(id) {
         window.location.href = $scope.baseUrl + 'house/' + id;
     }
+
+    // 搜尋考古題
+    $scope.search_exams = function() {
+
+        if ($scope.examms_keywords == null || $scope.examms_keywords == "") {
+            return false;
+        }
+
+        $http({
+                url: $scope.baseUrl + 'exams/search',
+                method: "POST",
+                data: $.param({
+                    "keywords": $scope.examms_keywords
+                }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                },
+            })
+            .success(function(data, status, headers, config) {
+
+                if (data.length !== 0) {
+
+                    $scope.exams = data;
+                    return false;
+                }
+
+                swal({
+                    title: "糟糕",
+                    text: "找不到相關考古題，換個關鍵字看看。",
+                    type: "error",
+                    confirmButtonText: "知道了"
+                });
+            })
+            .error(function(data, status, headers, config) {
+
+            });
+    }
+
+    $scope.exams_news = function() {
+
+        $http({
+                url: $scope.baseUrl + 'exams/news',
+                method: "GET",
+            })
+            .success(function(data, status, headers, config) {
+
+                $scope.exams_news = data;
+                console.log(data);
+            })
+            .error(function(data, status, headers, config) {
+
+            });
+    }
+
+
+    // 預覽考古題資訊
+    $scope.viewExamms = function(url) {
+        window.location.href = $scope.baseUrl + 'exams/' + url;
+    }
+
 
     // toastr dialog setting    
     toastr.options = {

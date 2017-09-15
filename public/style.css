@@ -183,6 +183,10 @@ td,
     margin-bottom: 0px !important;
 }
 
+.fix-exams-post-button {
+    margin-left: -5px !important;
+}
+
 .house-check-info {
     margin-bottom: 30px;
 }

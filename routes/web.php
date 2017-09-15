@@ -93,9 +93,17 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
     // 上傳圖片到 imgur
     Route::post('/upload/image', 'SimulationController@upload_image');
 
-    Route::get('/exams', 'ExamController@past_year');
+    Route::get('/exams', 'ExamController@index');
 
-    Route::post('/exams/add', 'ExamController@upload_handle');
+    Route::get('/exams/post', 'ExamController@past_year');
+
+    Route::get('/exams/news', 'ExamController@exams_news');
+
+    Route::get('/exams/{id}', 'ExamController@exams_info');
+
+    Route::post('/exams/search', 'ExamController@exams_search');
+
+    Route::post('/exams/post/handle', 'ExamController@upload_handle');
 
 
                             /* VerifyController */
