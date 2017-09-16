@@ -1125,14 +1125,21 @@ app.controller('ListController', function($scope, $http) {
 
 
     $scope.houseIndex;
+
     // 進入房屋資訊頁面
     $scope.view_house = function(index) {
 
         $scope.houseIndex = index;
     }
 
+    // 手機版進入房屋資訊頁面
     $scope.view_house_mobile = function(id) {
         window.location.href = $scope.baseUrl + 'house/' + id;
+    }
+
+    // 進入考古題資訊頁面
+    $scope.view_exams = function(id) {
+        window.location.href = $scope.baseUrl + 'exams/' + id;
     }
 
     // 搜尋考古題

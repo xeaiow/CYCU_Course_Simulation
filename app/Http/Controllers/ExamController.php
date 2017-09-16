@@ -41,12 +41,12 @@ class ExamController extends Controller
 
 
     // 個別考古題資訊
-    public function exams_info(Request $request)
+    public function exams_info()
     {
         $data = array(
             'username'  => Session::get('username'),
             'photo'     => Session::get('photo'),
-            'isImport'  => Session::get('isImport')
+            'exams'     => Exam::Where('fb_id', Session::get('id'))->Where('_id', Request::segment(2))->first()
         );
 
         return view('exams.info')->with('profile', $data);

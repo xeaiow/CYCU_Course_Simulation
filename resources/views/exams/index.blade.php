@@ -56,38 +56,20 @@
         <h2 class="ui header">
             <i class="cloud icon"></i>
             <div class="content">
-                最近上傳的五筆考古題
+                最近上傳的考古題
             </div>
         </h2>
-        <!-- 最新上傳 -->
-        <div class="lists-max-height" ng-init="exams_news()">
-            <div class="ui card fluid" ng-repeat="item in exams_news">
-                <div class="content">
-                    <div class="header">
-                        <a>
-                            <% item.title %>
-                        </a>
+        <div class="ui inverted segment">
+            <div class="ui inverted relaxed divided list" ng-init="exams_news()">
+                <div class="item view-house" ng-repeat="item in exams_news" ng-click="view_exams(item._id)">
+                    <div class="content">
+                    <div class="header"><i class="icon bookmark"></i> <% item.title %> / <% item.filename.length %> 個檔案</div>
+                        <% item.description | strcut %>
                     </div>
-                    <div class="description">
-                        <p>
-                            描述：
-                            <% item.description | strcut %>
-                        </p>
-                    </div>
-                </div>
-                <div class="extra content">
-                    <span class="left floated like">
-                        <% item.created_at %> 上傳
-                    </span>
-                    <span class="right floated like">
-                        <% item.filename.length %> 個檔案
-                    </span>
-                </div>
-                <div class="ui bottom attached button" ng-click="viewExamms(item._id)">
-                    <i class="unhide icon green"></i>查看
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
