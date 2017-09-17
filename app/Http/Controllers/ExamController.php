@@ -21,7 +21,6 @@ class ExamController extends Controller
         $data = array(
             'username'  => Session::get('username'),
             'photo'     => Session::get('photo'),
-            'isImport'  => Session::get('isImport')
         );
 
         return view('exams.index')->with('profile', $data);
@@ -33,7 +32,6 @@ class ExamController extends Controller
         $data = array(
             'username'  => Session::get('username'),
             'photo'     => Session::get('photo'),
-            'isImport'  => Session::get('isImport')
         );
 
         return view('exams.add')->with('profile', $data);
@@ -43,10 +41,19 @@ class ExamController extends Controller
     // 個別考古題資訊
     public function exams_info()
     {
+        $examsInfo = Exam::Where('fb_id', Session::get('id'))->Where('_id', Request::segment(2))->first();
+
+        // 如果不存在此筆資料就導回 /exams
+        if ( count($examsInfo) == 0 )
+        {
+            return redirect('/exams');
+        }
+        
+
         $data = array(
             'username'  => Session::get('username'),
             'photo'     => Session::get('photo'),
-            'exams'     => Exam::Where('fb_id', Session::get('id'))->Where('_id', Request::segment(2))->first()
+            'exams'     => $examsInfo
         );
 
         return view('exams.info')->with('profile', $data);

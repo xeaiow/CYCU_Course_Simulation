@@ -29,6 +29,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="author" content="CYCU Simulation">
     <meta name="article:author" content="CYCU Simulation">
     <meta name="og:description" content="每學期選課前，總是要手動列出欲選課清單，但往往沒想像中順利，得預備許多課表組合，因此誕生了此系統，希望能幫助到大家。" />
@@ -39,6 +41,7 @@
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="630">
     <meta property="og:image:height" content="760">
+    <meta property="al:android:app_name" content="模擬中原 CYCU Simulation">
     <meta property="og:image:secure_url" content="https://i.imgur.com/QEobY1P.png" />
     <title>@yield('pageTitle') - CYCU Simulation</title>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
@@ -132,6 +135,7 @@
 
         $(function() {
             FastClick.attach(document.body);
+            console.log("%c(ㆆᴗㆆ) 看一次 5,000 元", "color:#FF0000;font-size:25px;");
         });
          
     </script>

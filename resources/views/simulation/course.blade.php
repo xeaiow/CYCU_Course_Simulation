@@ -1,3 +1,28 @@
+<!--
+                       _oo0oo_
+                      o8888888o
+                      88" . "88
+                      (| -_- |)
+                      0\  =  /0
+                    ___/`---'\___
+                  .' \\|     |// '.
+                 / \\|||  :  |||// \
+                / _||||| -:- |||||- \
+               |   | \\\  -  /// |   |
+               | \_|  ''\---/''  |_/ |
+               \  .-\__  '-'  ___/-. /
+             ___'. .'  /--.--\  `. .'___
+          ."" '<  `.___\_<|>_/___.' >' "".
+         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+         \  \ `_.   \_ __\ /__ _/   .-` /  /
+     =====`-.____`.___ \_____/___.-`___.-'=====
+                       `=---='
+
+
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+               佛祖保佑         永無bug
+-->
 <!DOCTYPE html>
 <html>
 
@@ -7,6 +32,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="author" content="CYCU Simulation">
     <meta name="og:description" content="每學期選課前，總是要手動列出欲選課清單，但往往沒想像中順利，得預備許多課表組合，因此誕生了此系統，希望能幫助到大家。" />
+    <meta name="description" content="每學期選課前，總是要手動列出欲選課清單，但往往沒想像中順利，得預備許多課表組合，因此誕生了此系統，希望能幫助到大家。" />
     <meta property="og:title" content="{{ $data['title'] }}"/>
     <meta property="og:site_name" content="{{ $data['title'] }}"></meta>
     <meta property="og:type" content="模擬選課"/>
@@ -469,6 +495,7 @@
 
         $(function() {
             FastClick.attach(document.body);
+            console.log("%c(ㆆᴗㆆ) 看一次 5,000 元", "color:#FF0000;font-size:25px;");
         });
     </script>
 
