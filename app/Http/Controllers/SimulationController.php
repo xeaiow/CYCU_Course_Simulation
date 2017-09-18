@@ -259,18 +259,15 @@ class SimulationController extends Controller
     }
 
 
-    // 儲存的課表
+    // 儲存的課表 (2017.9/18 取消 rnd_id 欄位，改用 _id)
     public function courseAvailable (Request $request)
     {
         $new = [
-            'fb_id' => Session::get('id'),
-            'course_lists' => $request->added_course,
-            'title' => $request->title,
-            'rnd_id' => $request->rnd_id
+            'fb_id'         => Session::get('id'),
+            'course_lists'  => $request->added_course,
+            'title'         => $request->title
         ];
         courseAvailable::create($new);
-
-        //courseAvailable::Where('fb_id', Session::get('id'))->push(['course_lists' => $request->added_course]);
     }
 
     // 設定系所
@@ -297,13 +294,14 @@ class SimulationController extends Controller
     // 我的課表 ajax
     public function getMyCourse ()
     {
-        echo courseAvailable::Where('fb_id', Session::get('id'))->orderBy('_id', 'desc')->get(['course_lists.point', 'course_lists.name', 'rnd_id', 'title']);
+        echo courseAvailable::Where('fb_id', Session::get('id'))->orderBy('_id', 'desc')->get(['course_lists.point', 'course_lists.name', 'title']);
     }
 
     // 檢視公開課表
     public function course (Request $request)
     {
-        $exists = courseAvailable::Where('rnd_id', $request->id);
+        $exists = courseAvailable::Where('_id', $request->id)->orWhere('rnd_id', $request->id);
+        
         if ($exists->count() == 0) {
 
             return redirect('/');
@@ -315,7 +313,7 @@ class SimulationController extends Controller
     // 讀取公開課表 ajax (不需登入)
     public function loadOpenCourse (Request $request)
     {
-        echo $exists = courseAvailable::Where('rnd_id', $request->id)->first(['course_lists', 'created_at', 'rnd_id', 'title']);
+        echo $exists = courseAvailable::Where('_id', $request->id)->orWhere('rnd_id', $request->id)->first(['course_lists', 'created_at', 'title']);
     }
 
 
@@ -330,7 +328,7 @@ class SimulationController extends Controller
     public function removeCourse (Request $request)
     {
 
-        $remove_course = courseAvailable::Where('fb_id', Session::get('id'))->Where('rnd_id', $request->id)->first();
+        $remove_course = courseAvailable::Where('fb_id', Session::get('id'))->Where('_id', $request->id)->first();
         
         // 如果該編號是我的課表才刪除
         if ($remove_course !== null) {
@@ -347,8 +345,8 @@ class SimulationController extends Controller
 
         $url        = "http://cmap.cycu.edu.tw:8080//MyMentor/stdLogin.do" ;
         $ref_url    = "http://cmap.cycu.edu.tw:8080/MyMentor/courseCreditStructure.do";
-        $userId     = $request->userId;
-        $password   = $request->password;
+        $userId     = "10244257";//$request->userId;
+        $password   = "Lzj830919";//$request->password;
         
 
         $cookie_jar = tempnam('./tmp','cookie.txt');
@@ -421,14 +419,7 @@ class SimulationController extends Controller
         return view('simulation.pass')->with('profile', $data);
     }
 
-
-    public function test ()
-    {
-        echo House::Where('fb_id', Session::get('id'))->Where('_id', '599964fca3e92e282800155c')->first();
-    
-    }
-
-
+    // imgur 可多張圖片上傳
     public function upload_image ()
     {
 

@@ -654,8 +654,7 @@ app.controller('ListController', function($scope, $http) {
                                 method: "POST",
                                 data: $.param({
                                     "added_course": JSON.parse(angular.toJson($scope.selectCourse)),
-                                    "title": inputValue,
-                                    "rnd_id": rnd
+                                    "title": inputValue
                                 }),
                                 headers: {
                                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -715,6 +714,7 @@ app.controller('ListController', function($scope, $http) {
 
                     // 取得所有課表的 id
                     $scope.mySaveCourse.push({
+                        'id': data[i]._id,
                         'url': data[i].rnd_id,
                         'title': data[i].title,
                         'point': totalCourse,
@@ -752,7 +752,7 @@ app.controller('ListController', function($scope, $http) {
                     // 刪除課表後 UI 顯示部分也要刪除
                     angular.forEach($scope.mySaveCourse, function(val, key) {
 
-                        if (val.url == link) {
+                        if (val.id == link) {
 
                             $scope.mySaveCourse.splice(key, 1);
                         }
@@ -766,6 +766,7 @@ app.controller('ListController', function($scope, $http) {
 
 
     $scope.course_info = []; // 課表中其餘資訊
+    $scope.totalPoints = 0; // 檢視課表總學分數 (初始為 0)
     // 使用編號讀取課表
     $scope.load_open_course = function(id) {
 
@@ -781,6 +782,7 @@ app.controller('ListController', function($scope, $http) {
                 angular.forEach(course, function(val, i) {
 
                     $scope.pushCourseToList(course[i].phase, course[i].name, course[i].teacher);
+                    $scope.totalPoints += parseInt(course[i].point);
                 });
             })
             .error(function(data, status, headers, config) {
@@ -851,6 +853,7 @@ app.controller('ListController', function($scope, $http) {
 
                     // 清除空格及 html tag
                     var res = result[key] = val.replace(/\s\s+/g, ' ').replace(/(<([^>]+)>)/ig, "").split(" ");
+                    console.log(res);
                     var demand = new Array(); // 需存入的值
 
                     // 排除重複資料
@@ -1005,11 +1008,21 @@ app.controller('ListController', function($scope, $http) {
                             });
                             return false;
                         }
+
+                    } else if (res[0] == "" && res[2] == "" && res[4] == "" && res[6] == "") {
+
+                        demand = [1, 3, "尚未修習"];
+                        $scope.passCourse.push({
+                            'course_name': res[demand[0]],
+                            'type': res[demand[1]],
+                            'score': demand[2]
+                        });
+                        return false;
                     }
                 });
 
-
-                // save pass course
+                console.log($scope.passCourse);
+                //save pass course
                 $http({
                         url: $scope.baseUrl + 'pass/save',
                         method: "POST",

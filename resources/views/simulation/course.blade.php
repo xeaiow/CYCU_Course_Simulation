@@ -62,7 +62,7 @@
 <body ng-app="myApp" ng-controller="ListController" ng-cloak>
 
     <div class="ui container">
-        <div class="ui stackable one column grid" ng-init="load_open_course({{ request()->route('id') }})">
+        <div class="ui stackable one column grid" ng-init="load_open_course('{{ request()->route('id') }}')">
             <div class="column course_scroll">
                 <table class="ui unstackable celled inverted table" id="course_exports">
                     <thead>
@@ -420,11 +420,19 @@
             </div>
 
             <h4 class="ui horizontal divider header">
-                <i class="share icon"></i> 分享這個課表
+                <i class="share icon"></i> 分享 / 回應
             </h4>
-            <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button" data-size="large" data-mobile-iframe="true">
-                <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsimulation.com.tw%2F&amp;src=sdkpreparse"></a>
+
+            <div class="sixteen wide column">
+                <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button" data-size="large" data-mobile-iframe="true">
+                    <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsimulation.com.tw%2F&amp;src=sdkpreparse"></a>
+                </div>
+                <div class="fb-comments" data-href="{{ Request::url() }}" data-numposts="5" data-width="100%"></div>
             </div>
+            
+            <h4 class="ui horizontal divider header">
+                <i class="star icon"></i> 共 <% totalPoints %> 學分
+            </h4>
 
             <!-- courseInfo -->
             <div class="ui card fluid" ng-repeat="item in course_info">

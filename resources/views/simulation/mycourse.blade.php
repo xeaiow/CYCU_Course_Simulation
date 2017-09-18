@@ -29,8 +29,8 @@
                 </div>
 
                 <div class="ui two bottom attached buttons">
-                    <div class="ui button facebook" ng-click="link_course(item.url)"><i class="external icon"></i> 查看課表</div>
-                    <div class="ui button google plus" ng-click="remove_course(item.url)"><i class="remove icon"></i> 刪除</div>
+                    <div class="ui button facebook" ng-click="link_course(item.id)"><i class="external icon"></i> 查看課表</div>
+                    <div class="ui button google plus" ng-click="remove_course(item.id)"><i class="remove icon"></i> 刪除</div>
                 </div>
             </div>
         </div>

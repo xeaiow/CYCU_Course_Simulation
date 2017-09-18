@@ -10,10 +10,10 @@ Route::group(['prefix' => '/', 'middleware' => 'isLogin'], function () {
 Route::post('/profile/save', 'SimulationController@saveProfile');
 
 // 載入公開的課表頁面
-Route::get('/course/{id}', 'SimulationController@course');
+Route::get('/course/{id}', 'SimulationController@course')->where('id', '[0-9A-Za-z]+');
 
 // 載入公開的課表 ajax
-Route::get('/load_open_course/{id}', 'SimulationController@loadOpenCourse')->where('id', '[0-9]+');
+Route::get('/load_open_course/{id}', 'SimulationController@loadOpenCourse');
 
 // 載入已註冊人數
 Route::get('/load_joined', 'SimulationController@getJoined');
@@ -64,7 +64,7 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
     Route::get('/get_my_course', 'SimulationController@getMyCourse');
 
     // 刪除我的課表
-    Route::get('/remove_course/{id}', 'SimulationController@removeCourse');
+    Route::get('/remove_course/{id}', 'SimulationController@removeCourse')->where('id', '[0-9A-Za-z]+');
 
     // 已修習的學分清單
     Route::get('/pass', 'SimulationController@passCourse');
@@ -75,10 +75,6 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
     // 儲存 MyMentor 下載的課程
     Route::post('/load_mymentor', 'SimulationController@loadMymentor');
 
-    // test
-    Route::get('/test', 'SimulationController@test');
-
-    
 
     // 新增屋子資訊 middleware 判斷是否已認證啟用
     Route::get('/house/post', 'HouseController@post_house')->middleware('isVerify');
@@ -99,7 +95,7 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
 
     Route::get('/exams/news', 'ExamController@exams_news');
 
-    Route::get('/exams/{id}', 'ExamController@exams_info');
+    Route::get('/exams/{id}', 'ExamController@exams_info')->where('id', '[0-9a-z]+');
 
     Route::post('/exams/search', 'ExamController@exams_search');
 
@@ -121,7 +117,7 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
     Route::get('/verify/send', 'VerifyController@sendMailSuccess')->middleware('isVerifyed');
 
     // 認證啟用功能
-    Route::get('/verify/{token}', 'VerifyController@verifyConfirm')->middleware('verifySuccess');
+    Route::get('/verify/{token}', 'VerifyController@verifyConfirm')->where('token', '[0-9A-Za-z]+')->middleware('verifySuccess');
 
 
     Route::get('tests', function() {
@@ -132,4 +128,4 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
 });
 
 // 房屋資訊
-Route::get('/house/{id}', 'HouseController@view_house');
+Route::get('/house/{id}', 'HouseController@view_house')->where('id', '[0-9a-z]+');
