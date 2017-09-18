@@ -65,16 +65,6 @@ app.filter('pictures', function() {
     };
 });
 
-
-app.filter('checkbox', function() {
-    return function(val) {
-        if (val != "true") {
-            return "✖";
-        }
-        return "✔";
-    };
-});
-
 app.filter('postcheckbox', function() {
     return function(val) {
         if (val != true) {
@@ -92,8 +82,6 @@ app.filter('strcut', function() {
         return val;
     };
 });
-
-
 
 app.controller('ListController', function($scope, $http) {
 
@@ -1062,38 +1050,78 @@ app.controller('ListController', function($scope, $http) {
     // 發布房屋資訊
     $scope.house_post = function() {
 
-        $http({
-                url: $scope.baseUrl + 'house/post',
-                method: "POST",
-                data: $.param({
-                    "title": $scope.title,
-                    "marker": $scope.marker,
-                    "rent_price": $scope.rent_price,
-                    "floor": $scope.floor,
-                    "door": $scope.door,
-                    "space": $scope.space,
-                    "landlord_gender": $scope.landlord_gender,
-                    "house_type": $scope.house_type,
-                    "safe": $scope.safe,
-                    "extra_pay": $scope.extra_pay,
-                    "cooking": $scope.cooking,
-                    "landlord_score": $scope.landlord_score,
-                    "live_score": $scope.live_score,
-                    "landlord_comment": $scope.landlord_comment,
-                    "live_comment": $scope.live_comment,
-                    "pic": images
-                }),
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-                },
-            })
-            .success(function(data, status, headers, config) {
+        // 判斷所有應填寫欄位是否填寫
+        var condition = [
+            $scope.title == undefined,
+            $scope.marker == undefined,
+            $scope.rent_price == undefined,
+            $scope.floor == undefined,
+            $scope.door == undefined,
+            $scope.space == undefined,
+            $scope.landlord_gender == undefined,
+            $scope.house_type == undefined,
+            $scope.landlord_score == undefined,
+            $scope.live_score == undefined
+        ]
 
-                window.location.href = $scope.baseUrl;
-            })
-            .error(function(data, status, headers, config) {
+        if (condition.indexOf(true) !== -1) {
 
+            swal({
+                title: "糟糕",
+                text: "請確實填寫必填欄位！",
+                type: "error",
+                confirmButtonText: "知道了"
             });
+            return false;
+
+        } else {
+            $http({
+                    url: $scope.baseUrl + 'house/post',
+                    method: "POST",
+                    data: $.param({
+                        "title": $scope.title,
+                        "marker": $scope.marker,
+                        "rent_price": $scope.rent_price,
+                        "floor": $scope.floor,
+                        "door": $scope.door,
+                        "space": $scope.space,
+                        "landlord_gender": $scope.landlord_gender,
+                        "house_type": $scope.house_type,
+                        "safe": $scope.safe,
+                        "extra_pay": $scope.extra_pay,
+                        "cooking": $scope.cooking,
+                        "landlord_score": $scope.landlord_score,
+                        "live_score": $scope.live_score,
+                        "landlord_comment": $scope.landlord_comment,
+                        "live_comment": $scope.live_comment,
+                        "pic": images
+                    }),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                    },
+                })
+                .success(function(data, status, headers, config) {
+
+                    if (data.status === true) {
+
+                        window.location.href = $scope.baseUrl + 'house/' + data.url;
+                        return false;
+
+                    } else {
+                        swal({
+                            title: "糟糕",
+                            text: "新增失敗！請聯絡站長。",
+                            type: "error",
+                            confirmButtonText: "知道了"
+                        });
+                    }
+
+                })
+                .error(function(data, status, headers, config) {
+
+                });
+        }
+
     }
 
     $scope.houseInfo = [];
@@ -1115,7 +1143,6 @@ app.controller('ListController', function($scope, $http) {
                 if (data.length !== 0) {
 
                     $scope.houseInfo = data;
-                    console.log(data);
                 }
             })
             .error(function(data, status, headers, config) {
@@ -1135,6 +1162,22 @@ app.controller('ListController', function($scope, $http) {
     // 手機版進入房屋資訊頁面
     $scope.view_house_mobile = function(id) {
         window.location.href = $scope.baseUrl + 'house/' + id;
+    }
+
+
+    // 預覽房屋資訊圖片
+    $scope.house_view_images = function(img_url) {
+
+        $scope.image_zoom = img_url;
+        // setTimeout 是為了延遲讓圖片先載好，Modal才不會位移
+        setTimeout(function() {
+            $("#house-view-images").modal({
+                blurring: true,
+                observeChanges: true,
+                duration: 100,
+                autofocus: true
+            }).modal('show');
+        }, 100);
     }
 
     // 進入考古題資訊頁面

@@ -1,4 +1,4 @@
-@extends('layout.main') @section('pageTitle', '找屋子') @section('content')
+@extends('layout.main') @section('pageTitle', $profile['house']['title']) @section('content')
 
 <div class="ui grid stackable">
     <div class="ui eight wide column">
@@ -116,15 +116,21 @@
         </div>
     </div>
 
-    <!-- 評論及照片 -->
-    <div class="ui eight wide column">
+    <div class="eight wide column">
+        <div class="fb-comments" data-href="{{ url('/house') }}/{{ $profile['house']['_id'] }}" data-numposts="5"></div>
+        <div class="fb-like" data-href="{{ url('/house') }}/{{ $profile['house']['_id'] }}" data-layout="button" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+    </div>
+    
+
+    <h4 class="ui horizontal divider header"><i class="map pin icon"></i>地圖</h4>
+    <!-- 地圖 -->
+    <div class="sixteen wide column">
         <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src=http://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q={{ $profile['house']['marker'] }}&z=16&output=embed&t=></iframe>
     </div>
 
-    <h4 class="ui horizontal divider header"><i class="comments icon"></i>評論</h4>
-
+    <h4 class="ui horizontal divider header"><i class="comments icon"></i>心得</h4>
+    <!-- 心得 -->
     <div class="sixteen wide column">
-        <!-- 評論 -->
         <div class="ui piled segment">
             <h4 class="ui header">評論房東</h4>
             <p class="marker-text">
@@ -139,12 +145,13 @@
         </div>
 
         <h4 class="ui horizontal divider header"><i class="image icon"></i>照片</h4>
+        
         <!-- 圖片 -->
         <div class="ui basic segment stackable two column grid">
         @if ($profile['house']['pictures'])
             @foreach ($profile['house']['pictures'] as $img)
                 <div class="column">
-                    <div class="ui card fluid">
+                    <div class="ui card fluid" ng-click="house_view_images('{{ $img }}')">
                         <a class="ui">
                             <div class="image-square bordered ui image" style="background-image: url({{ $img }})"></div>
                         </a>
@@ -161,5 +168,26 @@
     </div>
 
 </div>
+
+<div class="ui basic modal" id="house-view-images">
+    <i class="close icon"></i>
+    <div class="image content">
+        <div class="ui Massive image centered">
+            <img ng-src="<% image_zoom %>">
+        </div>
+    </div>
+</div>
+
+<div id="fb-root"></div>
+<script>
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.10&appId=452934435085965";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 
 @endsection

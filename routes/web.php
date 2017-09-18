@@ -78,17 +78,17 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
     // test
     Route::get('/test', 'SimulationController@test');
 
-    // 找房子頁面
-    Route::get('/house', 'HouseController@house');
+    
 
     // 新增屋子資訊 middleware 判斷是否已認證啟用
     Route::get('/house/post', 'HouseController@post_house')->middleware('isVerify');
 
     Route::post('/house/post', 'HouseController@post_house_handle')->middleware('isVerify');
 
-    Route::post('/house/search', 'HouseController@search_house');
+    // 找房子頁面
+    Route::get('/house', 'HouseController@house');
 
-    Route::get('/house/{id}', 'HouseController@view_house');
+    Route::post('/house/search', 'HouseController@search_house');
 
     // 上傳圖片到 imgur
     Route::post('/upload/image', 'SimulationController@upload_image');
@@ -130,3 +130,6 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
     });
 
 });
+
+// 房屋資訊
+Route::get('/house/{id}', 'HouseController@view_house');

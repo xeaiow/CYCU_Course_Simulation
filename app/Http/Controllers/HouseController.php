@@ -20,7 +20,9 @@ class HouseController extends Controller
         $data = array(
             'username'  => Session::get('username'),
             'photo'     => Session::get('photo'),
-            'isImport'  => Session::get('isImport')
+            'og_title'  => "找屋子 | 模擬中原",
+            'og_image'  => "https://i.imgur.com/LlYu678.png",
+            'og_description' => "中原大學周邊租屋資訊，中原附近房屋心得，讓你得知最真實的資訊。"
         );
 
         return view('house.index')->with('profile', $data);
@@ -33,7 +35,6 @@ class HouseController extends Controller
         $data = array(
             'username'  => Session::get('username'),
             'photo'     => Session::get('photo'),
-            'isImport'  => Session::get('isImport')
         );
 
         return view('house.post')->with('profile', $data);
@@ -53,17 +54,24 @@ class HouseController extends Controller
             'space' => intval($request->space),
             'landlord_gender' => intval($request->landlord_gender),
             'house_type' => intval($request->house_type),
-            'safe' => $request->safe,
-            'extra_pay' => $request->extra_pay,
-            'cooking' => $request->cooking,
+            'safe' => filter_var($request->safe, FILTER_VALIDATE_BOOLEAN),
+            'extra_pay' => filter_var($request->extra_pay, FILTER_VALIDATE_BOOLEAN),
+            'cooking' => filter_var($request->cooking, FILTER_VALIDATE_BOOLEAN),
             'landlord_score' => intval($request->landlord_score),
             'live_score' => intval($request->live_score),
             'landlord_comment' => $request->landlord_comment,
             'live_comment' => $request->live_comment,
-            'pictures' => $request->pic
+            'pictures' => $request->pic[0]
         ];
 
-        House::create($new);
+        $isCreatData = House::create($new);
+
+        if ($isCreatData)
+        {
+            $response['status'] = true;
+            $response['url'] = $isCreatData->id;
+            return json_encode($response);
+        }
     }
 
 
@@ -76,13 +84,24 @@ class HouseController extends Controller
 
 
     // 房屋資訊頁面
-    public function view_house (Request $request) {
+    public function view_house (Request $request)
+    {
+
+        $houseInfo = House::Where('_id', $request->id)->first();
+
+        // 如果不存在此筆資料就導回 /house
+        if ( count($houseInfo) == 0 )
+        {
+            return redirect('/house');
+        }
 
         $data = array(
             'username'  => Session::get('username'),
             'photo'     => Session::get('photo'),
-            'isImport'  => Session::get('isImport'),
-            'house'     => House::Where('fb_id', Session::get('id'))->Where('_id', $request->id)->first()
+            'og_title'  => $houseInfo['title'],
+            'og_image'  => "https://i.imgur.com/LlYu678.png",
+            'og_description' => "中原大學周邊租屋資訊，中原附近房屋心得，讓你得知最真實的資訊。",
+            'house'     => $houseInfo
         );
 
         return view('house.info')->with('profile', $data);

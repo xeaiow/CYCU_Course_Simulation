@@ -1,6 +1,7 @@
 @extends('layout.main') @section('pageTitle', '新增屋子') @section('content')
 
 <div class="ui grid stackable">
+
     <div class="seven wide column" ng-init="safe=false;extra_pay=false;cooking=false">
 
         <!-- 標題 -->
@@ -85,6 +86,7 @@
                 </div>
             </div>
         </div>
+
         <!--滿意度-->
         <h3 class="ui header blue">滿意度*</h3>
         <div class="ui right labeled input fluid margin-20">
@@ -119,12 +121,12 @@
         </div>
 
         <div class="ui segment basic margin-top-less-30">
-            <button class="ui button simulation-theme white fluid" ng-click="house_post()">發布</button>
+            <button class="ui button simulation-theme white fluid" id="house-post" ng-click="house_post()">發布</button>
         </div>
 
         <form ng-cloak method="post" class="house-imgur" enctype="multipart/images">
             {{ csrf_field() }}
-            <input name="userImage" id="house-choose-image" type="file" accept="image/*">
+            <input name="userImage[]" id="house-choose-image" type="file" accept="image/*" multiple/>
             <input type="submit" id="house-upload-image" class="ui button blue" value="上傳">
         </form>
 
@@ -132,6 +134,9 @@
 
     <!-- 弱弱的隔開 -->
     <div class="one wide column">
+        <div class="ui vertical divider">
+            預覽
+        </div>
     </div>
 
     <div class="eight wide column">
@@ -234,9 +239,12 @@
 
         <!-- 圖片 -->
         <div class="ui piled segment">
+            <div class="ui active dimmer" id="exams-uploading">
+                <div class="ui massive text loader">Uploading...</div>
+            </div>
             <h4 class="ui header">圖片預覽</h4>
             <div class="marker-text ui basic segment stackable two column grid" id="image-result"></div>
-        </div> 
+        </div>
     </div>
 
 
@@ -245,6 +253,9 @@
 
         $(".house-imgur").on('submit', (function(e) {
             e.preventDefault();
+
+            $("#exams-uploading").show();
+            $("#house-post").prop("disabled", true); // Lock button
 
             $.ajax({
                 url: "//localhost/simulation/public/upload/image",
@@ -259,20 +270,26 @@
 
                     // 將網址存回陣列
                     images[images.length] = response;
-                    $("#image-result").append(
-                        '<div class="column" id="view-images-' + images.length + '">' +
-                        '<div class="ui card fluid">' +
-                        '<a class="ui left corner label">' +
-                        '<i class="remove red icon remove-image" id="' + images.length + '"></i>' +
-                        '</a>' +
-                        '<a class="ui">' +
-                        '<div class="image-square bordered ui image" style="background-image: url(' + response + ')"></div>' +
-                        '</a>' +
-                        '</div>' +
-                        '</div>'
-                    );
+
+                    $.each(response, function(index, value) {
+
+                        $("#image-result").append(
+                            '<div class="column" id="view-images-' + images.length + '">' +
+                            '<div class="ui card fluid">' +
+                            '<a class="ui left corner label">' +
+                            '<i class="remove red icon remove-image" id="' + images.length + '"></i>' +
+                            '</a>' +
+                            '<a class="ui">' +
+                            '<div class="image-square bordered ui image" style="background-image: url(' + value + ')"></div>' +
+                            '</a>' +
+                            '</div>' +
+                            '</div>'
+                        );
+                    });
                     toastr["success"](" ", "上傳成功！")
-                    console.log(images);
+                    $("#exams-uploading").hide();
+                    $("#house-post").prop("disabled", false); // UnLock button
+                    console.log(response);
                 },
                 error: function() {
 
@@ -288,6 +305,10 @@
         $("#house-choose-image").change(function() {
             $("#house-upload-image").click();
             toastr["success"](" ", "上傳中！")
+        });
+
+        $(document).ready(function() {
+            $("#exams-uploading").hide();
         });
 
         // remove image arrays el

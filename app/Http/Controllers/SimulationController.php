@@ -431,17 +431,23 @@ class SimulationController extends Controller
 
     public function upload_image ()
     {
-        $file       = file_get_contents($_FILES['userImage']['tmp_name']);
-        $ch         = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://api.imgur.com/3/image.json');
-        curl_setopt($ch, CURLOPT_POST, TRUE);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Client-ID '.'5f2eaa3314e3d73'));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, array('image' => base64_encode($file)));
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $reply      = curl_exec($ch);
-        curl_close($ch);
-        $result = json_decode($reply)->data->link;
+
+        $result = array();
+
+        foreach ($_FILES['userImage']['tmp_name'] as $index => $tmpName)
+        {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'https://api.imgur.com/3/image.json');
+            curl_setopt($ch, CURLOPT_POST, TRUE);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Client-ID '.'5f2eaa3314e3d73'));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, array('image' => file_get_contents($tmpName)));
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $reply  = curl_exec($ch);
+            curl_close($ch);
+            $result[] = json_decode($reply)->data->link;
+        }
+
         return json_encode($result);
     }
 

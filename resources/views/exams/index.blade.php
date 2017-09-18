@@ -1,4 +1,4 @@
-@extends('layout.main') @section('content') @section('pageTitle', '搜尋考古題')
+@extends('layout.main') @section('content') @section('pageTitle', '考古題')
 
 
 <div class="ui grid stackable">

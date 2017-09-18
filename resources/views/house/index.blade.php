@@ -141,19 +141,19 @@
                     <tr>
                         <td class="table-th">安全設備 (滅火器、逃生口)</td>
                         <td>
-                            <% houseInfo[houseIndex].safe.toString() | checkbox %>
+                            <% houseInfo[houseIndex].safe | postcheckbox %>
                         </td>
                     </tr>
                     <tr>
                         <td class="table-th">額外費用 (管理費)</td>
                         <td>
-                            <% houseInfo[houseIndex].extra_pay.toString() | checkbox %>
+                            <% houseInfo[houseIndex].extra_pay | postcheckbox %>
                         </td>
                     </tr>
                     <tr>
                         <td class="table-th">開伙</td>
                         <td>
-                            <% houseInfo[houseIndex].cooking.toString() | checkbox %>
+                            <% houseInfo[houseIndex].cooking | postcheckbox %>
                         </td>
                     </tr>
                     <tr>
@@ -189,13 +189,22 @@
             <div class="ui basic segment stackable three column grid">
                 <div class="column" ng-repeat="pic in houseInfo[houseIndex].pictures">
                     <div class="ui card fluid">
-                        <a class="ui">
+                        <a class="ui" ng-click="house_view_images(pic)">
                             <div class="image-square bordered ui image" style="background-image: url(<% pic %>)"></div>
                         </a>
                     </div>
                 </div>
             </div>
 
+        </div>
+    </div>
+</div>
+
+<div class="ui basic modal" id="house-view-images">
+    <i class="close icon"></i>
+    <div class="image content">
+        <div class="ui Massive image centered">
+            <img ng-src="<% image_zoom %>">
         </div>
     </div>
 </div>

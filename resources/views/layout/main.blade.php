@@ -33,16 +33,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="author" content="CYCU Simulation">
     <meta name="article:author" content="CYCU Simulation">
-    <meta name="og:description" content="每學期選課前，總是要手動列出欲選課清單，但往往沒想像中順利，得預備許多課表組合，因此誕生了此系統，希望能幫助到大家。" />
-    <meta property="og:title" content="模擬中原 - CYCU Simulation"/>
+    <meta name="og:description" content="{{ ( isset( $profile['og_description'] ) ? $profile['og_description'] : '每學期選課前，總是要手動列出欲選課清單，但往往沒想像中順利，得預備許多課表組合，因此誕生了此系統，希望能幫助到大家。' ) }}" />
+    <meta property="og:title" content="{{ ( isset( $profile['og_title'] ) ? $profile['og_title'].' | 考古題 | 模擬中原' : '模擬中原 - CYCU Simulation' ) }}"/>
     <meta property="og:type" content="模擬選課"/>
     <meta property="og:url" content="{{ Request::url() }}"/>
-    <meta property="og:image" content="//i.imgur.com/QEobY1P.png"/>
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="630">
     <meta property="og:image:height" content="760">
+    <meta property="og:image" content="{{ isset( $profile['og_image'] ) ? $profile['og_image'] : 'https://i.imgur.com/QEobY1P.png' }}"/>
+    <meta property="og:image:secure_url" content="{{ isset( $profile['og_image'] ) ? $profile['og_image'] : 'https://i.imgur.com/QEobY1P.png' }}" />
     <meta property="al:android:app_name" content="模擬中原 CYCU Simulation">
-    <meta property="og:image:secure_url" content="https://i.imgur.com/QEobY1P.png" />
     <title>@yield('pageTitle') - CYCU Simulation</title>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -50,7 +50,6 @@
     <script src="{{ asset('/js/mask.min.js') }}"></script>
     <script src="{{ asset('/js/controller.js') }}"></script>
     <script src="{{ asset('/js/sweetalert2.min.js') }}"></script>
-    <link rel="stylesheet" type="text/css" href="{{ asset('/sweetalert2.min.css') }}">
     <script src="//cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
@@ -58,6 +57,7 @@
     <link rel="stylesheet" href="{{ asset('/semantic.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('/style.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('/toastr.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/sweetalert2.min.css') }}">
 </head>
 
 <body ng-app="myApp" ng-controller="ListController"  ng-cloak>

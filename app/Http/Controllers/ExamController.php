@@ -21,6 +21,9 @@ class ExamController extends Controller
         $data = array(
             'username'  => Session::get('username'),
             'photo'     => Session::get('photo'),
+            'og_title'  => "搜尋考古題 | 模擬中原",
+            'og_image'  => "https://i.imgur.com/LlYu678.png",
+            'og_description' => "小考、期末考總是不知從何念起，這裡為您提供考古題、筆記講義，當然您也能無私提供。",
         );
 
         return view('exams.index')->with('profile', $data);
@@ -41,7 +44,7 @@ class ExamController extends Controller
     // 個別考古題資訊
     public function exams_info()
     {
-        $examsInfo = Exam::Where('fb_id', Session::get('id'))->Where('_id', Request::segment(2))->first();
+        $examsInfo = Exam::Where('_id', Request::segment(2))->first();
 
         // 如果不存在此筆資料就導回 /exams
         if ( count($examsInfo) == 0 )
@@ -53,6 +56,9 @@ class ExamController extends Controller
         $data = array(
             'username'  => Session::get('username'),
             'photo'     => Session::get('photo'),
+            'og_title'  => $examsInfo['title'],
+            'og_image'  => "https://i.imgur.com/LlYu678.png",
+            'og_description' => "小考、期末考總是不知從何念起，這裡為您提供考古題、筆記講義，當然您也能無私提供。",
             'exams'     => $examsInfo
         );
 
@@ -100,13 +106,13 @@ class ExamController extends Controller
         }
 
         // 儲存資訊
-        $id = Exam::create(
-            ['fb_id' => Session::get('id'), 
-            'title' => Request::input('title'),
-            'filename' => $filename, 
-            'url' => $fileurl,
-            'description' => Request::input('description')]
-        )->id;
+        $id = Exam::create([
+            'fb_id'         => Session::get('id'), 
+            'title'         => Request::input('title'),
+            'filename'      => $filename, 
+            'url'           => $fileurl,
+            'description'   => Request::input('description')
+        ])->id;
         
         
         $response['status'] = true;
