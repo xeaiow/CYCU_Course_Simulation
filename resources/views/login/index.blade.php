@@ -221,17 +221,51 @@
                     <div class="ui basic segment stackable grid">
                         <div class="row">
                             <div class="six wide mobile only column">
-                                <h3 class="ui header centered">學分計算系統</h3>
+                                <h3 class="ui header centered">修課計算系統</h3>
                                 <div class="ui segment basic center aligned">
                                     <p>
-                                        Comming Soon...
+                                        <div class="ui slogan">
+
+                                            <h2 class="ui header">
+                                                <i class="black checkmark box icon"></i>
+                                                <div class="content">一鍵匯入</div>
+                                            </h2>
+
+                                            <h2 class="ui header">
+                                                <i class="black checkmark box icon"></i>
+                                                <div class="content">修習過的課程</div>
+                                            </h2>
+
+                                            <h2 class="ui header">
+                                                <i class="black checkmark box icon"></i>
+                                                <div class="content">尚未修習之課程</div>
+                                            </h2>
+
+                                        </div>
                                     </p>
                                 </div>
                             </div>
                             <div class="six wide middle aligned computer tablet only column">
-                                <h3 class="ui header">學分計算系統</h3>
+                                <h3 class="ui header">修課計算系統</h3>
                                 <p>
-                                    Comming Soon...
+                                    <div class="ui slogan">
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">一鍵匯入</div>
+                                        </h2>
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">修習過的課程</div>
+                                        </h2>
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">尚未修習之課程</div>
+                                        </h2>
+
+                                    </div>
                                 </p>
                             </div>
                             <div class="eight wide right floated column">
@@ -241,6 +275,76 @@
                     </div>
                 </div>
                 <!-- Page3 End -->
+
+                <!-- Page4 -->
+                <div class="ui vertical stripe segment">
+                    <div class="ui basic segment stackable grid">
+                        <div class="row">
+                            <div class="six wide mobile only column">
+                            <h3 class="ui header centered">租屋資訊</h3>
+                                <div class="ui segment basic center aligned">
+                                    <div class="ui slogan">
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">地標搜尋</div>
+                                        </h2>
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">言論自由</div>
+                                        </h2>
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">詳細且真實</div>
+                                        </h2>
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">多圖預覽</div>
+                                        </h2>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="eight wide column">
+                                <img src="https://i.imgur.com/28USWPq.png" class="ui large image">
+                            </div>
+                            <div class="six wide middle aligned right floated computer tablet only column">
+                                <h3 class="ui header">租屋資訊</h3>
+                                <p>
+                                    <div class="ui slogan">
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">地標搜尋</div>
+                                        </h2>
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">言論自由</div>
+                                        </h2>
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">詳細且真實</div>
+                                        </h2>
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">多圖預覽</div>
+                                        </h2>
+
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Page4 End -->
+
+                
 
                 <div class="ui vertical stripe segment">
                     <div class="ui basic segment stackable grid">

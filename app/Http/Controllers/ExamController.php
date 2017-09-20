@@ -84,6 +84,8 @@ class ExamController extends Controller
     // 上傳考古題檔案到 Google Drive
     public function upload_handle() {
  
+        ini_set('max_execution_time', 300); // 執行時間延長至 300 秒
+        
          // 取得使用者所選擇的檔案
         $files      = Request::file('filefield');
 
@@ -94,15 +96,16 @@ class ExamController extends Controller
         foreach ($files as $file) {
 
             // 副檔名
-            $extension = $file->getClientOriginalExtension();
+            $extension = $file->getClientOriginalName();
 
-            Storage::disk('google')->put($file->getFilename().'.'.$extension,  File::get($file), 'public');
+            Storage::disk('google')->put($extension,  \File::get($file));
         
             // 取得剛剛上傳的檔案名稱 (因為只能抓所有，所以把其他的篩掉)
             $url = collect(Storage::disk('google')->listContents('/', true))->sortBy('timestamp')->last();
-            
-            $filename[]   = $file->getFilename().'.'.$extension;
+
+            $filename[]   = $extension;
             $fileurl[]    = $url['path'];
+            
         }
 
         // 儲存資訊

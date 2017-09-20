@@ -13,7 +13,7 @@ Route::post('/profile/save', 'SimulationController@saveProfile');
 Route::get('/course/{id}', 'SimulationController@course')->where('id', '[0-9A-Za-z]+');
 
 // 載入公開的課表 ajax
-Route::get('/load_open_course/{id}', 'SimulationController@loadOpenCourse');
+Route::get('/load_open_course/{id}', 'SimulationController@loadOpenCourse')->where('id', '[0-9A-Za-z]+');
 
 // 載入已註冊人數
 Route::get('/load_joined', 'SimulationController@getJoined');
