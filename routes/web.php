@@ -99,7 +99,9 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
 
     Route::post('/exams/search', 'ExamController@exams_search');
 
-    Route::post('/exams/post/handle', 'ExamController@upload_handle');
+    Route::post('/exams/img/post/handle', 'ExamController@upload_handle');
+
+    Route::post('/exams/post/handle', 'ExamController@exams_post_handle');
 
 
                             /* VerifyController */

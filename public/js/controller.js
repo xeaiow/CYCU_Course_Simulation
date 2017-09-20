@@ -1252,6 +1252,44 @@ app.controller('ListController', function($scope, $http) {
     }
 
 
+    // 發布考古題
+    $scope.exam_post = function() {
+
+        // 判斷是否填寫關鍵字及至少上傳一個檔案
+        if (!$scope.title || filename.length == 0) {
+
+            swal({
+                title: "糟糕",
+                text: "請填寫標題及至少上傳一個檔案。",
+                type: "error",
+                confirmButtonText: "知道了"
+            });
+            return false;
+        }
+
+        $http({
+                url: $scope.baseUrl + 'exams/post/handle',
+                method: "POST",
+                data: $.param({
+                    "title": $scope.title,
+                    "description": $scope.description,
+                    "filename": filename,
+                    "fileurl": fileurl
+                }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                },
+            })
+            .success(function(data, status, headers, config) {
+
+                window.location.href = $scope.baseUrl + 'exams/' + data;
+            })
+            .error(function(data, status, headers, config) {
+
+            });
+    }
+
+
     // 預覽考古題資訊
     $scope.viewExamms = function(url) {
         window.location.href = $scope.baseUrl + 'exams/' + url;

@@ -85,7 +85,7 @@ class ExamController extends Controller
     public function upload_handle() {
  
         ini_set('max_execution_time', 300); // 執行時間延長至 300 秒
-        
+
          // 取得使用者所選擇的檔案
         $files      = Request::file('filefield');
 
@@ -98,30 +98,36 @@ class ExamController extends Controller
             // 副檔名
             $extension = $file->getClientOriginalName();
 
-            Storage::disk('google')->put($extension,  \File::get($file));
+            Storage::disk('google')->put($extension,  File::get($file), 'public');
         
             // 取得剛剛上傳的檔案名稱 (因為只能抓所有，所以把其他的篩掉)
             $url = collect(Storage::disk('google')->listContents('/', true))->sortBy('timestamp')->last();
 
             $filename[]   = $extension;
             $fileurl[]    = $url['path'];
-            
         }
-
-        // 儲存資訊
-        $id = Exam::create([
-            'fb_id'         => Session::get('id'), 
-            'title'         => Request::input('title'),
-            'filename'      => $filename, 
-            'url'           => $fileurl,
-            'description'   => Request::input('description')
-        ])->id;
         
-        
-        $response['status'] = true;
-        $response['url']    = $id;
+        $response['status']     = true;
+        $response['url']        = $fileurl;
+        $response['filename']   = $filename;
 
         return json_encode($response);
+    }
+
+
+
+    public function exams_post_handle ()
+    {
+        // 儲存資訊
+        $id = Exam::create([
+            'fb_id'         => Session::get('id'),
+            'title'         => Request::input('title'),
+            'filename'      => Request::input('filename'), 
+            'url'           => Request::input('fileurl'),
+            'description'   => Request::input('description')
+        ])->id;
+
+        echo $id;
     }
     
 

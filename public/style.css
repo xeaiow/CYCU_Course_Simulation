@@ -151,7 +151,8 @@ td,
     widows: 60%;
 }
 
-.house-imgur {
+.house-imgur,
+.exams-gd {
     visibility: hidden;
 }
 
@@ -175,8 +176,20 @@ td,
     margin-bottom: -30px !important;
 }
 
+.margin-bottom-less-10 {
+    margin-bottom: -10px !important;
+}
+
+.margin-top-less-0 {
+    margin-top: 0px !important;
+}
+
 .margin-top-less-30 {
     margin-top: -30px !important;
+}
+
+.margin-top-less-80 {
+    margin-top: -80px !important;
 }
 
 .margin-bottom-zero {
