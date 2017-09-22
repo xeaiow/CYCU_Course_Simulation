@@ -91,17 +91,19 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
 
     Route::get('/exams', 'ExamController@index');
 
-    Route::get('/exams/post', 'ExamController@past_year');
+    Route::get('/exams/post', 'ExamController@past_year')->middleware('isVerify');
 
     Route::get('/exams/news', 'ExamController@exams_news');
 
     Route::get('/exams/{id}', 'ExamController@exams_info')->where('id', '[0-9a-z]+');
 
+    Route::get('/exams/{id}/ajax', 'ExamController@exams_info_ajax')->where('id', '[0-9a-z]+');
+
     Route::post('/exams/search', 'ExamController@exams_search');
 
-    Route::post('/exams/img/post/handle', 'ExamController@upload_handle');
+    Route::post('/exams/img/post/handle', 'ExamController@upload_handle')->middleware('isVerify');
 
-    Route::post('/exams/post/handle', 'ExamController@exams_post_handle');
+    Route::post('/exams/post/handle', 'ExamController@exams_post_handle')->middleware('isVerify');
 
 
                             /* VerifyController */

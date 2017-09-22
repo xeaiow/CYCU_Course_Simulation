@@ -61,7 +61,7 @@ class HouseController extends Controller
             'live_score' => intval($request->live_score),
             'landlord_comment' => $request->landlord_comment,
             'live_comment' => $request->live_comment,
-            'pictures' => $request->pic[0]
+            'pictures' => $request->pic
         ];
 
         $isCreatData = House::create($new);

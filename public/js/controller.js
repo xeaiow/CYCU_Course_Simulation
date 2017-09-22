@@ -107,7 +107,8 @@ app.controller('ListController', function($scope, $http) {
     $scope.baseUrl = "//localhost/simulation/public/";
     $scope.search = function() {
 
-        if ($scope.select_class == "" && $scope.keywords == null) {
+        // 如果什麼都沒輸入，也沒選開課系級就不動作
+        if ($scope.select_class == "" && ($scope.keywords == undefined || $scope.keywords == "")) {
 
             return false;
         }
@@ -125,9 +126,10 @@ app.controller('ListController', function($scope, $http) {
             })
             .success(function(data, status, headers, config) {
 
-
                 if (data.length !== 0) {
+
                     $scope.course = data;
+
                 } else {
                     swal({
                         title: "糟糕",
@@ -853,7 +855,7 @@ app.controller('ListController', function($scope, $http) {
 
                     // 清除空格及 html tag
                     var res = result[key] = val.replace(/\s\s+/g, ' ').replace(/(<([^>]+)>)/ig, "").split(" ");
-                    console.log(res);
+
                     var demand = new Array(); // 需存入的值
 
                     // 排除重複資料
@@ -1021,7 +1023,7 @@ app.controller('ListController', function($scope, $http) {
                     }
                 });
 
-                console.log($scope.passCourse);
+
                 //save pass course
                 $http({
                         url: $scope.baseUrl + 'pass/save',
@@ -1244,7 +1246,6 @@ app.controller('ListController', function($scope, $http) {
             .success(function(data, status, headers, config) {
 
                 $scope.exams_news = data;
-                console.log(data);
             })
             .error(function(data, status, headers, config) {
 
@@ -1283,6 +1284,22 @@ app.controller('ListController', function($scope, $http) {
             .success(function(data, status, headers, config) {
 
                 window.location.href = $scope.baseUrl + 'exams/' + data;
+            })
+            .error(function(data, status, headers, config) {
+
+            });
+    }
+
+
+    $scope.exams_info_ajax = function(id) {
+
+        $http({
+                url: $scope.baseUrl + 'exams/' + id + '/ajax',
+                method: "GET",
+            })
+            .success(function(data, status, headers, config) {
+
+                $scope.exams_info = data;
             })
             .error(function(data, status, headers, config) {
 

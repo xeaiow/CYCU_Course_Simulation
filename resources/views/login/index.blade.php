@@ -53,21 +53,23 @@
                             <div class="sixteen wide center aligned mobile only column">
                                 <img src="{{ url('/logo.svg') }}" alt="CYCU Simulation" class="ui image small centered">
                                 <h3 class="ui header nothighlight">CYCU Simulation</h3>
+                                <h2 class="ui header">
+                                    有 <span class="joined"><% joinedCounts %></span> 位同學正在使用
+                                </h2>
                                 <p class="story-text">
-                                    每學期選課前，總是要手動列出欲選課清單，但往往沒想像中順利，得預備許多課表組合，因此誕生了此系統，希望能幫助到大家。
-                                    <h2 class="ui header">
-                                        有 <span class="joined">已註冊人數 <% joinedCounts %></span> 位同學正在使用
-                                    </h2>
+                                    模擬選課<br />學分計算<br />租屋資訊<br />考古題
                                 </p>
                             </div>
-                            <div class="sixteen wide center aligned computer tablet only column">
+                            <div class="sixteen wide computer tablet only column">
                                 <img src="{{ url('/logo.svg') }}" alt="CYCU Simulation" class="ui image small centered">
-                                <h3 class="ui header nothighlight">CYCU Simulation</h3>
+                                <h3 class="ui header center aligned nothighlight">CYCU Simulation</h3>
+                                <h2 class="ui header center aligned">
+                                    有 <span class="joined"><% joinedCounts %></span> 位同學正在使用
+                                </h2>
                                 <p class="story-text">
-                                    每學期選課前，總是要手動列出欲選課清單，但往往沒想像中順利，得預備許多課表組合，因此誕生了此系統，希望能幫助到大家。<br />
-                                    <h2 class="ui header">
-                                        有 <span class="joined"><% joinedCounts %></span> 位同學正在使用
-                                    </h2>
+                                    <span class="highlight">模擬選課</span>：每學期選課前，總是要手動列出欲選課清單，但往往沒想像中順利，得預備許多課表組合，因此誕生了此系統。<br />
+                                    <span class="highlight">租屋資訊</span>：期望每個人把租屋經驗及心得記錄下來，日後他人租屋時，能更精確找到心目中的異鄉屋。<br />
+                                    <span class="highlight">考古題</span>：考試總是抓不住重點，如能有個參考範例，朝著範圍前進，想必能得心應手。
                                 </p>
                             </div>
                         </div>
@@ -216,7 +218,7 @@
                 </div>
                 <!-- Page1 End -->
 
-                <!-- Page3 -->
+                <!-- Page2 -->
                 <div class="ui vertical stripe segment">
                     <div class="ui basic segment stackable grid">
                         <div class="row">
@@ -274,9 +276,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- Page3 End -->
+                <!-- Page2 End -->
 
-                <!-- Page4 -->
+                <!-- Page3 -->
                 <div class="ui vertical stripe segment">
                     <div class="ui basic segment stackable grid">
                         <div class="row">
@@ -342,6 +344,66 @@
                         </div>
                     </div>
                 </div>
+                <!-- Page3 End -->
+
+                <!-- Page4 -->
+                <div class="ui vertical stripe segment">
+                    <div class="ui basic segment stackable grid">
+                        <div class="row">
+                            <div class="six wide mobile only column">
+                                <h3 class="ui header centered">考古題分享</h3>
+                                <div class="ui segment basic center aligned">
+                                    <p>
+                                        <div class="ui slogan">
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">穩定雲端下載</div>
+                                        </h2>
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">出外靠朋友</div>
+                                        </h2>
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">共享精隨</div>
+                                        </h2>
+
+                                    </div>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="six wide middle aligned computer tablet only column">
+                                <h3 class="ui header">考古題分享</h3>
+                                <p>
+                                    <div class="ui slogan">
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">穩定雲端下載</div>
+                                        </h2>
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">出外靠朋友</div>
+                                        </h2>
+
+                                        <h2 class="ui header">
+                                            <i class="black checkmark box icon"></i>
+                                            <div class="content">共享精隨</div>
+                                        </h2>
+
+                                    </div>
+                                </p>
+                            </div>
+                            <div class="eight wide right floated column">
+                                <img src="https://i.imgur.com/z2ZNDHB.png" class="ui big image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- Page4 End -->
 
                 
@@ -364,11 +426,17 @@
                 }
                 
                 #story {
-                    padding: 0em 0em;
+                    padding: 1em 0em;
                 }
                 
                 .ui.vertical.stripe h3 {
                     font-size: 2em;
+                    color: #183346;
+                    text-shadow: 0px 0px 26px rgba(247, 217, 44, .7);
+                }
+
+                .highlight {
+                    font-size: 1em;
                     color: #183346;
                     text-shadow: 0px 0px 26px rgba(247, 217, 44, .7);
                 }

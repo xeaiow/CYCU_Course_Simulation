@@ -26,7 +26,7 @@
         
         <!-- 取得檔案 -->
         <div class="ui piled segment margin-top-less-10">
-            <div class="ui stackable four column grid" id="file-result"></div>
+            <div class="ui stackable two column grid" id="file-result"></div>
         </div>
 
         <h4 class="ui horizontal divider header">
@@ -139,8 +139,8 @@
                         );
 
                         // 注入回傳的檔名跟網址結果
-                        filename[i] = response.filename[i];
-                        fileurl[i]  = response.url[i];
+                        filename[filename.length] = response.filename[i];
+                        fileurl[fileurl.length]  = response.url[i];
                     });
                     $("#filefield").val('');
                 }

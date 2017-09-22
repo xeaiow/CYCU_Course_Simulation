@@ -46,24 +46,31 @@ class ExamController extends Controller
     {
         $examsInfo = Exam::Where('_id', Request::segment(2))->first();
 
-        // 如果不存在此筆資料就導回 /exams
-        if ( count($examsInfo) == 0 )
-        {
-            return redirect('/exams');
-        }
-        
-
         $data = array(
             'username'  => Session::get('username'),
             'photo'     => Session::get('photo'),
             'og_title'  => $examsInfo['title'],
             'og_image'  => "https://i.imgur.com/LlYu678.png",
-            'og_description' => "小考、期末考總是不知從何念起，這裡為您提供考古題、筆記講義，當然您也能無私提供。",
-            'exams'     => $examsInfo
+            'og_description' => "小考、期末考總是不知從何念起，這裡為您提供考古題、筆記講義，當然您也能無私提供。"
         );
 
         return view('exams.info')->with('profile', $data);
     }
+
+
+    // 個別考古題資訊 (載入 ajax)
+    public function exams_info_ajax ()
+    {
+        $examsInfo = Exam::Where('_id', Request::segment(2))->first();
+        
+        // 如果沒有這筆資料，就導回 /exams 
+        if ( count($examsInfo) == 0 )
+        {
+            return redirect('/exams');
+        }
+        echo $examsInfo;
+    }
+
 
     // 最新上傳的 5 筆資料
     public function exams_news ()

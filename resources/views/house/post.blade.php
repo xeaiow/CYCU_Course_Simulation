@@ -239,7 +239,7 @@
 
         <!-- 圖片 -->
         <div class="ui piled segment">
-            <div class="ui active dimmer" id="exams-uploading">
+            <div class="ui active dimmer" id="house-uploading">
                 <div class="ui massive text loader">Uploading...</div>
             </div>
             <h4 class="ui header">圖片預覽</h4>
@@ -249,13 +249,21 @@
 
 
     <script>
+
+        // hide loading icon
+        $( document ).ready(function() {
+            $("#house-uploading").hide();
+        });
+
         var images = new Array(); // 存放 imgur 回傳網址
 
         $(".house-imgur").on('submit', (function(e) {
             e.preventDefault();
 
-            $("#exams-uploading").show();
+            $("#house-uploading").show();
             $("#house-post").prop("disabled", true); // Lock button
+            $("#house-browser-images").prop("disabled", true); // Lock browser images button
+            toastr["success"](" ", "上傳中！")
 
             $.ajax({
                 url: "//localhost/simulation/public/upload/image",
@@ -269,7 +277,6 @@
                     var response = $.parseJSON(JSON.stringify(response));
 
                     // 將網址存回陣列
-                    images[images.length] = response;
 
                     $.each(response, function(index, value) {
 
@@ -285,14 +292,20 @@
                             '</div>' +
                             '</div>'
                         );
+                        images[images.length] = value;
                     });
                     toastr["success"](" ", "上傳成功！")
-                    $("#exams-uploading").hide();
+                    $("#house-uploading").hide();
                     $("#house-post").prop("disabled", false); // UnLock button
-                    console.log(response);
+                    $("#house-browser-images").prop("disabled", false); // Lock browser images button
+                    $("#house-choose-image").val('');
                 },
                 error: function() {
 
+                    $("#house-uploading").hide();
+                    $("#house-post").prop("disabled", false); // UnLock button
+                    $("#house-browser-images").prop("disabled", false); // Lock browser images button
+                    $("#house-choose-image").val('');
                 }
             });
         }));
@@ -304,7 +317,7 @@
 
         $("#house-choose-image").change(function() {
             $("#house-upload-image").click();
-            toastr["success"](" ", "上傳中！")
+            $("#exams-uploading").hide();
         });
 
         $(document).ready(function() {
@@ -327,7 +340,7 @@
             }).then(function() {
 
                 // 清除占用的陣列位址
-                delete images[thisImage.attr('id') - 1];
+                images.splice(thisImage.attr('id'), 1);
                 $("#view-images-" + thisImage.attr('id')).remove();
                 swal("已刪除照片", "您可以繼續上傳其他照片", "success");
             });
