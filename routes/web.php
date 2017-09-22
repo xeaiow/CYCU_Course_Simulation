@@ -40,10 +40,10 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
     Route::get('/minus_course/{course_id}', 'SimulationController@minusCourse')->where('course_id', '[0-9A-Za-z]+');
 
     // 匯入 iTouch 已修過課程頁面
-    Route::get('/import', 'SimulationController@import');
+    // Route::get('/import', 'SimulationController@import');
 
     // 匯入 iTouch 已修過課程動作 ajax
-    Route::post('/import_course', 'SimulationController@importCourse');
+    //Route::post('/import_course', 'SimulationController@importCourse');
 
     // 載入已修過課程 ajax
     Route::get('/history', 'SimulationController@history');
@@ -122,12 +122,6 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
 
     // 認證啟用功能
     Route::get('/verify/{token}', 'VerifyController@verifyConfirm')->where('token', '[0-9A-Za-z]+')->middleware('verifySuccess');
-
-
-    Route::get('tests', function() {
-
-        Storage::disk('google')->put('test.pdf', 'Hello World');
-    });
 
 });
 

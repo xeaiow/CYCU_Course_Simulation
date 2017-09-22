@@ -1,3 +1,28 @@
+<!--
+                       _oo0oo_
+                      o8888888o
+                      88" . "88
+                      (| -_- |)
+                      0\  =  /0
+                    ___/`---'\___
+                  .' \\|     |// '.
+                 / \\|||  :  |||// \
+                / _||||| -:- |||||- \
+               |   | \\\  -  /// |   |
+               | \_|  ''\---/''  |_/ |
+               \  .-\__  '-'  ___/-. /
+             ___'. .'  /--.--\  `. .'___
+          ."" '<  `.___\_<|>_/___.' >' "".
+         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+         \  \ `_.   \_ __\ /__ _/   .-` /  /
+     =====`-.____`.___ \_____/___.-`___.-'=====
+                       `=---='
+
+
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+               佛祖保佑         永無bug
+-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -13,20 +38,11 @@
     <meta property="og:image:width" content="630">
     <meta property="og:image:height" content="760">
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
-    <script src="{{ asset('/js/controller.js') }}"></script>
-    <script src="{{ asset('/js/mask.min.js') }}"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-animateNumber/0.0.14/jquery.animateNumber.min.js"></script>
     <link rel="stylesheet" href="{{ asset('/semantic.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('/style.css') }}" />
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/themes/facebook/facebook.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/toastr.min.css') }}">
     <title>模擬中原 - CYCU Simulation</title>
 </head>
 
@@ -145,7 +161,7 @@
                                 </div>
                             </div>
                             <div class="six wide right floated column">
-                                <img src="https://i.imgur.com/CtiwpLR.png" class="ui large image">
+                                <img src="https://i.imgur.com/Co0EZgy.png" class="ui large image">
                             </div>
                         </div>
                     </div>
@@ -184,7 +200,7 @@
                                 </div>
                             </div>
                             <div class="eight wide column">
-                                <img src="https://i.imgur.com/QEobY1P.png" class="ui large image">
+                                <img src="https://i.imgur.com/wQe8Y3N.png" class="ui large image">
                             </div>
                             <div class="six wide middle aligned right floated computer tablet only column">
                                 <p>
@@ -271,7 +287,7 @@
                                 </p>
                             </div>
                             <div class="eight wide right floated column">
-                                <img src="https://i.imgur.com/MXvMhvk.png" class="ui big image">
+                                <img src="https://i.imgur.com/4SG9aik.png" class="ui big image">
                             </div>
                         </div>
                     </div>
@@ -311,7 +327,7 @@
                                 </div>
                             </div>
                             <div class="eight wide column">
-                                <img src="https://i.imgur.com/28USWPq.png" class="ui large image">
+                                <img src="https://i.imgur.com/aNFUbor.png" class="ui large image">
                             </div>
                             <div class="six wide middle aligned right floated computer tablet only column">
                                 <h3 class="ui header">租屋資訊</h3>
@@ -399,15 +415,13 @@
                                 </p>
                             </div>
                             <div class="eight wide right floated column">
-                                <img src="https://i.imgur.com/z2ZNDHB.png" class="ui big image">
+                                <img src="https://i.imgur.com/NGPfDxJ.png" class="ui big image">
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <!-- Page4 End -->
-
-                
-
                 <div class="ui vertical stripe segment">
                     <div class="ui basic segment stackable grid">
                         <div class="row">
@@ -419,81 +433,147 @@
                 </div>
 
             </div>
-
-            <style media="screen">
-                body {
-                    background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
-                }
-                
-                #story {
-                    padding: 1em 0em;
-                }
-                
-                .ui.vertical.stripe h3 {
-                    font-size: 2em;
-                    color: #183346;
-                    text-shadow: 0px 0px 26px rgba(247, 217, 44, .7);
-                }
-
-                .highlight {
-                    font-size: 1em;
-                    color: #183346;
-                    text-shadow: 0px 0px 26px rgba(247, 217, 44, .7);
-                }
-                
-                .ui.vertical.stripe .button+h3,
-                .ui.vertical.stripe p+h3 {
-                    margin-top: 3em;
-                }
-                
-                .ui.vertical.stripe .floated.image {
-                    clear: both;
-                }
-                
-                .ui.vertical.stripe p {
-                    font-size: 1.3em;
-                    margin-top: 15px;
-                    line-height: 2em;
-                }
-            </style>
-
-
         </div>
+    </div>
 
-        <script>
-            (function(i, s, o, g, r, a, m) {
-                i['GoogleAnalyticsObject'] = r;
-                i[r] = i[r] || function() {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-                a = s.createElement(o),
-                    m = s.getElementsByTagName(o)[0];
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m)
-            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    <style media="screen">
+        body {
+            background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
+        }
+        
+        #story {
+            padding: 1em 0em;
+        }
+        
+        .ui.vertical.stripe h3 {
+            font-size: 2em;
+            color: #183346;
+            text-shadow: 0px 0px 26px rgba(247, 217, 44, .7);
+        }
 
-            ga('create', 'UA-103170316-1', 'auto');
-            ga('send', 'pageview');
-        </script>
+        .highlight {
+            font-size: 1em;
+            color: #183346;
+            text-shadow: 0px 0px 26px rgba(247, 217, 44, .7);
+        }
+        
+        .ui.vertical.stripe .button+h3,
+        .ui.vertical.stripe p+h3 {
+            margin-top: 3em;
+        }
+        
+        .ui.vertical.stripe .floated.image {
+            clear: both;
+        }
+        
+        .ui.vertical.stripe p {
+            font-size: 1.3em;
+            margin-top: 15px;
+            line-height: 2em;
+        }
+    </style>
 
-        <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
-        <script>
-            // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyBzSbVjSh0HcmjeOlIjCgUHy2hCNwn9QNo",
-                authDomain: "simulation-7b9ca.firebaseapp.com",
-                databaseURL: "https://simulation-7b9ca.firebaseio.com",
-                projectId: "simulation-7b9ca",
-                storageBucket: "simulation-7b9ca.appspot.com",
-                messagingSenderId: "754253323975"
-            };
-            firebase.initializeApp(config);
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-            $(function() {
-                FastClick.attach(document.body);
-            });
-        </script>
+        ga('create', 'UA-103170316-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBzSbVjSh0HcmjeOlIjCgUHy2hCNwn9QNo",
+            authDomain: "simulation-7b9ca.firebaseapp.com",
+            databaseURL: "https://simulation-7b9ca.firebaseio.com",
+            projectId: "simulation-7b9ca",
+            storageBucket: "simulation-7b9ca.appspot.com",
+            messagingSenderId: "754253323975"
+        };
+        firebase.initializeApp(config);
+
+        var app = angular.module('myApp', []);
+
+        app.controller('ListController', function($scope, $http) {
+
+            $scope.baseUrl = "//localhost/simulation/public/";
+            $scope.joinedCounts = 0;
+
+            $scope.load_joined = function() {
+                $http({
+                        url: $scope.baseUrl + 'load_joined',
+                        method: "GET",
+                    })
+                    .success(function(data, status, headers, config) {
+
+                        $(".joined").animateNumber({ number: data });
+                    })
+                    .error(function(data, status, headers, config) {
+
+                    });
+            }
+
+            // login
+            $scope.fbProfile = [];
+            $scope.loadProfile = function() {
+
+                var provider = new firebase.auth.FacebookAuthProvider();
+                provider.setCustomParameters({
+                    'display': 'page'
+                });
+
+                firebase.auth().signInWithPopup(provider).then(function(result) {
+
+                    $scope.fbProfile.fb_id = result.additionalUserInfo.profile.id;
+                    $scope.fbProfile.birthday = result.additionalUserInfo.profile.birthday;
+                    $scope.fbProfile.name = result.additionalUserInfo.profile.name;
+                    $scope.fbProfile.gender = result.additionalUserInfo.profile.gender;
+                    $scope.fbProfile.photo = 'https://graph.facebook.com/' + result.additionalUserInfo.profile.id + '/picture?type=large';
+                    $scope.fbProfile.email = result.user.providerData[0].email;
+
+                    $http({
+                            url: $scope.baseUrl + 'profile/save',
+                            method: "POST",
+                            data: $.param({
+                                "fb_id": $scope.fbProfile.fb_id,
+                                "birthday": $scope.fbProfile.birthday,
+                                "name": $scope.fbProfile.name,
+                                "gender": $scope.fbProfile.gender,
+                                "photo": $scope.fbProfile.photo,
+                                "email": $scope.fbProfile.email
+                            }),
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                            },
+                        })
+                        .success(function(data, status, headers, config) {
+
+                            window.location.href = $scope.baseUrl + 'start';
+                        })
+                        .error(function(data, status, headers, config) {
+
+                            console.log('login failed');
+                        });
+
+                }).catch(function(error) {
+
+                    window.location.href = $scope.baseUrl + 'start';
+                });
+            }
+        });
+    </script>
+    
 
 </body>
 

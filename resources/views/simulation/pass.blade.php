@@ -3,7 +3,11 @@
 @section('content')
 
 <div class="ui grid">
+    <div class="ui active dimmer" id="pass-loading">
+        <div class="ui massive text loader">下載中請勿重整或中斷...</div>
+    </div>
     <div class="sixteen wide column">
+
 
         <h2 class="ui icon header center aligned">
             <i class="bookmark icon"></i>

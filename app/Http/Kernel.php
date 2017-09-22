@@ -59,7 +59,7 @@ class Kernel extends HttpKernel
         'simu' => \App\Http\Middleware\LoginMiddleware::class,
         'isLogin' => \App\Http\Middleware\isLoginMiddleware::class,
         'isVerify' => \App\Http\Middleware\isVerifyMiddleware::class,
-        'isVerifyed' => \App\Http\Middleware\isVerifyedMiddleware::class,
+        'isVerifyed' => \App\Http\Middleware\isVerifyedMiddleWare::class,
         'verifySuccess' => \App\Http\Middleware\verifySuccessMiddleware::class,
     ];
 }

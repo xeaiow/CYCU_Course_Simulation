@@ -104,7 +104,7 @@ app.controller('ListController', function($scope, $http) {
     $scope.course = [];
     $scope.loging = false;
     $scope.fbProfile = [];
-    $scope.baseUrl = "//localhost/simulation/public/";
+    $scope.baseUrl = "https://simulation.com.tw/";
     $scope.search = function() {
 
         // 如果什麼都沒輸入，也沒選開課系級就不動作
@@ -476,7 +476,7 @@ app.controller('ListController', function($scope, $http) {
         });
 
         firebase.auth().signInWithPopup(provider).then(function(result) {
-            console.log(result);
+
             $scope.fbProfile.fb_id = result.additionalUserInfo.profile.id;
             $scope.fbProfile.birthday = result.additionalUserInfo.profile.birthday;
             $scope.fbProfile.name = result.additionalUserInfo.profile.name;
@@ -501,8 +501,8 @@ app.controller('ListController', function($scope, $http) {
                 })
                 .success(function(data, status, headers, config) {
 
-                    console.log(data);
-                    //window.location.href = $scope.baseUrl + 'start';
+
+                    window.location.href = $scope.baseUrl + 'start';
                 })
                 .error(function(data, status, headers, config) {
 

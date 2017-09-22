@@ -121,11 +121,11 @@ class SimulationController extends Controller
 
 
             // 建立匯入已修過課程資料
-            $history = [
-                'fb_id' => $request->fb_id,
-                'history_course' => []
-            ];
-            historyCourse::create($history);
+            // $history = [
+            //     'fb_id' => $request->fb_id,
+            //     'history_course' => []
+            // ];
+            // historyCourse::create($history);
 
 
             // 建立模擬選課清單預設資料
@@ -199,18 +199,24 @@ class SimulationController extends Controller
 
 
     // 儲存匯入的已修習課程
-    public function importCourse (Request $request)
-    {
+    // public function importCourse (Request $request)
+    // {
 
-        $historyCourse = historyCourse::Where('fb_id', Session::get('id'));
-        $historyCourse->update(['history_course' => $request->history_course]);
+    //     $historyCourse = historyCourse::Where('fb_id', Session::get('id'));
+    //     $historyCourse->update(['history_course' => $request->history_course]);
 
-        // 設定該使用者為已匯入過
-        Users::Where('fb_id', Session::get('id'))->update(['isImport' => 1]);
+    //     $history = [
+    //             'fb_id' => Session::get('id'),
+    //             'history_course' => $request->history_course
+    //         ];
+    //     historyCourse::create($history);
 
-        // 建立 Session 且設定為已匯入 
-        Session::put('isImport', 1);
-    }
+    //     // 設定該使用者為已匯入過
+    //     Users::Where('fb_id', Session::get('id'))->update(['isImport' => 1]);
+
+    //     // 建立 Session 且設定為已匯入 
+    //     Session::put('isImport', 1);
+    // }
 
 
     // 退選 
@@ -345,8 +351,8 @@ class SimulationController extends Controller
 
         $url        = "http://cmap.cycu.edu.tw:8080//MyMentor/stdLogin.do" ;
         $ref_url    = "http://cmap.cycu.edu.tw:8080/MyMentor/courseCreditStructure.do";
-        $userId     = "10244257";//$request->userId;
-        $password   = "Lzj830919";//$request->password;
+        $userId     = $request->userId;
+        $password   = $request->password;
         
 
         $cookie_jar = tempnam('./tmp','cookie.txt');
@@ -395,14 +401,22 @@ class SimulationController extends Controller
     public function savePassCourse (Request $request)
     {
 
-        $historyCourse = historyCourse::Where('fb_id', Session::get('id'));
-        $historyCourse->update(['history_course' => $request->history_course]);
+        // $historyCourse = historyCourse::Where('fb_id', Session::get('id'));
+        // $historyCourse->update(['history_course' => $request->history_course]);
+        $new = [    
+            'fb_id' => Session::get('id'),
+            'history_course' => $request->history_course
+        ];
+
+        historyCourse::create($new);
 
         //設定該使用者為已匯入過
         Users::Where('fb_id', Session::get('id'))->update(['isImport' => 1]);
 
         //建立 Session 且設定為已匯入 
         Session::put('isImport', 1);
+
+        
     }
 
 

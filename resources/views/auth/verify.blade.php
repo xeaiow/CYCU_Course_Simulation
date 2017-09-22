@@ -35,6 +35,7 @@
                     <ul>
                         <li>校園信箱格式：s+學號@cycu.edu.tw</li>
                         <li>校園 gmail 信箱格式：自訂+cycu.org.tw</li>
+                        <li>一組校園信箱只能認證乙次</li>
                         <li><a href="https://mail.cycu.edu.tw/indexi2.html">進入校園信箱</a></li>
                         <li><a href="https://www.google.com/gmail/">進入校園 gmail 信箱</a></li>
                     </ul>

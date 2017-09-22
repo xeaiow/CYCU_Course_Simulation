@@ -8,6 +8,7 @@ use App\Users;
 use Redirect;
 use Session;
 use Mail;
+use App\Email;
 use App\Http\Requests\EmailVerifyRequest;
 
 class VerifyController extends Controller
@@ -17,8 +18,16 @@ class VerifyController extends Controller
     public function sendMail (emailVerifyRequest $request)
     {
 
-        $verifyToken = sha1(time());
-        // 產生一組 token 作為認證網址後綴
+        $isExist = Email::Where('email', $request->email)->count();
+
+        // 如果已經註冊過，就擋下
+        if ($isExist > 0)
+        {
+            return redirect('/verify');
+        }
+
+        $verifyToken = sha1(time()); // 產生一組 token 作為認證網址後綴
+
         Users::Where('fb_id', Session::get('id'))->update(['verify.token' => $verifyToken]);
 
         $data = array( 'email' => $request->email, 'title' => $request->email, 'from' => '學生認證啟用 - 模擬中原', 'token' => $verifyToken );
@@ -27,6 +36,14 @@ class VerifyController extends Controller
         {
             $message->to( $data['email'] )->from( $data['title'] )->subject( $data['from'] );
         });
+
+        // 儲存信箱認證紀錄
+        $new = [
+            'fb_id' => Session::get('id'),
+            'email' => $request->email
+        ];
+
+        Email::create($new);
 
         //將 isVerify 改成 1 Users::Where('fb_id', Session::get('id'))->update(['isVerify' => 1]);
 

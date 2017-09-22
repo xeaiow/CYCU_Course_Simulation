@@ -125,7 +125,7 @@
     <h4 class="ui horizontal divider header"><i class="map pin icon"></i>地圖</h4>
     <!-- 地圖 -->
     <div class="sixteen wide column">
-        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src=http://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q={{ $profile['house']['marker'] }}&z=16&output=embed&t=></iframe>
+        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src=https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q={{ $profile['house']['marker'] }}&z=16&output=embed&t=></iframe>
     </div>
 
     <h4 class="ui horizontal divider header"><i class="comments icon"></i>心得</h4>
@@ -177,17 +177,5 @@
         </div>
     </div>
 </div>
-
-<div id="fb-root"></div>
-<script>
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.10&appId=452934435085965";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
 
 @endsection
