@@ -92,6 +92,7 @@ class ExamController extends Controller
     public function upload_handle() {
  
         ini_set('max_execution_time', 300); // 執行時間延長至 300 秒
+        ini_set('memory_limit', '256M');        
 
          // 取得使用者所選擇的檔案
         $files      = Request::file('filefield');

@@ -436,7 +436,7 @@ class SimulationController extends Controller
     // imgur 可多張圖片上傳
     public function upload_image ()
     {
-
+        ini_set('memory_limit', '256M');        
         $result = array();
 
         foreach ($_FILES['userImage']['tmp_name'] as $index => $tmpName)
