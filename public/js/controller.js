@@ -839,8 +839,7 @@ app.controller('ListController', function($scope, $http) {
                     }).then(
                         function() {
                             $scope.inputiTouchModal();
-                        },
-                    )
+                        });
 
                     return false;
                 }
@@ -1045,8 +1044,7 @@ app.controller('ListController', function($scope, $http) {
                         }).then(
                             function() {
                                 window.location.href = $scope.baseUrl + 'pass';
-                            },
-                        )
+                            });
                     })
                     .error(function(data, status, headers, config) {
 
@@ -1200,6 +1198,11 @@ app.controller('ListController', function($scope, $http) {
         window.location.href = $scope.baseUrl + 'exams/' + id;
     }
 
+    // 進入房屋資訊頁面
+    $scope.top_view_house = function(id) {
+        window.location.href = $scope.baseUrl + 'house/' + id;
+    }
+
     // 搜尋考古題
     $scope.search_exams = function() {
 
@@ -1237,6 +1240,8 @@ app.controller('ListController', function($scope, $http) {
             });
     }
 
+
+    // 讀取最近新增的五筆考古題
     $scope.exams_news = function() {
 
         $http({
@@ -1252,6 +1257,21 @@ app.controller('ListController', function($scope, $http) {
             });
     }
 
+    // 讀取最近新增的五筆租屋資訊
+    $scope.house_news = function() {
+
+        $http({
+                url: $scope.baseUrl + 'house/news',
+                method: "GET",
+            })
+            .success(function(data, status, headers, config) {
+
+                $scope.house_news = data;
+            })
+            .error(function(data, status, headers, config) {
+
+            });
+    }
 
     // 發布考古題
     $scope.exam_post = function() {

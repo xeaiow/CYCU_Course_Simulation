@@ -88,7 +88,27 @@
             </div>
         </div>
 
+        <h4 class="ui horizontal divider header">
+            <i class="home icon"></i> 最近發布的屋子
+            </h4>
+        <div class="ui inverted segment">
+            <div class="ui inverted relaxed divided list" ng-init="house_news()">
+                <div class="item view-house" ng-repeat="item in house_news" ng-click="top_view_house(item._id)">
+                    <div class="content">
+                    <div class="header"><i class="icon bookmark"></i> <% item.title %></div>
+                       <% item.live_comment | strcut %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <div ng-if="houseIndex != null">
+
+            <h4 class="ui horizontal divider header">
+            <i class="search icon"></i> 搜尋結果
+            </h4>
+
             <h2 class="ui header">
                 <i class="bookmark icon"></i>
                 <div class="content">

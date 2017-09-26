@@ -106,4 +106,10 @@ class HouseController extends Controller
 
         return view('house.info')->with('profile', $data);
     }
+
+    // 最新新增的 5 筆資料
+    public function house_news ()
+    {
+        echo House::take(5)->orderBy('created_at', 'desc')->get();
+    }
 }

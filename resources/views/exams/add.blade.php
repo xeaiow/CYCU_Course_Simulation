@@ -25,7 +25,7 @@
         </div>
         
         <!-- 取得檔案 -->
-        <div class="ui piled segment margin-top-less-10">
+        <div class="ui piled segment margin-top-less-10" id="file-result-container">
             <div class="ui stackable two column grid" id="file-result"></div>
         </div>
 
@@ -104,6 +104,7 @@
     // hide loading icon
     $( document ).ready(function() {
         $("#exams-uploading").hide();
+        $("#file-result-container").hide();
     });
 
     // 上傳後回傳的檔案資訊
@@ -115,7 +116,7 @@
         e.preventDefault();
 
         $.ajax({
-            url: "//localhost/simulation/public/exams/img/post/handle",
+            url: "https://simulation.com.tw/exams/img/post/handle",
             type: "POST",
             dataType: 'json',
             data: new FormData(this),
@@ -129,6 +130,7 @@
                 {
                     
                     $("#exams-uploading").hide();
+                    $("#file-result-container").show();
 
                     $.each(response.url, function(i) {
 

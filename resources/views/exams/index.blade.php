@@ -53,12 +53,9 @@
             </div>
         </div>
 
-        <h2 class="ui header">
-            <i class="cloud icon"></i>
-            <div class="content">
-                最近上傳的考古題
-            </div>
-        </h2>
+        <h4 class="ui horizontal divider header">
+            <i class="cloud icon"></i> 最近上傳的考古題
+        </h4>
         <div class="ui inverted segment">
             <div class="ui inverted relaxed divided list" ng-init="exams_news()">
                 <div class="item view-house" ng-repeat="item in exams_news" ng-click="view_exams(item._id)">

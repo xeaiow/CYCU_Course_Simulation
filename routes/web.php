@@ -86,6 +86,8 @@ Route::group(['prefix' => '/', 'middleware' => 'simu'], function () {
 
     Route::post('/house/search', 'HouseController@search_house');
 
+    Route::get('/house/news', 'HouseController@house_news');
+
     // 上傳圖片到 imgur
     Route::post('/upload/image', 'SimulationController@upload_image');
 
