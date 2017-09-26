@@ -1,51 +1,49 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+## 模擬中原 CYCU Simulation
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+### 特色：選課往往沒想像中順利，得預備許多課表組合，但系統當天才開放，因此誕生了此系統。
 
-## About Laravel
+### 功能：模擬選課、學分計算、租屋資訊、考古題分享
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+### 網址：[https://sumilation.com.tw](https://sumilation.com.tw)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 工具：Laravel5.4 | MongoDB | AngularJS
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+### 環境：Ubuntu 16.x, PHP 7.x, Nginx 1.9.x [參考](https://gist.github.com/santoshachari/87bf77baeb45a65eb83b553aceb135a3)
 
-## Learning Laravel
+### 更新紀錄
+- 2017/09/23
+1. 新增租屋資訊、考古題分享
+2. 修正學分計算 bug、改善許多細節
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
+- 2017/07/30
+1. 新增學分計算系統
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+- 2017/07/27
+1. 新增刪除我的課表
 
-## Laravel Sponsors
+- 2017/07/26
+1. 新增可模糊搜索課程、篩選開課系級
+2. 修正 B 節課選課問題
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
+- 2017/07/25
+1. 初版模擬中原上線
 
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Styde](https://styde.net)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
+#### [v1 版說明](https://www.dcard.tw/f/cycu/p/227312922)
+#### [v2 版說明](https://www.dcard.tw/f/cycu/p/226868911)
+#### [粉專](https://www.facebook.com/cycusimulation/)
 
-## Contributing
+#### 模擬選課
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+<img src="https://i.imgur.com/Co0EZgy.png" width="40%" />
 
-## Security Vulnerabilities
+#### 仿真課表
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+<img src="https://i.imgur.com/wQe8Y3N.png" width="40%" />
 
-## License
+#### 租屋資訊
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+<img src="https://i.imgur.com/aNFUbor.png" width="40%" />
+
+#### 考古題分享
+
+<img src="https://i.imgur.com/NGPfDxJ.png" width="40%" />
