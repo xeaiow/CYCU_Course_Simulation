@@ -32,3 +32,18 @@
 #### [v2 版說明](https://www.dcard.tw/f/cycu/p/226868911)
 #### [粉專](https://www.facebook.com/cycusimulation/)
 
+#### 模擬選課
+
+<img src="https://i.imgur.com/Co0EZgy.png" width="40%" />
+
+#### 仿真課表
+
+<img src="https://i.imgur.com/wQe8Y3N.png" width="40%" />
+
+#### 租屋資訊
+
+<img src="https://i.imgur.com/aNFUbor.png" width="40%" />
+
+#### 考古題分享
+
+<img src="https://i.imgur.com/NGPfDxJ.png" width="40%" />
